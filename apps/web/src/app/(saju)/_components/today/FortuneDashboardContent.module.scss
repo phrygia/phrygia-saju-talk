@@ -1,0 +1,206 @@
+.wrapper {
+  padding: 28px 32px 40px;
+  overflow-y: scroll;
+
+  @media (max-width: 767px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 40px;
+  padding: 9px 18px;
+  border-radius: 50px;
+  background: rgba(124, 92, 252, 0.1);
+  border: 1px solid rgba(124, 92, 252, 0.22);
+  color: var(--violet);
+  font-size: 12px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(124, 92, 252, 0.18);
+    box-shadow: 0 4px 16px rgba(124, 92, 252, 0.2);
+  }
+}
+
+.totalSaju {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: center;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 16, 58, 0.9),
+    rgba(12, 10, 40, 0.9)
+  );
+  border: 1px solid rgba(130, 90, 255, 0.16);
+  border-radius: 24px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  margin-top: 28px;
+  position: relative;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    padding: 28px 20px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(
+      circle,
+      rgba(124, 92, 252, 0.1) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+}
+
+.score {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & .number {
+    font-size: 42px;
+    line-height: 1;
+    font-weight: 600;
+    background: linear-gradient(135deg, #e8e0ff, #a78bfa 50%, #f0c060);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  & .denom {
+    font-size: 11px;
+    color: var(--foreground-muted);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  & .label {
+    font-size: 10px;
+    color: var(--foreground-muted);
+    letter-spacing: 0.12em;
+    margin-top: 4px;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(240, 192, 96, 0.1);
+  border: 1px solid rgba(240, 192, 96, 0.25);
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 6px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.categoryCard {
+  background: linear-gradient(
+    135deg,
+    rgba(18, 14, 52, 0.95),
+    rgba(12, 10, 38, 0.95)
+  );
+  border: 1px solid rgba(130, 90, 255, 0.13);
+  border-radius: 18px;
+  padding: 18px 16px;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+
+  & .emoji {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+}
+
+.advice {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 92, 252, 0.08),
+    rgba(70, 50, 180, 0.06)
+  );
+  border: 1px solid rgba(124, 92, 252, 0.18);
+  border-radius: 20px;
+  padding: 20px 22px;
+}
+
+:global(html.light) {
+  & .totalSaju {
+    background: linear-gradient(
+      135deg,
+      rgba(245, 240, 255, 0.95),
+      rgba(232, 224, 255, 0.95)
+    );
+    border-color: rgba(100, 65, 160, 0.14);
+
+    &:before {
+      background: radial-gradient(
+        circle,
+        rgba(124, 92, 252, 0.06) 0%,
+        transparent 65%
+      );
+    }
+  }
+
+  & .categoryCard {
+    background: linear-gradient(
+      135deg,
+      rgba(248, 245, 255, 0.97),
+      rgba(238, 232, 255, 0.97)
+    );
+    border-color: rgba(100, 65, 200, 0.12);
+  }
+
+  & .tag {
+    background: rgba(184, 134, 11, 0.1);
+    border-color: rgba(184, 134, 11, 0.28);
+  }
+
+  & .number {
+    background: linear-gradient(135deg, #3b2a6e, #7c5cf0 50%, #b8860b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  & .emoji {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.07);
+  }
+
+  & .advice {
+    background: linear-gradient(
+      135deg,
+      rgba(100, 65, 160, 0.07),
+      rgba(70, 50, 140, 0.05)
+    );
+    border-color: rgba(100, 65, 160, 0.16);
+  }
+}

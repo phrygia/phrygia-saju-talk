@@ -1,0 +1,110 @@
+.wrap {
+  font-family: "Noto Sans KR", sans-serif;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.sectionTitle {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 14px;
+}
+
+.barList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barLabel {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  min-width: 34px;
+}
+
+.hanja {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.hangul {
+  font-size: 10px;
+  color: var(--foreground-muted);
+}
+
+.barTrack {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.barVal {
+  font-size: 11px;
+  color: var(--foreground-muted);
+  min-width: 16px;
+  text-align: right;
+}
+
+.chipGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  & > *:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.chip {
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chipLabel {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.chipSub {
+  font-size: 10px;
+  color: var(--foreground-muted);
+}
+
+.chipVal {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 4px;
+}

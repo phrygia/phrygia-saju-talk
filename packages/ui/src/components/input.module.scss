@@ -1,0 +1,134 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--foreground-sub);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required {
+  color: #f87171;
+  font-size: 11px;
+}
+
+
+.input {
+  display: flex;
+  height: auto;
+  width: 100%;
+  padding: 11px 14px;
+  background: linear-gradient(135deg, rgba(18, 14, 55, 0.8), rgba(12, 10, 38, 0.8));
+  border: 1px solid rgba(124, 92, 252, 0.18);
+  border-radius: 12px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-family: "Noto Sans KR", sans-serif;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+
+  &::placeholder {
+    color: var(--foreground-muted);
+  }
+
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #100d38 inset;
+    -webkit-text-fill-color: var(--foreground);
+  }
+
+  :global(.light) & {
+    background: linear-gradient(135deg, rgba(248, 245, 255, 0.95), rgba(238, 232, 255, 0.95));
+    border-color: rgba(100, 65, 160, 0.15);
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px #f5f2ff inset;
+    }
+  }
+}
+
+
+.default {
+  &:focus {
+    border-color: rgba(124, 92, 252, 0.45);
+    box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.1);
+
+    :global(.light) & {
+      border-color: rgba(100, 65, 160, 0.4);
+      box-shadow: 0 0 0 3px rgba(100, 65, 160, 0.07);
+    }
+  }
+}
+
+.error {
+  border-color: rgba(248, 113, 113, 0.5) !important;
+
+  &:focus {
+    border-color: rgba(248, 113, 113, 0.7) !important;
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
+  }
+}
+
+.warning {
+  border-color: rgba(251, 191, 36, 0.45) !important;
+
+  &:focus {
+    border-color: rgba(251, 191, 36, 0.65) !important;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+  }
+}
+
+.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+.inputWrap {
+  position: relative;
+
+  .input {
+    padding-right: 36px;
+  }
+}
+
+.inputIcon {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: var(--foreground-muted);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+
+.text {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &::before {
+    content: "•";
+    font-size: 10px;
+  }
+}
+
+.errorText {
+  color: #f87171;
+}
+
+.warningText {
+  color: #fbbf24;
+}

@@ -1,0 +1,2735 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Components Manifest</title>
+  <style>
+      :root {
+          --bg: #0b0c10;
+          --panel: #121318;
+          --muted: #9aa0a6;
+          --fg: #e8eaed;
+          --ok: #22c55e;
+          --info: #1e88e5;
+          --err: #c62828;
+          --ok-bg: #0c1a13;
+          --info-bg: #0c1624;
+          --err-bg: #1a0e0e;
+          --chip: #1f2330;
+          --border: #2b2f3a;
+          --link: #8ab4f8;
+          --active-ring: 1px; /* 1px active ring for pills and toggles */
+      }
+
+      * {
+          box-sizing: border-box;
+      }
+
+      html,
+      body {
+          margin: 0;
+          background: var(--bg);
+          color: var(--fg);
+          font: 14px/1.5 system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Ubuntu,
+          Cantarell,
+          'Helvetica Neue',
+          Arial,
+          'Noto Sans';
+      }
+
+      .wrap {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 16px 20px;
+      }
+
+      header {
+          position: sticky;
+          top: 0;
+          backdrop-filter: blur(6px);
+          background: color-mix(in srgb, var(--bg) 84%, transparent);
+          border-bottom: 1px solid var(--border);
+          z-index: 10;
+      }
+
+      h1 {
+          font-size: 20px;
+          margin: 0 0 6px;
+      }
+
+      .summary {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          align-items: center;
+      }
+
+      /* Top filter pills */
+      .filter-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 12px;
+          border: 1px solid var(--border);
+          border-radius: 999px;
+          background: var(--panel);
+          text-decoration: none;
+          cursor: pointer;
+          user-select: none;
+          color: var(--fg);
+      }
+
+      .filter-pill.ok {
+          color: #b9f6ca;
+          border-color: color-mix(in srgb, var(--ok) 55%, var(--border));
+          background: color-mix(in srgb, var(--ok) 18%, #000);
+      }
+
+      .filter-pill.info {
+          color: #b3d9ff;
+          border-color: color-mix(in srgb, var(--info) 55%, var(--border));
+          background: var(--info-bg);
+      }
+
+      .filter-pill.err {
+          color: #ff9aa0;
+          border-color: color-mix(in srgb, var(--err) 55%, var(--border));
+          background: var(--err-bg);
+      }
+
+      .filter-pill.all {
+          color: #d7dbe0;
+          border-color: var(--border);
+          background: var(--panel);
+      }
+
+      .filter-pill[aria-disabled='true'] {
+          cursor: default;
+          text-decoration: none;
+      }
+
+      .filter-pill:focus,
+      .filter-pill:active {
+          outline: none;
+          box-shadow: none;
+      }
+
+      /* Selected top pill ring via :target */
+      #filter-all:target ~ header .filter-pill[data-k='all'],
+      #filter-errors:target ~ header .filter-pill[data-k='errors'],
+      #filter-infos:target ~ header .filter-pill[data-k='infos'],
+      #filter-story-errors:target ~ header .filter-pill[data-k='story-errors'],
+      #filter-doc-errors:target ~ header .filter-pill[data-k='docs'],
+      #filter-docs:target ~ header .filter-pill[data-k='docs'] {
+          box-shadow: 0 0 0 var(--active-ring) currentColor;
+          border-color: currentColor;
+      }
+
+      /* Hidden targets for filtering */
+      #filter-all,
+      #filter-errors,
+      #filter-infos,
+      #filter-story-errors,
+      #filter-doc-errors,
+      #filter-docs {
+          display: none;
+      }
+
+      main {
+          padding: 36px 0 40px;
+      }
+
+      .grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 18px;
+      }
+
+      /* one card per row */
+
+      .card {
+          border: 1px solid var(--border);
+          background: var(--panel);
+          border-radius: 14px;
+          padding: 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+      }
+
+      .head {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+      }
+
+      .title {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+      }
+
+      .title h2 {
+          font-size: 16px;
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+
+      .meta {
+          font-size: 12px;
+          color: var(--muted);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+
+      .kv {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+      }
+
+      .chip {
+          font-size: 12px;
+          padding: 4px 8px;
+          border-radius: 999px;
+          background: var(--chip);
+          border: 1px solid var(--border);
+      }
+
+      .hint {
+          color: var(--muted);
+          font-size: 12px;
+      }
+
+      .badges {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+      }
+
+      /* Per-card badges: labels become toggles when clickable */
+      .badge {
+          font-size: 12px;
+          padding: 3px 8px;
+          border-radius: 999px;
+          border: 1px solid var(--border);
+          background: var(--chip);
+          color: #d7dbe0;
+      }
+
+      .badge.ok {
+          color: #b9f6ca;
+          border-color: color-mix(in srgb, var(--ok) 55%, var(--border));
+      }
+
+      .badge.info {
+          color: #b3d9ff;
+          border-color: color-mix(in srgb, var(--info) 55%, var(--border));
+      }
+
+      .badge.err {
+          color: #ff9aa0;
+          border-color: color-mix(in srgb, var(--err) 55%, var(--border));
+      }
+
+      .as-toggle {
+          cursor: pointer;
+      }
+
+      /* 1px ring on active toggle */
+      .tg-err:checked + label.as-toggle,
+      .tg-info:checked + label.as-toggle,
+      .tg-stories:checked + label.as-toggle,
+      .tg-docs:checked + label.as-toggle,
+      .tg-content:checked + label.as-toggle,
+      .tg-props:checked + label.as-toggle {
+          box-shadow: 0 0 0 var(--active-ring) currentColor;
+          border-color: currentColor;
+      }
+
+      /* Panels: hidden by default, shown when respective toggle checked */
+      .panels {
+          display: grid;
+          gap: 10px;
+      }
+
+      .panel {
+          display: none;
+      }
+
+      .tg-err:checked ~ .panels .panel-err {
+          display: grid;
+      }
+
+      .tg-info:checked ~ .panels .panel-info {
+          display: grid;
+          gap: 8px;
+      }
+
+      .tg-stories:checked ~ .panels .panel-stories {
+          display: grid;
+          gap: 8px;
+      }
+
+      .tg-docs:checked ~ .panels .panel-docs {
+          display: grid;
+          gap: 8px;
+      }
+
+      .tg-content:checked ~ .panels .panel-content {
+          display: grid;
+          gap: 8px;
+      }
+
+      .tg-props:checked ~ .panels .panel-props {
+          display: grid;
+      }
+
+      /* Colored notes for prop type error + info */
+      .note {
+          padding: 12px;
+          border: 1px solid var(--border);
+          border-radius: 10px;
+      }
+
+      .note.err {
+          border-color: color-mix(in srgb, var(--err) 55%, var(--border));
+          background: var(--err-bg);
+          color: #ffd1d4;
+      }
+
+      .note.info {
+          border-color: color-mix(in srgb, var(--info) 55%, var(--border));
+          background: var(--info-bg);
+          color: #d6e8ff;
+      }
+
+      .note.ok {
+          border-color: color-mix(in srgb, var(--ok) 55%, var(--border));
+          background: var(--ok-bg);
+          color: var(--fg);
+      }
+
+      .note-title {
+          font-weight: 600;
+          margin-bottom: 6px;
+      }
+
+      .note-body {
+          white-space: normal;
+      }
+
+      /* Story error cards */
+      .ex {
+          padding: 10px;
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          background: #0f131b;
+      }
+
+      .ex.err {
+          border-color: color-mix(in srgb, var(--err) 55%, var(--border));
+      }
+
+      .row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+      }
+
+      .status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          display: inline-block;
+      }
+
+      .dot-ok {
+          background: var(--ok);
+      }
+
+      .dot-err {
+          background: var(--err);
+      }
+
+      .ex-name {
+          font-weight: 600;
+      }
+
+      /* Error groups (visible in errors filter) */
+      .error-groups {
+          display: none;
+          margin-bottom: 16px;
+      }
+
+      .group {
+          border: 1px solid var(--border);
+          background: var(--panel);
+          border-radius: 14px;
+          overflow: hidden;
+      }
+
+      .group + .group {
+          margin-top: 12px;
+      }
+
+      .group-header {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 14px;
+          cursor: pointer;
+          border-bottom: 1px solid var(--border);
+      }
+
+      .group-header:hover {
+          background: #141722;
+      }
+
+      .group-title {
+          font-weight: 600;
+          flex: 1;
+      }
+
+      .group-count {
+          font-size: 12px;
+          color: var(--muted);
+      }
+
+      .group-cards {
+          display: none;
+          padding: 12px;
+      }
+
+      .group .card {
+          margin: 12px 0;
+      }
+
+      .group .card:first-child {
+          margin-top: 0;
+      }
+
+      .group .card:last-child {
+          margin-bottom: 0;
+      }
+
+      /* caret rotation */
+      .group-tg:checked + label .caret {
+          transform: rotate(90deg);
+      }
+
+      .caret {
+          transition: transform 0.15s ease;
+      }
+
+      /* toggle body */
+      .group-tg:checked ~ .group-cards {
+          display: block;
+      }
+
+      /* CSS-only filtering of cards via top pills */
+      #filter-errors:target ~ main .card:not(.has-error):not(.has-story-error) {
+          display: none;
+      }
+
+      #filter-infos:target ~ main .card:not(.has-info) {
+          display: none;
+      }
+
+      #filter-story-errors:target ~ main .card:not(.has-story-error) {
+          display: none;
+      }
+
+      #filter-doc-errors:target ~ main .card:not(.has-doc-error) {
+          display: none;
+      }
+
+      #filter-docs:target ~ main .card:has(> .tg-docs),
+      #filter-docs:target ~ main .card.is-doc {
+          display: block;
+      }
+
+      #filter-docs:target ~ main .card:not(:has(> .tg-docs)):not(.is-doc) {
+          display: none;
+      }
+
+      #filter-all:target ~ main .card {
+          display: block;
+      }
+
+      /* In errors view, hide standalone component-error cards in the regular grid (they will appear in groups) */
+      #filter-errors:target ~ main .grid .card.has-error {
+          display: none;
+      }
+
+      /* Show grouped section only in errors view */
+      #filter-errors:target ~ main .error-groups {
+          display: block;
+      }
+
+      /* Section titles */
+      .section-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--muted);
+          margin: 24px 0 12px;
+          padding-bottom: 8px;
+          border-bottom: 1px solid var(--border);
+      }
+      .section-title:first-child {
+          margin-top: 0;
+      }
+
+      /* When a toggle is checked, show the corresponding panel */
+      .card > .tg-err:checked ~ .panels .panel-err {
+          display: grid;
+      }
+      
+      .card > .tg-info:checked ~ .panels .panel-info {
+          display: grid;
+      }
+      
+      .card > .tg-stories:checked ~ .panels .panel-stories {
+          display: grid;
+      }
+
+      .card > .tg-docs:checked ~ .panels .panel-docs {
+          display: grid;
+      }
+
+      .card > .tg-content:checked ~ .panels .panel-content {
+          display: grid;
+      }
+
+      /* Add vertical spacing around panels only when any panel is visible */
+      .card > .tg-err:checked ~ .panels,
+      .card > .tg-info:checked ~ .panels,
+      .card > .tg-stories:checked ~ .panels,
+      .card > .tg-docs:checked ~ .panels,
+      .card > .tg-content:checked ~ .panels,
+      .card > .tg-props:checked ~ .panels {
+          margin: 10px 0;
+      }
+
+      /* Optional: a subtle 1px ring on the active badge, using :has() if available */
+      @supports selector(.card:has(.tg-err:checked)) {
+          .card:has(.tg-err:checked) label[for$='-err'],
+          .card:has(.tg-info:checked) label[for$='-info'],
+          .card:has(.tg-stories:checked) label[for$='-stories'],
+          .card:has(.tg-docs:checked) label[for$='-docs'],
+          .card:has(.tg-content:checked) label[for$='-content'],
+          .card:has(.tg-props:checked) label[for$='-props'] {
+              box-shadow: 0 0 0 1px currentColor;
+              border-color: currentColor;
+          }
+      }
+
+      /* Wrap long lines in code blocks at ~120 characters */
+      pre, code {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+      pre {
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+          word-break: break-word;
+          overflow-x: auto; /* fallback for extremely long tokens */
+          margin: 8px 0 0;
+      }
+      pre > code {
+          display: block;
+          white-space: inherit;
+          overflow-wrap: inherit;
+          word-break: inherit;
+          inline-size: min(100%, 120ch);
+      }
+
+      /* MDX content container for docs */
+      .mdx-content {
+          background: #0f131b;
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          padding: 12px;
+          max-height: 400px;
+          overflow-y: auto;
+          margin-top: 8px;
+      }
+  </style>
+</head>
+<body>
+<!-- Hidden targets for the top-level filters -->
+<span id="filter-all"></span>
+<span id="filter-errors"></span>
+<span id="filter-infos"></span>
+<span id="filter-story-errors"></span>
+<span id="filter-doc-errors"></span>
+<span id="filter-docs"></span>
+<header>
+  <div class="wrap">
+    <h1>Manifest Debugger</h1>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">1/14 prop type error</a><a class="filter-pill info" data-k="infos" href="#filter-infos">14/14 infos</a><span class="filter-pill ok" aria-disabled="true">57 stories ok</span></div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="note info" style="margin-bottom: 16px;">
+            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.3s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
+            <pre><code>typescript: {
+  reactDocgen: 'react-docgen-typescript',
+}</code></pre>
+            Note: <code>react-docgen-typescript</code> can be slower. If performance is acceptable for your project, it generally produces better results.
+            <a href="https://storybook.js.org/docs/api/main-config/main-config-typescript#reactdocgen" target="_blank">Learn more</a>
+          </div>
+    <h2 class="section-title">Components</h2>
+    <div class="grid" role="list">
+      
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Avatar">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Avatar</h2>
+      <div class="badges">
+        <label for="c-0-components-avatar-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-0-components-avatar-info" class="badge info as-toggle">1 info</label>
+        <label for="c-0-components-avatar-stories" class="badge ok as-toggle">5 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/avatar.stories.tsx">components-avatar · ./src/components/avatar.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-0-components-avatar-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-0-components-avatar-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-0-components-avatar-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">4 prop types</span>
+            </div>
+            <pre><code>Component: src/components/avatar.tsx::Avatar</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>alt?: string
+
+fallback?: string
+
+size?: &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; = &quot;md&quot;
+
+src?: string</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Avatar } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Fallback</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithFallback = () =&gt; &lt;Avatar fallback=&quot;이채연&quot; size=&quot;md&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Small</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Small = () =&gt; &lt;Avatar fallback=&quot;LC&quot; size=&quot;sm&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Large</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Large = () =&gt; &lt;Avatar fallback=&quot;SajuTalk&quot; size=&quot;lg&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Image</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithImage = () =&gt; &lt;Avatar
+    src=&quot;https://avatars.githubusercontent.com/u/1?v=4&quot;
+    alt=&quot;GitHub User&quot;
+    size=&quot;md&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">All Sizes</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const AllSizes = () =&gt; (
+  &lt;div style={{ display: &quot;flex&quot;, gap: 12, alignItems: &quot;center&quot; }}&gt;
+    &lt;Avatar fallback=&quot;SM&quot; size=&quot;sm&quot; /&gt;
+    &lt;Avatar fallback=&quot;MD&quot; size=&quot;md&quot; /&gt;
+    &lt;Avatar fallback=&quot;LG&quot; size=&quot;lg&quot; /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Badge">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Badge</h2>
+      <div class="badges">
+        
+        <label for="c-1-components-badge-info" class="badge info as-toggle">1 info</label>
+        <label for="c-1-components-badge-stories" class="badge ok as-toggle">7 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/badge.stories.tsx">components-badge · ./src/components/badge.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-1-components-badge-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-1-components-badge-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Badge } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Badge&gt;Badge&lt;/Badge&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Secondary</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Secondary = () =&gt; &lt;Badge variant=&quot;secondary&quot;&gt;Secondary&lt;/Badge&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Destructive</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Destructive = () =&gt; &lt;Badge variant=&quot;destructive&quot;&gt;삭제됨&lt;/Badge&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Outline</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Outline = () =&gt; &lt;Badge variant=&quot;outline&quot;&gt;Outline&lt;/Badge&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Success</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Success = () =&gt; &lt;Badge variant=&quot;success&quot;&gt;완료&lt;/Badge&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Warning</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Warning = () =&gt; &lt;Badge variant=&quot;warning&quot;&gt;주의&lt;/Badge&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">All Variants</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const AllVariants = () =&gt; (
+  &lt;div style={{ display: &quot;flex&quot;, gap: 8, flexWrap: &quot;wrap&quot; }}&gt;
+    &lt;Badge&gt;Default&lt;/Badge&gt;
+    &lt;Badge variant=&quot;secondary&quot;&gt;Secondary&lt;/Badge&gt;
+    &lt;Badge variant=&quot;destructive&quot;&gt;Destructive&lt;/Badge&gt;
+    &lt;Badge variant=&quot;outline&quot;&gt;Outline&lt;/Badge&gt;
+    &lt;Badge variant=&quot;success&quot;&gt;Success&lt;/Badge&gt;
+    &lt;Badge variant=&quot;warning&quot;&gt;Warning&lt;/Badge&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Button">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Button</h2>
+      <div class="badges">
+        <label for="c-2-components-button-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-2-components-button-info" class="badge info as-toggle">1 info</label>
+        <label for="c-2-components-button-stories" class="badge ok as-toggle">6 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/button.stories.tsx">components-button · ./src/components/button.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-2-components-button-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-2-components-button-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-2-components-button-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">1 prop type</span>
+            </div>
+            <pre><code>Component: src/components/button.tsx::Button</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>size?: any = &quot;default&quot;</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Button } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Button size=&quot;default&quot;&gt;Default&lt;/Button&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Small</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Small = () =&gt; &lt;Button size=&quot;sm&quot; fullWidth={false}&gt;Small&lt;/Button&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Large</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Large = () =&gt; &lt;Button size=&quot;lg&quot; fullWidth={false}&gt;Large&lt;/Button&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Secondary</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Secondary = () =&gt; &lt;Button variant=&quot;secondary&quot; size=&quot;default&quot; fullWidth={false}&gt;Secondary&lt;/Button&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; &lt;Button variant=&quot;disabled&quot; size=&quot;default&quot; disabled fullWidth={false}&gt;Disabled&lt;/Button&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Loading</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Loading = () =&gt; &lt;Button variant=&quot;loading&quot; size=&quot;default&quot; loading fullWidth={false}&gt;Loading&lt;/Button&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Input">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Input</h2>
+      <div class="badges">
+        <label for="c-3-components-input-props" class="badge ok as-toggle">6 prop types</label>
+        <label for="c-3-components-input-info" class="badge info as-toggle">1 info</label>
+        <label for="c-3-components-input-stories" class="badge ok as-toggle">2 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/input.stories.tsx">components-input · ./src/components/input.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-3-components-input-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-3-components-input-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-3-components-input-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">6 prop types</span>
+            </div>
+            <pre><code>Component: src/components/input.tsx::Input</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>errorMessage?: string
+
+label?: string
+
+labelRequired?: boolean = false
+
+ref?: React.Ref&lt;HTMLInputElement&gt;
+
+variant?: VariantProps&lt;typeof inputVariants&gt;[&quot;variant&quot;]
+
+warningMessage?: string</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Input } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Input
+    variant=&quot;default&quot;
+    value=&quot;&quot;
+    placeholder=&quot;이메일을 입력하세요&quot;
+    disabled={false}
+    errorMessage=&quot;올바른 값을 입력해주세요.&quot;
+    warningMessage=&quot;입력값을 다시 확인해주세요.&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Label</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithLabel = () =&gt; &lt;Input
+    variant=&quot;default&quot;
+    id=&quot;email&quot;
+    type=&quot;email&quot;
+    label=&quot;이메일&quot;
+    labelRequired
+    placeholder=&quot;hello@example.com&quot;
+    value=&quot;&quot; /&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Label">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Label</h2>
+      <div class="badges">
+        
+        <label for="c-4-components-label-info" class="badge info as-toggle">1 info</label>
+        <label for="c-4-components-label-stories" class="badge ok as-toggle">3 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/label.stories.tsx">components-label · ./src/components/label.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-4-components-label-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-4-components-label-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Input, Label } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Label&gt;이메일 주소&lt;/Label&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Input</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithInput = () =&gt; (
+  &lt;div
+    style={{ display: &quot;flex&quot;, flexDirection: &quot;column&quot;, gap: 6, width: 280 }}
+  &gt;
+    &lt;Label htmlFor=&quot;email&quot;&gt;이메일&lt;/Label&gt;
+    &lt;Input id=&quot;email&quot; type=&quot;email&quot; placeholder=&quot;hello@example.com&quot; /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Required</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Required = () =&gt; (
+  &lt;div
+    style={{ display: &quot;flex&quot;, flexDirection: &quot;column&quot;, gap: 6, width: 280 }}
+  &gt;
+    &lt;Label htmlFor=&quot;name&quot;&gt;
+      이름 &lt;span style={{ color: &quot;red&quot; }}&gt;*&lt;/span&gt;
+    &lt;/Label&gt;
+    &lt;Input id=&quot;name&quot; placeholder=&quot;홍길동&quot; required /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Menu.Dropdown">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Menu.Dropdown</h2>
+      <div class="badges">
+        <label for="c-5-components-menu-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-5-components-menu-info" class="badge info as-toggle">1 info</label>
+        <label for="c-5-components-menu-stories" class="badge ok as-toggle">3 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/menu.stories.tsx">components-menu · ./src/components/menu.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-5-components-menu-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-5-components-menu-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-5-components-menu-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">1 prop type</span>
+            </div>
+            <pre><code>Component: src/components/menu.tsx::MenuDropdown</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>header?: React.ReactNode</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Menu } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Basic Dropdown</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const BasicDropdown = () =&gt; (
+  &lt;Menu.Dropdown header={&lt;Menu.Header&gt;편집&lt;/Menu.Header&gt;}&gt;
+    &lt;Menu.DropdownItem&gt;첫 번째 메뉴&lt;/Menu.DropdownItem&gt;
+    &lt;Menu.DropdownItem&gt;두 번째 메뉴&lt;/Menu.DropdownItem&gt;
+    &lt;Menu.DropdownItem&gt;세 번째 메뉴&lt;/Menu.DropdownItem&gt;
+  &lt;/Menu.Dropdown&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Right Icons</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithRightIcons = () =&gt; (
+  &lt;Menu.Dropdown header={&lt;Menu.Header&gt;편집&lt;/Menu.Header&gt;}&gt;
+    &lt;Menu.DropdownItem right={&lt;Menu.DropdownIcon name=&quot;icon-setting-mono&quot; /&gt;}&gt;
+      첫 번째 메뉴
+    &lt;/Menu.DropdownItem&gt;
+    &lt;Menu.DropdownItem right={&lt;Menu.DropdownIcon name=&quot;icon-setting-mono&quot; /&gt;}&gt;
+      두 번째 메뉴
+    &lt;/Menu.DropdownItem&gt;
+    &lt;Menu.DropdownItem right={&lt;Menu.DropdownIcon name=&quot;icon-setting-mono&quot; /&gt;}&gt;
+      세 번째 메뉴
+    &lt;/Menu.DropdownItem&gt;
+  &lt;/Menu.Dropdown&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Trigger With Check Items</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const TriggerWithCheckItems = () =&gt; {
+  const TriggerDemo = () =&gt; {
+    const [open, setOpen] = useState&lt;boolean&gt;(false);
+    const [selected, setSelected] = useState&lt;number&gt;(1);
+
+    return (
+      &lt;div
+        style={{
+          minHeight: 220,
+          display: &quot;flex&quot;,
+          alignItems: &quot;center&quot;,
+          justifyContent: &quot;center&quot;,
+        }}
+      &gt;
+        &lt;Menu.Trigger
+          open={open}
+          onOpen={() =&gt; setOpen(true)}
+          onClose={() =&gt; setOpen(false)}
+          placement=&quot;bottom&quot;
+          dropdown={
+            &lt;Menu.Dropdown
+              header={&lt;Menu.Header&gt;항목을 선택하세요&lt;/Menu.Header&gt;}
+            &gt;
+              &lt;Menu.DropdownCheckItem
+                checked={selected === 1}
+                onCheckedChange={(checked) =&gt; checked &amp;&amp; setSelected(1)}
+              &gt;
+                첫 번째 메뉴
+              &lt;/Menu.DropdownCheckItem&gt;
+              &lt;Menu.DropdownCheckItem
+                checked={selected === 2}
+                onCheckedChange={(checked) =&gt; checked &amp;&amp; setSelected(2)}
+              &gt;
+                두 번째 메뉴
+              &lt;/Menu.DropdownCheckItem&gt;
+              &lt;Menu.DropdownCheckItem
+                checked={selected === 3}
+                onCheckedChange={(checked) =&gt; checked &amp;&amp; setSelected(3)}
+              &gt;
+                세 번째 메뉴
+              &lt;/Menu.DropdownCheckItem&gt;
+            &lt;/Menu.Dropdown&gt;
+          }
+        &gt;
+          &lt;button
+            type=&quot;button&quot;
+            style={{
+              border: &quot;1px solid #d9d9d9&quot;,
+              borderRadius: 10,
+              fontSize: 14,
+              padding: &quot;10px 14px&quot;,
+              display: &quot;inline-flex&quot;,
+              alignItems: &quot;center&quot;,
+              gap: 8,
+            }}
+          &gt;
+            클릭해보세요
+          &lt;/button&gt;
+        &lt;/Menu.Trigger&gt;
+      &lt;/div&gt;
+    );
+  };
+
+  return &lt;TriggerDemo /&gt;;
+};</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Modal">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> Modal</h2>
+      <div class="badges">
+        <label for="c-6-components-modal-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-6-components-modal-info" class="badge info as-toggle">1 info</label>
+        <label for="c-6-components-modal-stories" class="badge ok as-toggle">2 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/modal.stories.tsx">components-modal · ./src/components/modal.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-6-components-modal-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-6-components-modal-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-6-components-modal-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /Users/leechaeyeon/Desktop/saju-talk/packages/ui/src/components/modal.tsx
+Error:
+No suitable component definition found.
+You can debug your component file in this playground: https://react-docgen.dev/playground
+Code:
+&quot;use client&quot;;
+
+import { useEffect, useState } from &quot;react&quot;;
+import { createPortal } from &quot;react-dom&quot;;
+import { X } from &quot;lucide-react&quot;;
+import { cn } from &quot;../lib/utils&quot;;
+
+export interface ModalProps {
+  isOpen: boolean;
+  onClose: () =&gt; void;
+  title?: React.ReactNode;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+  closeOnOverlayClick?: boolean;
+  closeOnEsc?: boolean;
+  lockScroll?: boolean;
+  hideTopCloseButton?: boolean;
+  className?: string;
+  contentClassName?: string;
+}
+
+function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  footer,
+  closeOnOverlayClick = true,
+  closeOnEsc = true,
+  lockScroll = true,
+  hideTopCloseButton = false,
+  className,
+  contentClassName,
+}: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() =&gt; {
+    setMounted(true);
+  }, []);
+
+  useEffect(() =&gt; {
+    if (!isOpen || !closeOnEsc) return;
+
+    const handleKeyDown = (event: KeyboardEvent) =&gt; {
+      if (event.key === &quot;Escape&quot;) onClose();
+    };
+
+    window.addEventListener(&quot;keydown&quot;, handleKeyDown);
+
+    return () =&gt; window.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+  }, [isOpen, closeOnEsc, onClose]);
+
+  useEffect(() =&gt; {
+    if (!isOpen || !lockScroll) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = &quot;hidden&quot;;
+
+    return () =&gt; {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen, lockScroll]);
+
+  if (!mounted || !isOpen) {
+    return null;
+  }
+
+  return createPortal(
+    &lt;div
+      className={cn(
+        &quot;fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4&quot;,
+        className,
+      )}
+      role=&quot;presentation&quot;
+      onClick={() =&gt; {
+        if (closeOnOverlayClick) {
+          onClose();
+        }
+      }}
+    &gt;
+      &lt;div
+        role=&quot;dialog&quot;
+        aria-modal=&quot;true&quot;
+        aria-label={typeof title === &quot;string&quot; ? title : &quot;Modal&quot;}
+        className={cn(
+          &quot;w-full max-w-lg rounded-xl bg-surface p-5 text-foreground shadow-xl&quot;,
+          contentClassName,
+        )}
+        onClick={(event) =&gt; event.stopPropagation()}
+      &gt;
+        &lt;div
+          className={cn(
+            &quot;flex relative items-center pr-7&quot;,
+            !hideTopCloseButton &amp;&amp; &quot;min-h-6&quot;,
+          )}
+        &gt;
+          {title &amp;&amp; (
+            &lt;h2 className=&quot;text-base font-semibold leading-6&quot;&gt;{title}&lt;/h2&gt;
+          )}
+          {!hideTopCloseButton &amp;&amp; (
+            &lt;button
+              type=&quot;button&quot;
+              onClick={onClose}
+              className=&quot;absolute right-0&quot;
+            &gt;
+              &lt;X strokeWidth={1.8} size={22} /&gt;
+            &lt;/button&gt;
+          )}
+        &lt;/div&gt;
+        &lt;div className={cn(hideTopCloseButton &amp;&amp; !title ? &quot;&quot; : &quot;mt-4&quot;)}&gt;
+          {children}
+        &lt;/div&gt;
+        {footer ? (
+          &lt;div className=&quot;mt-5 flex justify-end gap-2&quot;&gt;{footer}&lt;/div&gt;
+        ) : null}
+      &lt;/div&gt;
+    &lt;/div&gt;,
+    document.body,
+  );
+}
+
+export { Modal };
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Modal } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;DemoModal
+    title=&quot;기본 모달&quot;
+    closeOnOverlayClick
+    closeOnEsc
+    lockScroll
+    hideTopCloseButton={false} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Persistent</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Persistent = () =&gt; &lt;DemoModal
+    title=&quot;필수 확인 모달&quot;
+    closeOnOverlayClick={false}
+    closeOnEsc={false}
+    lockScroll
+    hideTopCloseButton={false} /&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="RadioGroup">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> RadioGroup</h2>
+      <div class="badges">
+        <label for="c-7-components-radio-props" class="badge ok as-toggle">9 prop types</label>
+        <label for="c-7-components-radio-info" class="badge info as-toggle">1 info</label>
+        <label for="c-7-components-radio-stories" class="badge ok as-toggle">4 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/radio.stories.tsx">components-radio · ./src/components/radio.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-7-components-radio-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-7-components-radio-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-7-components-radio-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">9 prop types</span>
+            </div>
+            <pre><code>Component: src/components/radio.tsx::RadioGroup</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>defaultValue?: string
+
+direction?: &quot;vertical&quot; | &quot;horizontal&quot; = &quot;vertical&quot;
+
+disabled?: any = false
+
+label?: string
+
+labelRequired?: boolean = false
+
+name: string
+
+onValueChange?: (value: string) =&gt; void
+
+options: RadioOption[]
+
+value?: string</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { RadioGroup } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;RadioGroup
+    name=&quot;job&quot;
+    label=&quot;직업&quot;
+    labelRequired={false}
+    direction=&quot;vertical&quot;
+    defaultValue=&quot;developer&quot;
+    options={jobOptions} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Label</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithLabel = () =&gt; &lt;RadioGroup
+    name=&quot;consulting&quot;
+    label=&quot;상담 방식&quot;
+    labelRequired
+    direction=&quot;vertical&quot;
+    defaultValue=&quot;chat&quot;
+    options={[
+      {
+        label: &quot;채팅 상담&quot;,
+        value: &quot;chat&quot;,
+        description: &quot;텍스트로 천천히 내용을 확인해요&quot;,
+      },
+      {
+        label: &quot;전화 상담&quot;,
+        value: &quot;call&quot;,
+        description: &quot;빠르게 핵심만 상담할 수 있어요&quot;,
+      },
+      {
+        label: &quot;대면 상담&quot;,
+        value: &quot;offline&quot;,
+        description: &quot;직접 만나 깊이 있게 이야기해요&quot;,
+      },
+    ]} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Horizontal</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Horizontal = () =&gt; &lt;RadioGroup
+    name=&quot;job&quot;
+    label=&quot;직업&quot;
+    labelRequired={false}
+    direction=&quot;horizontal&quot;
+    defaultValue=&quot;developer&quot;
+    options={jobOptions} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled Option</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const DisabledOption = () =&gt; &lt;RadioGroup
+    name=&quot;status&quot;
+    label=&quot;이용 상태&quot;
+    labelRequired={false}
+    direction=&quot;vertical&quot;
+    defaultValue=&quot;active&quot;
+    options={[
+      {
+        label: &quot;사용 가능&quot;,
+        value: &quot;active&quot;,
+        description: &quot;즉시 선택할 수 있어요&quot;,
+      },
+      {
+        label: &quot;준비 중&quot;,
+        value: &quot;pending&quot;,
+        description: &quot;곧 제공될 예정이에요&quot;,
+        disabled: true,
+      },
+    ]} /&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Select">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Select</h2>
+      <div class="badges">
+        <label for="c-8-components-select-props" class="badge ok as-toggle">3 prop types</label>
+        <label for="c-8-components-select-info" class="badge info as-toggle">1 info</label>
+        <label for="c-8-components-select-stories" class="badge ok as-toggle">4 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/select.stories.tsx">components-select · ./src/components/select.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-8-components-select-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-8-components-select-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-8-components-select-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/select.tsx::Select</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>label?: string
+
+labelRequired?: boolean = false
+
+ref?: React.Ref&lt;HTMLSelectElement&gt;</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Select } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; (
+  &lt;Select&gt;
+    &lt;option value=&quot;&quot;&gt;선택하세요&lt;/option&gt;
+    &lt;option value=&quot;1&quot;&gt;옵션 1&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;옵션 2&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;옵션 3&lt;/option&gt;
+  &lt;/Select&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; (
+  &lt;Select disabled&gt;
+    &lt;option&gt;비활성화됨&lt;/option&gt;
+  &lt;/Select&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Groups</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithGroups = () =&gt; (
+  &lt;Select&gt;
+    &lt;option value=&quot;&quot;&gt;카테고리 선택&lt;/option&gt;
+    &lt;optgroup label=&quot;프론트엔드&quot;&gt;
+      &lt;option value=&quot;react&quot;&gt;React&lt;/option&gt;
+      &lt;option value=&quot;vue&quot;&gt;Vue&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label=&quot;백엔드&quot;&gt;
+      &lt;option value=&quot;node&quot;&gt;Node.js&lt;/option&gt;
+      &lt;option value=&quot;python&quot;&gt;Python&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/Select&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Label</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithLabel = () =&gt; &lt;Select disabled={false} labelRequired id=&quot;job&quot; label=&quot;직업&quot;&gt;
+    &lt;option value=&quot;&quot;&gt;직업을 선택하세요&lt;/option&gt;
+    &lt;option value=&quot;developer&quot;&gt;개발자&lt;/option&gt;
+    &lt;option value=&quot;designer&quot;&gt;디자이너&lt;/option&gt;
+    &lt;option value=&quot;planner&quot;&gt;기획자&lt;/option&gt;
+&lt;/Select&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Separator">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Separator</h2>
+      <div class="badges">
+        <label for="c-9-components-separator-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-9-components-separator-info" class="badge info as-toggle">1 info</label>
+        <label for="c-9-components-separator-stories" class="badge ok as-toggle">3 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/separator.stories.tsx">components-separator · ./src/components/separator.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-9-components-separator-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-9-components-separator-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-9-components-separator-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">1 prop type</span>
+            </div>
+            <pre><code>Component: src/components/separator.tsx::Separator</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>orientation?: &quot;horizontal&quot; | &quot;vertical&quot; = &quot;horizontal&quot;</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Separator } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Horizontal</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Horizontal = () =&gt; &lt;Separator /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Vertical</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Vertical = () =&gt; (
+  &lt;div style={{ display: &quot;flex&quot;, height: 40, alignItems: &quot;center&quot;, gap: 16 }}&gt;
+    &lt;span className=&quot;text-sm&quot;&gt;항목 1&lt;/span&gt;
+    &lt;Separator orientation=&quot;vertical&quot; /&gt;
+    &lt;span className=&quot;text-sm&quot;&gt;항목 2&lt;/span&gt;
+    &lt;Separator orientation=&quot;vertical&quot; /&gt;
+    &lt;span className=&quot;text-sm&quot;&gt;항목 3&lt;/span&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Content</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithContent = () =&gt; (
+  &lt;div style={{ width: 320 }}&gt;
+    &lt;p className=&quot;text-sm font-medium&quot;&gt;위 섹션&lt;/p&gt;
+    &lt;Separator className=&quot;my-4&quot; /&gt;
+    &lt;p className=&quot;text-sm font-medium&quot;&gt;아래 섹션&lt;/p&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Skeleton">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Skeleton</h2>
+      <div class="badges">
+        <label for="c-10-components-skeleton-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-10-components-skeleton-info" class="badge info as-toggle">1 info</label>
+        <label for="c-10-components-skeleton-stories" class="badge ok as-toggle">5 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/skeleton.stories.tsx">components-skeleton · ./src/components/skeleton.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-10-components-skeleton-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-10-components-skeleton-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-10-components-skeleton-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">1 prop type</span>
+            </div>
+            <pre><code>Component: src/components/skeleton.tsx::Skeleton</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>rounded?: boolean = false</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Skeleton } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Skeleton style={{ width: 200, height: 20 }} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Circle</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Circle = () =&gt; &lt;Skeleton rounded style={{ width: 48, height: 48 }} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Card Skeleton</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CardSkeleton = () =&gt; (
+  &lt;div
+    style={{ display: &quot;flex&quot;, flexDirection: &quot;column&quot;, gap: 12, width: 300 }}
+  &gt;
+    &lt;Skeleton style={{ height: 160, width: &quot;100%&quot; }} /&gt;
+    &lt;div style={{ display: &quot;flex&quot;, gap: 10, alignItems: &quot;center&quot; }}&gt;
+      &lt;Skeleton rounded style={{ width: 40, height: 40, flexShrink: 0 }} /&gt;
+      &lt;div
+        style={{ flex: 1, display: &quot;flex&quot;, flexDirection: &quot;column&quot;, gap: 8 }}
+      &gt;
+        &lt;Skeleton style={{ height: 14, width: &quot;70%&quot; }} /&gt;
+        &lt;Skeleton style={{ height: 12, width: &quot;50%&quot; }} /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;Skeleton style={{ height: 12, width: &quot;100%&quot; }} /&gt;
+    &lt;Skeleton style={{ height: 12, width: &quot;90%&quot; }} /&gt;
+    &lt;Skeleton style={{ height: 12, width: &quot;60%&quot; }} /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">List Skeleton</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const ListSkeleton = () =&gt; (
+  &lt;div
+    style={{ display: &quot;flex&quot;, flexDirection: &quot;column&quot;, gap: 16, width: 320 }}
+  &gt;
+    {Array.from({ length: 4 }).map((_, i) =&gt; (
+      &lt;div key={i} style={{ display: &quot;flex&quot;, gap: 12, alignItems: &quot;center&quot; }}&gt;
+        &lt;Skeleton rounded style={{ width: 44, height: 44, flexShrink: 0 }} /&gt;
+        &lt;div
+          style={{
+            flex: 1,
+            display: &quot;flex&quot;,
+            flexDirection: &quot;column&quot;,
+            gap: 6,
+          }}
+        &gt;
+          &lt;Skeleton style={{ height: 14, width: &quot;65%&quot; }} /&gt;
+          &lt;Skeleton style={{ height: 12, width: &quot;45%&quot; }} /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    ))}
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Text Block</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const TextBlock = () =&gt; (
+  &lt;div
+    style={{ display: &quot;flex&quot;, flexDirection: &quot;column&quot;, gap: 8, width: 280 }}
+  &gt;
+    &lt;Skeleton style={{ height: 20, width: &quot;80%&quot; }} /&gt;
+    &lt;Skeleton style={{ height: 14, width: &quot;100%&quot; }} /&gt;
+    &lt;Skeleton style={{ height: 14, width: &quot;95%&quot; }} /&gt;
+    &lt;Skeleton style={{ height: 14, width: &quot;75%&quot; }} /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Spinner">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Spinner</h2>
+      <div class="badges">
+        
+        <label for="c-11-components-spinner-info" class="badge info as-toggle">1 info</label>
+        <label for="c-11-components-spinner-stories" class="badge ok as-toggle">5 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/spinner.stories.tsx">components-spinner · ./src/components/spinner.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-11-components-spinner-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-11-components-spinner-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Spinner } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Spinner /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Small</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Small = () =&gt; &lt;Spinner size=&quot;sm&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Large</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Large = () =&gt; &lt;Spinner size=&quot;lg&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Extra Large</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const ExtraLarge = () =&gt; &lt;Spinner size=&quot;xl&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">All Sizes</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const AllSizes = () =&gt; (
+  &lt;div style={{ display: &quot;flex&quot;, gap: 16, alignItems: &quot;center&quot; }}&gt;
+    &lt;Spinner size=&quot;sm&quot; /&gt;
+    &lt;Spinner size=&quot;md&quot; /&gt;
+    &lt;Spinner size=&quot;lg&quot; /&gt;
+    &lt;Spinner size=&quot;xl&quot; /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Switch">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Switch</h2>
+      <div class="badges">
+        <label for="c-12-components-switch-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-12-components-switch-info" class="badge info as-toggle">1 info</label>
+        <label for="c-12-components-switch-stories" class="badge ok as-toggle">4 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/switch.stories.tsx">components-switch · ./src/components/switch.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-12-components-switch-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-12-components-switch-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-12-components-switch-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">4 prop types</span>
+            </div>
+            <pre><code>Component: src/components/switch.tsx::Switch</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>checkedChildren?: React.ReactNode
+
+disabled?: boolean = false
+
+size?: any = &quot;md&quot;
+
+unCheckedChildren?: React.ReactNode</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Switch } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Switch size=&quot;md&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Small</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Small = () =&gt; &lt;Switch size=&quot;sm&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; &lt;Switch disabled /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Text</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithText = () =&gt; &lt;Switch size=&quot;md&quot; checkedChildren=&quot;ON&quot; unCheckedChildren=&quot;OFF&quot; /&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Textarea">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> Textarea</h2>
+      <div class="badges">
+        
+        <label for="c-13-components-textarea-info" class="badge info as-toggle">1 info</label>
+        <label for="c-13-components-textarea-stories" class="badge ok as-toggle">4 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/textarea.stories.tsx">components-textarea · ./src/components/textarea.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-13-components-textarea-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-13-components-textarea-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Textarea } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Textarea placeholder=&quot;내용을 입력하세요...&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Value</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithValue = () =&gt; &lt;Textarea defaultValue=&quot;이미 입력된 내용입니다.&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; &lt;Textarea placeholder=&quot;비활성화됨&quot; disabled /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Tall</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Tall = () =&gt; &lt;Textarea placeholder=&quot;긴 텍스트 영역&quot; style={{ minHeight: 160 }} /&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+    </div>
+    <div class="error-groups" role="region" aria-label="Prop type error groups">
+        <section class="group">
+          <input id="no-component-definition-found-toggle" class="group-tg" type="checkbox" hidden />
+          <label for="no-component-definition-found-toggle" class="group-header">
+            <span class="caret">▸</span>
+            <span class="group-title">No component definition found</span>
+            <span class="group-count">1</span>
+          </label>
+          <div class="group-cards">
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Modal">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> Modal</h2>
+      <div class="badges">
+        <label for="c-error-0-components-modal-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-0-components-modal-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-0-components-modal-stories" class="badge ok as-toggle">2 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/modal.stories.tsx">components-modal · ./src/components/modal.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-error-0-components-modal-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-0-components-modal-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-0-components-modal-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>File: /Users/leechaeyeon/Desktop/saju-talk/packages/ui/src/components/modal.tsx
+Error:
+No suitable component definition found.
+You can debug your component file in this playground: https://react-docgen.dev/playground
+Code:
+&quot;use client&quot;;
+
+import { useEffect, useState } from &quot;react&quot;;
+import { createPortal } from &quot;react-dom&quot;;
+import { X } from &quot;lucide-react&quot;;
+import { cn } from &quot;../lib/utils&quot;;
+
+export interface ModalProps {
+  isOpen: boolean;
+  onClose: () =&gt; void;
+  title?: React.ReactNode;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+  closeOnOverlayClick?: boolean;
+  closeOnEsc?: boolean;
+  lockScroll?: boolean;
+  hideTopCloseButton?: boolean;
+  className?: string;
+  contentClassName?: string;
+}
+
+function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  footer,
+  closeOnOverlayClick = true,
+  closeOnEsc = true,
+  lockScroll = true,
+  hideTopCloseButton = false,
+  className,
+  contentClassName,
+}: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() =&gt; {
+    setMounted(true);
+  }, []);
+
+  useEffect(() =&gt; {
+    if (!isOpen || !closeOnEsc) return;
+
+    const handleKeyDown = (event: KeyboardEvent) =&gt; {
+      if (event.key === &quot;Escape&quot;) onClose();
+    };
+
+    window.addEventListener(&quot;keydown&quot;, handleKeyDown);
+
+    return () =&gt; window.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+  }, [isOpen, closeOnEsc, onClose]);
+
+  useEffect(() =&gt; {
+    if (!isOpen || !lockScroll) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = &quot;hidden&quot;;
+
+    return () =&gt; {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen, lockScroll]);
+
+  if (!mounted || !isOpen) {
+    return null;
+  }
+
+  return createPortal(
+    &lt;div
+      className={cn(
+        &quot;fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4&quot;,
+        className,
+      )}
+      role=&quot;presentation&quot;
+      onClick={() =&gt; {
+        if (closeOnOverlayClick) {
+          onClose();
+        }
+      }}
+    &gt;
+      &lt;div
+        role=&quot;dialog&quot;
+        aria-modal=&quot;true&quot;
+        aria-label={typeof title === &quot;string&quot; ? title : &quot;Modal&quot;}
+        className={cn(
+          &quot;w-full max-w-lg rounded-xl bg-surface p-5 text-foreground shadow-xl&quot;,
+          contentClassName,
+        )}
+        onClick={(event) =&gt; event.stopPropagation()}
+      &gt;
+        &lt;div
+          className={cn(
+            &quot;flex relative items-center pr-7&quot;,
+            !hideTopCloseButton &amp;&amp; &quot;min-h-6&quot;,
+          )}
+        &gt;
+          {title &amp;&amp; (
+            &lt;h2 className=&quot;text-base font-semibold leading-6&quot;&gt;{title}&lt;/h2&gt;
+          )}
+          {!hideTopCloseButton &amp;&amp; (
+            &lt;button
+              type=&quot;button&quot;
+              onClick={onClose}
+              className=&quot;absolute right-0&quot;
+            &gt;
+              &lt;X strokeWidth={1.8} size={22} /&gt;
+            &lt;/button&gt;
+          )}
+        &lt;/div&gt;
+        &lt;div className={cn(hideTopCloseButton &amp;&amp; !title ? &quot;&quot; : &quot;mt-4&quot;)}&gt;
+          {children}
+        &lt;/div&gt;
+        {footer ? (
+          &lt;div className=&quot;mt-5 flex justify-end gap-2&quot;&gt;{footer}&lt;/div&gt;
+        ) : null}
+      &lt;/div&gt;
+    &lt;/div&gt;,
+    document.body,
+  );
+}
+
+export { Modal };
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { Modal } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;DemoModal
+    title=&quot;기본 모달&quot;
+    closeOnOverlayClick
+    closeOnEsc
+    lockScroll
+    hideTopCloseButton={false} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Persistent</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Persistent = () =&gt; &lt;DemoModal
+    title=&quot;필수 확인 모달&quot;
+    closeOnOverlayClick={false}
+    closeOnEsc={false}
+    lockScroll
+    hideTopCloseButton={false} /&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article></div>
+        </section>
+      </div>
+    
+    
+  </div>
+</main>
+</body>
+</html>  

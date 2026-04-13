@@ -1,0 +1,10 @@
+@import "@repo/ui/styles.css";
+@source "../../../../packages/ui/src";
+@variant dark (&:is(.dark *));
+
+.theme-transitioning [class*="dark:"] {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}

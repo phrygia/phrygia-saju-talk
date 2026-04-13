@@ -1,0 +1,47 @@
+.button {
+  background: linear-gradient(
+    135deg,
+    rgba(248, 245, 255, 0.97),
+    rgba(238, 232, 255, 0.97)
+  );
+  border: 1px solid rgba(100, 65, 200, 0.12);
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124, 92, 252, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 14px;
+  }
+
+  &:hover {
+    border-color: rgba(100, 65, 200, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+}
+
+:global(html.dark) {
+  & .button {
+    background: linear-gradient(
+      135deg,
+      rgba(20, 16, 58, 0.88),
+      rgba(12, 10, 38, 0.88)
+    );
+    border-color: rgba(130, 90, 255, 0.15);
+
+    &:hover {
+      box-shadow: 0 6px 18px rgba(100, 65, 160, 0.1);
+      border-color: rgba(130, 90, 255, 0.3);
+    }
+  }
+}

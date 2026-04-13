@@ -1,0 +1,116 @@
+.dropdown {
+  background: linear-gradient(
+    160deg,
+    rgba(33, 26, 97, 0.98) 0%,
+    rgba(15, 12, 51, 0.98) 100%
+  );
+  border: 1px solid rgba(124, 92, 252, 0.22);
+  box-shadow:
+    0 -8px 32px rgba(0, 0, 0, 0.4),
+    0 4px 24px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(124, 92, 252, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: menuSlide 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+
+  :global(.light) & {
+    background: linear-gradient(
+      160deg,
+      rgba(250, 248, 255, 0.99) 0%,
+      rgba(240, 235, 255, 0.99) 100%
+    );
+    border-color: rgba(100, 65, 160, 0.18);
+    box-shadow:
+      0 -4px 24px rgba(100, 65, 160, 0.1),
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(100, 65, 160, 0.06);
+  }
+}
+
+@keyframes menuSlide {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.item {
+  color: var(--foreground-sub, rgba(220, 205, 255, 0.7));
+  border-radius: 10px;
+  transition:
+    background 0.14s,
+    color 0.14s;
+
+  &:hover:not(:disabled) {
+    background: rgba(124, 92, 252, 0.12);
+    color: var(--violet, #a78bfa);
+  }
+
+  :global(.light) & {
+    color: var(--foreground-sub, rgba(30, 15, 70, 0.65));
+
+    &:hover:not(:disabled) {
+      background: rgba(100, 65, 160, 0.1);
+      color: var(--violet, #7c5cf0);
+    }
+  }
+}
+
+.dangerItem {
+  color: rgba(248, 113, 113, 0.8);
+  border-radius: 10px;
+  transition:
+    background 0.14s,
+    color 0.14s;
+
+  &:hover:not(:disabled) {
+    background: rgba(248, 113, 113, 0.1);
+    color: #f87171;
+  }
+
+  :global(.light) & {
+    color: rgba(220, 38, 38, 0.75);
+
+    &:hover:not(:disabled) {
+      background: rgba(220, 38, 38, 0.08);
+      color: #dc2626;
+    }
+  }
+}
+
+.itemIcon {
+  flex-shrink: 0;
+  font-size: 15px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.separator {
+  height: 1px;
+  background: rgba(124, 92, 252, 0.13);
+  margin: 4px 8px;
+
+  :global(.light) & {
+    background: rgba(100, 65, 160, 0.12);
+  }
+}
+
+.header {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--foreground-muted, rgba(180, 155, 255, 0.45));
+  padding: 6px 14px 4px;
+
+  :global(.light) & {
+    color: var(--foreground-muted, rgba(80, 55, 130, 0.45));
+  }
+}

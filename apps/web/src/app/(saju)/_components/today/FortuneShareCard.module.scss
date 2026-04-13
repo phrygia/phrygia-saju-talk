@@ -1,0 +1,41 @@
+.root {
+  background: linear-gradient(160deg, #12071f 0%, #0d1535 40%, #0a0f2e 100%);
+
+  &:before,
+  &:after {
+    @apply absolute -left-1/2 -top-1/2 w-[150%] h-[150%] rounded-full;
+
+    content: "";
+  }
+
+  &:before {
+    background-image:
+      radial-gradient(1px 1px at 25% 25%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 50% 50%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 75% 75%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 15% 85%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 35% 95%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 45% 15%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 65% 35%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 85% 65%, white 1px, transparent 0),
+      radial-gradient(1px 1px at 90% 5%, white 1px, transparent 0);
+    background-repeat: repeat;
+    background-size: 150px 150px;
+    opacity: 0.15;
+  }
+
+  &:after {
+    background-image:
+      radial-gradient(2px 2px at 10% 10%, white 1px, transparent 0),
+      radial-gradient(2px 2px at 30% 40%, white 1px, transparent 0),
+      radial-gradient(2px 2px at 55% 25%, white 1px, transparent 0),
+      radial-gradient(2px 2px at 70% 60%, white 1px, transparent 0),
+      radial-gradient(2px 2px at 85% 85%, white 1px, transparent 0),
+      radial-gradient(2px 2px at 95% 95%, white 1px, transparent 0),
+      radial-gradient(2px 2px at 40% 80%, white 1px, transparent 0),
+      radial-gradient(2px 2px at 60% 15%, white 1px, transparent 0);
+    background-repeat: repeat;
+    background-size: 250px 250px;
+    opacity: 0.3;
+  }
+}

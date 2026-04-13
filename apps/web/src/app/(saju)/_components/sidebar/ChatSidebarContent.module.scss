@@ -1,0 +1,47 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: var(--foreground-sub);
+  transition: all 0.18s;
+  margin-bottom: 2px;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(124, 92, 252, 0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.18s;
+    border-radius: 11px;
+  }
+
+  &:hover,
+  &.active {
+    color: var(--color-violet);
+
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &.active {
+    font-weight: 500;
+    border: 1px solid rgba(124, 92, 252, 0.22);
+    background: rgba(124, 92, 252, 0.08);
+  }
+
+  & span {
+    display: inline-block;
+    margin-top: 5px;
+    width: 18px;
+    height: 18px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,5859 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAJU TALK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #060618;
+        --bg2: #09092a;
+        --surface: #0d0c2e;
+        --card: #110f38;
+        --card2: #13113f;
+        --border: rgba(130, 90, 255, 0.13);
+        --border-h: rgba(130, 90, 255, 0.28);
+        --purple: #7c5cfc;
+        --indigo: #5b57f0;
+        --violet: #a78bfa;
+        --gold: #f0c060;
+        --gold2: #fbbf24;
+        --teal: #2dd4bf;
+        --rose: #f472b6;
+        --green: #34d399;
+        --blue: #60a5fa;
+        --text: #ede8ff;
+        --text2: rgba(220, 205, 255, 0.65);
+        --muted: rgba(180, 155, 255, 0.4);
+        --sidebar-w: 260px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+      body {
+        font-family: "Noto Sans KR", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        position: relative;
+      }
+
+      /* ─── STARFIELD ─── */
+      #c {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── SIDEBAR ─── */
+      .sidebar {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(180deg, #0a0928 0%, #070620 100%);
+        border-right: 1px solid var(--border);
+        position: relative;
+        z-index: 10;
+        overflow: hidden;
+      }
+      .sidebar::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(124, 92, 252, 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .sb-logo {
+        padding: 20px 18px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px solid var(--border);
+      }
+      .sb-logo-gem {
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, #6366f1, #a78bfa);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        box-shadow: 0 0 14px rgba(99, 102, 241, 0.45);
+        flex-shrink: 0;
+        animation: gemPulse 3s ease-in-out infinite;
+      }
+      @keyframes gemPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 14px rgba(99, 102, 241, 0.45);
+        }
+        50% {
+          box-shadow:
+            0 0 22px rgba(99, 102, 241, 0.75),
+            0 0 40px rgba(99, 102, 241, 0.2);
+        }
+      }
+      .sb-logo-text {
+        font-family: "DM Serif Display", serif;
+        font-size: 17px;
+        letter-spacing: 0.08em;
+        background: linear-gradient(90deg, #e8e0ff, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .sb-logo-sub {
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+        margin-top: 1px;
+      }
+
+      .sb-nav {
+        padding: 12px 10px 8px;
+      }
+      .sb-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: 11px;
+        font-size: 12.5px;
+        color: var(--text2);
+        cursor: pointer;
+        transition: all 0.18s;
+        margin-bottom: 2px;
+        position: relative;
+        overflow: hidden;
+      }
+      .sb-nav-item::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          rgba(124, 92, 252, 0.15),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.18s;
+        border-radius: 11px;
+      }
+      .sb-nav-item:hover::before,
+      .sb-nav-item.active::before {
+        opacity: 1;
+      }
+      .sb-nav-item:hover,
+      .sb-nav-item.active {
+        color: var(--violet);
+      }
+      .sb-nav-item.active {
+        border: 1px solid rgba(124, 92, 252, 0.22);
+        background: rgba(124, 92, 252, 0.08);
+      }
+      .sb-nav-icon {
+        font-size: 14px;
+        width: 18px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .sb-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 4px 14px 8px;
+      }
+
+      .sb-section {
+        font-size: 9.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(130, 90, 255, 0.4);
+        padding: 6px 22px 5px;
+      }
+      .sb-convs {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 10px 12px;
+      }
+      .sb-convs::-webkit-scrollbar {
+        width: 3px;
+      }
+      .sb-convs::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sb-convs::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.25);
+        border-radius: 2px;
+      }
+      .sb-conv {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 9px;
+        font-size: 12px;
+        color: var(--text2);
+        cursor: pointer;
+        transition: all 0.15s;
+        margin-bottom: 1px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .sb-conv:hover {
+        background: rgba(124, 92, 252, 0.08);
+        color: rgba(220, 200, 255, 0.75);
+      }
+      .sb-conv.active {
+        background: rgba(124, 92, 252, 0.12);
+        color: rgba(220, 200, 255, 0.9);
+        border: 1px solid rgba(124, 92, 252, 0.15);
+      }
+      .sb-conv-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--muted);
+        flex-shrink: 0;
+      }
+      .sb-conv.active .sb-conv-dot {
+        background: var(--violet);
+      }
+
+      .sb-bottom {
+        padding: 10px 10px 14px;
+        border-top: 1px solid var(--border);
+      }
+      .sb-profile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: 11px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .sb-profile:hover {
+        background: rgba(124, 92, 252, 0.08);
+      }
+      .sb-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1, #a78bfa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+      .sb-profile-name {
+        font-size: 12px;
+        color: var(--text2);
+      }
+      .sb-profile-email {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 1px;
+      }
+
+      /* ─── MAIN ─── */
+      .main {
+        flex: 1;
+        min-width: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 5;
+        overflow: hidden;
+      }
+
+      /* ─── TOPBAR ─── */
+      .topbar {
+        height: 54px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(6, 6, 24, 0.7);
+        backdrop-filter: blur(12px);
+        position: relative;
+        z-index: 10;
+      }
+      .topbar-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 16px;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .topbar-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 8px var(--gold);
+        animation: blink 2s ease-in-out infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .topbar-date {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+      }
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .topbar-btn {
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 11.5px;
+        cursor: pointer;
+        border: none;
+        font-family: "Noto Sans KR", sans-serif;
+        transition: all 0.15s;
+      }
+      .topbar-btn-ghost {
+        background: rgba(124, 92, 252, 0.1);
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        color: var(--violet);
+      }
+      .topbar-btn-ghost:hover {
+        background: rgba(124, 92, 252, 0.18);
+      }
+      .topbar-btn-primary {
+        background: linear-gradient(135deg, #6366f1, #7c5cfc);
+        color: #fff;
+        box-shadow: 0 2px 12px rgba(99, 102, 241, 0.3);
+      }
+      .topbar-btn-primary:hover {
+        box-shadow: 0 4px 18px rgba(99, 102, 241, 0.45);
+        transform: translateY(-1px);
+      }
+
+      /* ─── VIEWS ─── */
+      .view {
+        display: none;
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+      }
+      .view.active {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ─── FORTUNE VIEW ─── */
+      .fortune-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px 32px 40px;
+      }
+      .fortune-scroll::-webkit-scrollbar {
+        width: 3px;
+      }
+      .fortune-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .fortune-scroll::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.2);
+        border-radius: 2px;
+      }
+
+      .fortune-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 28px;
+      }
+      .fortune-header-left {
+      }
+      .fortune-eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .fortune-eyebrow::before {
+        content: "✦";
+        font-size: 8px;
+      }
+      .fortune-main-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px;
+        color: var(--text);
+        line-height: 1.2;
+        margin-bottom: 4px;
+      }
+      .fortune-sub {
+        font-size: 12px;
+        color: var(--text2);
+        font-weight: 300;
+      }
+
+      .dl-btn {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 18px;
+        border-radius: 50px;
+        background: rgba(124, 92, 252, 0.1);
+        border: 1px solid rgba(124, 92, 252, 0.22);
+        color: var(--violet);
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      .dl-btn:hover {
+        background: rgba(124, 92, 252, 0.18);
+        box-shadow: 0 4px 16px rgba(124, 92, 252, 0.2);
+      }
+      .dl-btn-icon {
+        font-size: 14px;
+      }
+
+      /* score + desc row */
+      .fortune-score-row {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 32px;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(20, 16, 58, 0.9),
+          rgba(12, 10, 40, 0.9)
+        );
+        border: 1px solid rgba(130, 90, 255, 0.16);
+        border-radius: 24px;
+        padding: 28px 32px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .fortune-score-row::before {
+        content: "";
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(
+          circle,
+          rgba(124, 92, 252, 0.1) 0%,
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+      .score-ring-wrap {
+        position: relative;
+        width: 130px;
+        height: 130px;
+        flex-shrink: 0;
+      }
+      .score-ring-wrap svg {
+        transform: rotate(-90deg);
+      }
+      .score-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .score-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 42px;
+        line-height: 1;
+        background: linear-gradient(135deg, #e8e0ff, #a78bfa 50%, #f0c060);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .score-denom {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+        margin-top: 2px;
+      }
+      .score-label {
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        margin-top: 4px;
+      }
+
+      .fortune-desc-col {
+      }
+      .fortune-desc-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(240, 192, 96, 0.1);
+        border: 1px solid rgba(240, 192, 96, 0.25);
+        color: var(--gold);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+      }
+      .fortune-desc-text {
+        font-family: "Noto Serif KR", serif;
+        font-size: 14px;
+        line-height: 1.85;
+        color: var(--text2);
+        font-weight: 300;
+      }
+
+      /* categories */
+      .cat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+      .cat-card {
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 52, 0.95),
+          rgba(12, 10, 38, 0.95)
+        );
+        border: 1px solid rgba(130, 90, 255, 0.13);
+        border-radius: 18px;
+        padding: 18px 16px;
+        cursor: pointer;
+        transition: all 0.22s;
+        position: relative;
+        overflow: hidden;
+      }
+      .cat-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--c-glow, transparent);
+        pointer-events: none;
+        border-radius: 18px;
+      }
+      .cat-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--c-color);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+      }
+      .cat-card:nth-child(1) {
+        --c-color: #fbbf24;
+        --c-glow: radial-gradient(
+          circle at 85% 15%,
+          rgba(251, 191, 36, 0.07) 0%,
+          transparent 55%
+        );
+      }
+      .cat-card:nth-child(2) {
+        --c-color: #f472b6;
+        --c-glow: radial-gradient(
+          circle at 85% 15%,
+          rgba(244, 114, 182, 0.07) 0%,
+          transparent 55%
+        );
+      }
+      .cat-card:nth-child(3) {
+        --c-color: #34d399;
+        --c-glow: radial-gradient(
+          circle at 85% 15%,
+          rgba(52, 211, 153, 0.07) 0%,
+          transparent 55%
+        );
+      }
+      .cat-card:nth-child(4) {
+        --c-color: #60a5fa;
+        --c-glow: radial-gradient(
+          circle at 85% 15%,
+          rgba(96, 165, 250, 0.07) 0%,
+          transparent 55%
+        );
+      }
+      .cat-card:nth-child(5) {
+        --c-color: #a78bfa;
+        --c-glow: radial-gradient(
+          circle at 85% 15%,
+          rgba(167, 139, 250, 0.07) 0%,
+          transparent 55%
+        );
+      }
+      .cat-card:nth-child(6) {
+        --c-color: #2dd4bf;
+        --c-glow: radial-gradient(
+          circle at 85% 15%,
+          rgba(45, 212, 191, 0.07) 0%,
+          transparent 55%
+        );
+      }
+      .cat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+      .cat-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+      .cat-score {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px;
+        line-height: 1;
+        color: var(--c-color);
+      }
+      .cat-name {
+        font-size: 11px;
+        color: var(--text2);
+        font-weight: 500;
+        margin-bottom: 9px;
+      }
+      .cat-bar {
+        height: 3px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .cat-fill {
+        height: 100%;
+        border-radius: 4px;
+        background: var(--c-color);
+        box-shadow: 0 0 7px var(--c-color);
+        width: 0;
+        transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* lucky row */
+      .lucky-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+      .lucky-card {
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 52, 0.9),
+          rgba(12, 10, 38, 0.9)
+        );
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px 14px;
+      }
+      .lucky-label {
+        font-size: 9.5px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .lucky-val {
+        font-size: 14px;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .lucky-dot {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* advice */
+      .advice-card {
+        background: linear-gradient(
+          135deg,
+          rgba(124, 92, 252, 0.08),
+          rgba(70, 50, 180, 0.06)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        border-radius: 20px;
+        padding: 20px 22px;
+      }
+      .advice-star {
+        font-size: 16px;
+        margin-bottom: 10px;
+        display: block;
+        color: var(--gold);
+      }
+      .advice-text {
+        font-family: "Noto Serif KR", serif;
+        font-size: 13px;
+        line-height: 1.85;
+        color: var(--text2);
+        font-weight: 300;
+      }
+
+      /* ─── FORTUNE CALENDAR ─── */
+      .fortune-cal {
+        margin-top: 24px;
+        background: linear-gradient(
+          135deg,
+          rgba(16, 12, 48, 0.95),
+          rgba(10, 8, 36, 0.95)
+        );
+        border: 1px solid rgba(130, 90, 255, 0.16);
+        border-radius: 24px;
+        padding: 22px 24px 20px;
+        margin-bottom: 8px;
+      }
+      .fortune-cal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .fortune-cal-title-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .fortune-cal-icon {
+        font-size: 15px;
+      }
+      .fortune-cal-title {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        letter-spacing: 0.04em;
+      }
+      .fortune-cal-sub {
+        font-size: 10.5px;
+        color: var(--muted);
+        letter-spacing: 0.06em;
+      }
+      .fortune-cal-nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .fortune-cal-nav button {
+        background: rgba(124, 92, 252, 0.08);
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        color: var(--violet);
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.18s;
+      }
+      .fortune-cal-nav button:hover {
+        background: rgba(124, 92, 252, 0.18);
+      }
+      .fortune-cal-month {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text);
+        min-width: 72px;
+        text-align: center;
+      }
+      .fortune-cal-legend {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .cal-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        color: var(--text2);
+      }
+      .fortune-cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+      .cal-dow {
+        text-align: center;
+        font-size: 9.5px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        padding-bottom: 8px;
+        font-weight: 500;
+      }
+      .cal-dow:first-child { color: #f87171; }
+      .cal-dow:last-child  { color: #93c5fd; }
+      .cal-day {
+        aspect-ratio: 1;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        font-size: 11.5px;
+        color: var(--text2);
+        cursor: default;
+        position: relative;
+        transition: background 0.15s;
+      }
+      .cal-day.empty { pointer-events: none; }
+      .cal-day.today {
+        background: rgba(124, 92, 252, 0.14);
+        border: 1px solid rgba(124, 92, 252, 0.35);
+        color: var(--violet);
+        font-weight: 600;
+      }
+      .cal-day.has-fortune {
+        cursor: pointer;
+      }
+      .cal-day.has-fortune:hover {
+        background: rgba(124, 92, 252, 0.1);
+      }
+      .cal-day-num {
+        font-size: 11px;
+        line-height: 1;
+      }
+      .cal-day-emoji {
+        font-size: 13px;
+        line-height: 1;
+      }
+      .cal-day.sun .cal-day-num { color: #fca5a5; }
+      .cal-day.sat .cal-day-num { color: #93c5fd; }
+      .cal-day.today .cal-day-num { color: var(--violet); }
+      .cal-day.future {
+        opacity: 0.28;
+        pointer-events: none;
+      }
+
+      /* light mode */
+      body.light .fortune-cal {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.97),
+          rgba(238, 232, 255, 0.97)
+        );
+        border-color: rgba(100, 65, 200, 0.13);
+      }
+      body.light .fortune-cal-nav button {
+        background: rgba(100, 65, 160, 0.07);
+        border-color: rgba(100, 65, 160, 0.18);
+      }
+      body.light .cal-day.today {
+        background: rgba(100, 65, 160, 0.1);
+        border-color: rgba(100, 65, 160, 0.3);
+      }
+      body.light .cal-day.has-fortune:hover {
+        background: rgba(100, 65, 160, 0.07);
+      }
+
+      /* ─── CHAT VIEW ─── */
+      .chat-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .chat-msgs {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .chat-msgs::-webkit-scrollbar {
+        width: 3px;
+      }
+      .chat-msgs::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.2);
+        border-radius: 2px;
+      }
+
+      .msg-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+      }
+      .msg-row.user {
+        justify-content: flex-end;
+      }
+      .msg-row.ai {
+        justify-content: flex-start;
+      }
+
+      .ai-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1, #a78bfa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+        box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
+        margin-bottom: 2px;
+      }
+
+      .bubble {
+        max-width: 68%;
+        padding: 13px 17px;
+        font-size: 13.5px;
+        line-height: 1.65;
+        position: relative;
+      }
+      .bubble-user {
+        background: linear-gradient(135deg, #5b57f0, #7c5cfc);
+        color: #fff;
+        border-radius: 18px 18px 4px 18px;
+        box-shadow: 0 4px 18px rgba(91, 87, 240, 0.3);
+      }
+      .bubble-ai {
+        background: linear-gradient(
+          135deg,
+          rgba(22, 16, 60, 0.92),
+          rgba(15, 11, 44, 0.92)
+        );
+        color: rgba(225, 210, 255, 0.88);
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        border-radius: 18px 18px 18px 4px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+        font-family: "Noto Serif KR", serif;
+        font-weight: 300;
+        font-size: 13px;
+      }
+      .bubble-ai::before {
+        content: "✦";
+        position: absolute;
+        top: -10px;
+        left: 14px;
+        font-size: 10px;
+        color: var(--gold);
+        opacity: 0.85;
+      }
+      .bubble-time {
+        font-size: 10px;
+        color: var(--muted);
+        flex-shrink: 0;
+        margin-bottom: 4px;
+      }
+
+      .chat-input-area {
+        padding: 16px 24px 20px;
+        border-top: 1px solid var(--border);
+        background: rgba(6, 6, 24, 0.6);
+        backdrop-filter: blur(12px);
+        position: relative;
+      }
+
+      /* ── Scroll to bottom button ── */
+      .scroll-to-bottom {
+        position: absolute;
+        left: 50%;
+        top: -22px;
+        transform: translateX(-50%) translateY(0);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(124, 92, 252, 0.3);
+        background: rgba(16, 13, 56, 0.92);
+        backdrop-filter: blur(12px);
+        box-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(124, 92, 252, 0.1),
+          0 0 12px rgba(124, 92, 252, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: rgba(200, 180, 255, 0.75);
+        font-size: 15px;
+        transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 20;
+      }
+      .scroll-to-bottom.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .scroll-to-bottom:hover {
+        background: rgba(124, 92, 252, 0.18);
+        border-color: rgba(124, 92, 252, 0.5);
+        color: #ede8ff;
+        box-shadow:
+          0 6px 24px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(124, 92, 252, 0.2),
+          0 0 20px rgba(124, 92, 252, 0.22);
+        transform: translateX(-50%) translateY(-1px);
+      }
+      .scroll-to-bottom svg {
+        width: 14px;
+        height: 14px;
+        stroke: currentColor;
+        stroke-width: 2.2;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      body.light .scroll-to-bottom {
+        background: rgba(245, 242, 255, 0.95);
+        border-color: rgba(100, 65, 160, 0.25);
+        color: rgba(80, 55, 130, 0.7);
+        box-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.1),
+          0 0 0 1px rgba(100, 65, 160, 0.08);
+      }
+      body.light .scroll-to-bottom:hover {
+        background: rgba(230, 220, 255, 0.95);
+        border-color: rgba(100, 65, 160, 0.4);
+        color: rgba(80, 55, 130, 1);
+      }
+      .chat-input-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 55, 0.9),
+          rgba(12, 10, 38, 0.9)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        border-radius: 16px;
+        padding: 10px 12px 10px 18px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .chat-input-row:focus-within {
+        border-color: rgba(124, 92, 252, 0.45);
+        box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.08);
+      }
+      .chat-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-size: 13.5px;
+        font-family: "Noto Sans KR", sans-serif;
+        resize: none;
+        min-height: 22px;
+        max-height: 120px;
+        line-height: 1.5;
+      }
+      .chat-input::placeholder {
+        color: var(--muted);
+      }
+      .send-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(135deg, #6366f1, #7c5cfc);
+        color: #fff;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+      }
+      .send-btn:hover {
+        transform: scale(1.07);
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.5);
+      }
+
+      .chat-hint-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 8px;
+        gap: 8px;
+      }
+      .chat-hint {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.03em;
+      }
+      .chat-clear-btn {
+        background: none;
+        border: none;
+        font-size: 11px;
+        color: rgba(248, 113, 113, 0.5);
+        cursor: pointer;
+        font-family: "Noto Sans KR", sans-serif;
+        padding: 3px 8px;
+        border-radius: 6px;
+        transition: all 0.15s;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .chat-clear-btn:hover {
+        color: #f87171;
+        background: rgba(248, 113, 113, 0.08);
+      }
+      body.light .chat-clear-btn {
+        color: rgba(220, 38, 38, 0.45);
+      }
+      body.light .chat-clear-btn:hover {
+        color: #dc2626;
+        background: rgba(220, 38, 38, 0.07);
+      }
+
+      /* ─── SIMPLE CONFIRM MODAL ─── */
+      .simple-confirm-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 400;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(4, 3, 18, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        animation: scFadeIn 0.18s ease;
+      }
+      .simple-confirm-overlay.open {
+        display: flex;
+      }
+      @keyframes scFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .simple-confirm-box {
+        width: calc(100% - 40px);
+        max-width: 320px;
+        background: linear-gradient(160deg, #13103c 0%, #0a0820 100%);
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        border-radius: 20px;
+        padding: 28px 24px 22px;
+        text-align: center;
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(124, 92, 252, 0.06);
+        animation: scBoxIn 0.25s cubic-bezier(0.34, 1.48, 0.64, 1);
+      }
+      body.light .simple-confirm-box {
+        background: linear-gradient(160deg, #f8f5ff 0%, #ede8ff 100%);
+        border-color: rgba(100, 65, 160, 0.18);
+        box-shadow: 0 20px 50px rgba(100, 65, 160, 0.15);
+      }
+      @keyframes scBoxIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      @keyframes scBoxOut {
+        from {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: scale(0.94) translateY(6px);
+        }
+      }
+
+      .sc-icon {
+        font-size: 36px;
+        margin-bottom: 14px;
+        display: block;
+        filter: drop-shadow(0 0 10px rgba(248, 113, 113, 0.4));
+      }
+      body.light .sc-icon {
+        filter: drop-shadow(0 0 8px rgba(220, 38, 38, 0.25));
+      }
+
+      .sc-title {
+        font-family: "Noto Serif KR", serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+      .sc-desc {
+        font-size: 12.5px;
+        color: var(--text2);
+        line-height: 1.65;
+        margin-bottom: 22px;
+        font-weight: 300;
+      }
+      .sc-desc strong {
+        color: #f87171;
+        font-weight: 600;
+      }
+      body.light .sc-desc strong {
+        color: #dc2626;
+      }
+
+      .sc-footer {
+        display: flex;
+        gap: 8px;
+      }
+      .sc-btn {
+        flex: 1;
+        padding: 11px 8px;
+        border-radius: 12px;
+        border: none;
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.16s;
+        letter-spacing: 0.01em;
+      }
+      .sc-btn-cancel {
+        background: rgba(124, 92, 252, 0.09);
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        color: var(--text2);
+      }
+      .sc-btn-cancel:hover {
+        background: rgba(124, 92, 252, 0.16);
+        color: var(--text);
+      }
+      body.light .sc-btn-cancel {
+        background: rgba(100, 65, 160, 0.07);
+        border-color: rgba(100, 65, 160, 0.16);
+      }
+      body.light .sc-btn-cancel:hover {
+        background: rgba(100, 65, 160, 0.13);
+      }
+
+      .sc-btn-delete {
+        background: linear-gradient(135deg, #dc2626, #ef4444);
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+      }
+      .sc-btn-delete:hover {
+        box-shadow: 0 5px 18px rgba(239, 68, 68, 0.5);
+        transform: translateY(-1px);
+      }
+      .sc-btn-delete:active {
+        transform: translateY(0);
+      }
+
+      /* typing indicator */
+      .typing-dots {
+        display: flex;
+        gap: 4px;
+        padding: 12px 18px;
+      }
+      .typing-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--violet);
+        opacity: 0.5;
+        animation: typingBounce 1.2s ease-in-out infinite;
+      }
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      @keyframes typingBounce {
+        0%,
+        80%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        40% {
+          transform: translateY(-5px);
+          opacity: 1;
+        }
+      }
+
+      /* ─── SAJUWON 사주 원국 ─── */
+      .saju-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px 32px 40px;
+      }
+      .saju-scroll::-webkit-scrollbar {
+        width: 3px;
+      }
+      .saju-scroll::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.2);
+        border-radius: 2px;
+      }
+
+      .saju-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 32px;
+      }
+      .saju-label {
+        font-family: "DM Serif Display", serif;
+        font-size: 24px;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .saju-label-ko {
+        font-size: 13px;
+        color: var(--text2);
+        font-family: "Noto Serif KR", serif;
+        font-weight: 300;
+      }
+      .saju-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(240, 192, 96, 0.1);
+        border: 1px solid rgba(240, 192, 96, 0.25);
+        color: var(--gold);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+
+      .pillars-wrap {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      .pillar {
+        background: linear-gradient(
+          160deg,
+          rgba(20, 16, 58, 0.95),
+          rgba(12, 10, 40, 0.95)
+        );
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+        cursor: pointer;
+      }
+      .pillar:hover {
+        transform: translateY(-4px);
+        border-color: var(--border-h);
+      }
+      .pillar-head {
+        padding: 12px 14px 10px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(124, 92, 252, 0.04);
+        text-align: center;
+      }
+      .pillar-pos {
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .pillar-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 15px;
+        color: var(--text);
+      }
+      .pillar-body {
+        padding: 20px 14px 14px;
+        text-align: center;
+      }
+      .pillar-hanzi {
+        font-family: "Noto Serif KR", serif;
+        font-size: 42px;
+        font-weight: 600;
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+      .pillar-hanzi span:first-child {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .pillar-ohaeng {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-top: 8px;
+      }
+      .pillar-element {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .elem {
+        padding: 6px 4px;
+        border-radius: 8px;
+        font-size: 10px;
+        text-align: center;
+        color: var(--text2);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .elem-label {
+        font-size: 9px;
+        color: var(--muted);
+        margin-bottom: 2px;
+        letter-spacing: 0.08em;
+      }
+
+      /* ohaeng colors */
+      .oh-wood {
+        color: #4ade80;
+      }
+      .oh-fire {
+        color: #f87171;
+      }
+      .oh-earth {
+        color: #fbbf24;
+      }
+      .oh-metal {
+        color: #cbd5e1;
+      }
+      .oh-water {
+        color: #60a5fa;
+      }
+      .oh-bg-wood {
+        background: rgba(74, 222, 128, 0.1);
+        border-color: rgba(74, 222, 128, 0.2);
+      }
+      .oh-bg-fire {
+        background: rgba(248, 113, 113, 0.1);
+        border-color: rgba(248, 113, 113, 0.2);
+      }
+      .oh-bg-earth {
+        background: rgba(251, 191, 36, 0.1);
+        border-color: rgba(251, 191, 36, 0.2);
+      }
+      .oh-bg-metal {
+        background: rgba(203, 213, 225, 0.1);
+        border-color: rgba(203, 213, 225, 0.2);
+      }
+      .oh-bg-water {
+        background: rgba(96, 165, 250, 0.1);
+        border-color: rgba(96, 165, 250, 0.2);
+      }
+
+      /* ohaeng chart */
+      .ohaeng-section {
+        background: linear-gradient(
+          135deg,
+          rgba(20, 16, 58, 0.9),
+          rgba(12, 10, 40, 0.9)
+        );
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px 26px;
+        margin-bottom: 24px;
+      }
+      .ohaeng-title {
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ohaeng-title::before {
+        content: "◈";
+        color: var(--gold);
+        font-size: 10px;
+      }
+      .ohaeng-bars {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .ohaeng-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .ohaeng-name {
+        font-size: 12px;
+        font-family: "Noto Serif KR", serif;
+        width: 28px;
+        flex-shrink: 0;
+      }
+      .ohaeng-track {
+        flex: 1;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .ohaeng-bar {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+        width: 0;
+      }
+      .ohaeng-count {
+        font-size: 11px;
+        color: var(--muted);
+        width: 16px;
+        text-align: right;
+        flex-shrink: 0;
+      }
+
+      /* birth info card */
+      .birth-card {
+        background: linear-gradient(
+          135deg,
+          rgba(20, 16, 58, 0.9),
+          rgba(12, 10, 40, 0.9)
+        );
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 20px 24px;
+      }
+      .birth-title {
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .birth-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .birth-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(124, 92, 252, 0.08);
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        color: var(--text2);
+        font-size: 12px;
+        padding: 5px 12px;
+        border-radius: 20px;
+      }
+      .birth-pill-label {
+        font-size: 10px;
+        color: var(--muted);
+        margin-right: 2px;
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .fade-in {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease forwards;
+      }
+      .fade-in:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .fade-in:nth-child(2) {
+        animation-delay: 0.12s;
+      }
+      .fade-in:nth-child(3) {
+        animation-delay: 0.18s;
+      }
+      .fade-in:nth-child(4) {
+        animation-delay: 0.24s;
+      }
+      .fade-in:nth-child(5) {
+        animation-delay: 0.3s;
+      }
+      .fade-in:nth-child(6) {
+        animation-delay: 0.36s;
+      }
+
+      /* ring animation */
+      .ring-prog {
+        stroke-dasharray: 339.3;
+        stroke-dashoffset: 339.3;
+        transition: stroke-dashoffset 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* ─── SETTINGS MENU ─── */
+      .sb-settings-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: 11px;
+        cursor: pointer;
+        transition: background 0.15s;
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-family: "Noto Sans KR", sans-serif;
+        color: var(--text2);
+        font-size: 12.5px;
+      }
+      .sb-settings-btn:hover {
+        background: rgba(124, 92, 252, 0.08);
+      }
+      .sb-settings-btn .sb-avatar {
+        flex-shrink: 0;
+      }
+      .sb-settings-chevron {
+        margin-left: auto;
+        font-size: 10px;
+        color: var(--muted);
+        transition: transform 0.2s;
+      }
+      .sb-settings-btn.open .sb-settings-chevron {
+        transform: rotate(180deg);
+      }
+
+      .settings-menu {
+        position: absolute;
+        bottom: 62px;
+        left: 10px;
+        right: 10px;
+        background: linear-gradient(
+          160deg,
+          rgba(18, 14, 52, 0.98),
+          rgba(10, 8, 36, 0.98)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.25);
+        border-radius: 16px;
+        padding: 6px;
+        box-shadow:
+          0 -8px 32px rgba(0, 0, 0, 0.45),
+          0 0 0 1px rgba(124, 92, 252, 0.08);
+        z-index: 50;
+        display: none;
+        animation: menuSlide 0.2s ease;
+      }
+      @keyframes menuSlide {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .settings-menu.open {
+        display: block;
+      }
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-size: 12.5px;
+        color: var(--text2);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .menu-item:hover {
+        background: rgba(124, 92, 252, 0.12);
+        color: var(--violet);
+      }
+      .menu-item.danger {
+        color: rgba(248, 113, 113, 0.75);
+      }
+      .menu-item.danger:hover {
+        background: rgba(248, 113, 113, 0.1);
+        color: #f87171;
+      }
+      .menu-item-icon {
+        font-size: 14px;
+        width: 18px;
+        text-align: center;
+      }
+      .menu-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 4px 8px;
+      }
+
+      /* light overrides for menu */
+      body.light .settings-menu {
+        background: linear-gradient(
+          160deg,
+          rgba(250, 248, 255, 0.99),
+          rgba(240, 235, 255, 0.99)
+        );
+        border-color: rgba(100, 65, 160, 0.2);
+        box-shadow:
+          0 -8px 32px rgba(0, 0, 0, 0.12),
+          0 0 0 1px rgba(100, 65, 160, 0.06);
+      }
+      body.light .menu-item:hover {
+        background: rgba(100, 65, 160, 0.1);
+        color: var(--violet);
+      }
+      body.light .menu-item.danger:hover {
+        background: rgba(248, 113, 113, 0.08);
+      }
+
+      /* ─── MODAL OVERLAY ─── */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(4, 3, 18, 0.75);
+        backdrop-filter: blur(10px);
+        animation: fadeOverlay 0.25s ease;
+      }
+      @keyframes fadeOverlay {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+
+      .modal-box {
+        width: 100%;
+        max-width: 480px;
+        background: linear-gradient(160deg, #100d38 0%, #08071e 100%);
+        border: 1px solid rgba(124, 92, 252, 0.25);
+        border-radius: 24px;
+        padding: 32px 32px 28px;
+        position: relative;
+        box-shadow:
+          0 24px 64px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(124, 92, 252, 0.08);
+        animation: modalIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: scale(0.94) translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      .modal-box::-webkit-scrollbar {
+        width: 3px;
+      }
+      .modal-box::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.2);
+        border-radius: 2px;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 18px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        background: rgba(124, 92, 252, 0.1);
+        color: var(--text2);
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s;
+      }
+      .modal-close:hover {
+        background: rgba(124, 92, 252, 0.2);
+        color: var(--text);
+      }
+      .modal-star {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.2),
+          rgba(124, 92, 252, 0.15)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin: 0 auto 16px;
+        box-shadow: 0 0 20px rgba(124, 92, 252, 0.2);
+      }
+      .modal-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        color: var(--text);
+        text-align: center;
+        margin-bottom: 6px;
+      }
+      .modal-sub {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+        margin-bottom: 28px;
+      }
+
+      /* form elements */
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text2);
+        letter-spacing: 0.08em;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .form-required {
+        color: #f87171;
+        font-size: 11px;
+      }
+
+      .toggle-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .toggle-btn {
+        padding: 11px 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        background: rgba(124, 92, 252, 0.06);
+        color: var(--text2);
+        font-size: 13px;
+        cursor: pointer;
+        font-family: "Noto Sans KR", sans-serif;
+        transition: all 0.18s;
+        text-align: center;
+      }
+      .toggle-btn:hover {
+        background: rgba(124, 92, 252, 0.12);
+        border-color: rgba(124, 92, 252, 0.3);
+      }
+      .toggle-btn.selected {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.25),
+          rgba(124, 92, 252, 0.2)
+        );
+        border-color: rgba(124, 92, 252, 0.5);
+        color: var(--violet);
+        font-weight: 600;
+        box-shadow: 0 0 12px rgba(124, 92, 252, 0.15);
+      }
+
+      .date-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+      }
+      .form-select {
+        width: 100%;
+        padding: 11px 14px;
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 55, 0.8),
+          rgba(12, 10, 38, 0.8)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        border-radius: 12px;
+        color: var(--text);
+        font-size: 13px;
+        font-family: "Noto Sans KR", sans-serif;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b5cf6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 32px;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+      }
+      .form-select:focus {
+        border-color: rgba(124, 92, 252, 0.45);
+        box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.1);
+      }
+      .form-select option {
+        background: #100d38;
+        color: var(--text);
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 11px 14px;
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 55, 0.8),
+          rgba(12, 10, 38, 0.8)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        border-radius: 12px;
+        color: var(--text);
+        font-size: 13px;
+        font-family: "Noto Sans KR", sans-serif;
+        outline: none;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+      }
+      .form-input:focus {
+        border-color: rgba(124, 92, 252, 0.45);
+        box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.1);
+      }
+      .form-input::placeholder {
+        color: var(--muted);
+      }
+      .form-input:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .form-input-wrap {
+        position: relative;
+      }
+      .form-input-icon {
+        position: absolute;
+        right: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: var(--muted);
+        pointer-events: none;
+      }
+
+      .form-btn-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 28px;
+      }
+      .form-btn {
+        padding: 13px 10px;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        font-size: 13.5px;
+        font-weight: 600;
+        font-family: "Noto Sans KR", sans-serif;
+        transition: all 0.2s;
+      }
+      .form-btn-primary {
+        background: linear-gradient(135deg, #5b57f0, #7c5cfc);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(99, 102, 241, 0.35);
+      }
+      .form-btn-primary:hover {
+        box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+        transform: translateY(-1px);
+      }
+      .form-btn-ghost {
+        background: rgba(124, 92, 252, 0.07);
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        color: var(--text2);
+      }
+      .form-btn-ghost:hover {
+        background: rgba(124, 92, 252, 0.14);
+      }
+      .form-btn-danger {
+        background: rgba(248, 113, 113, 0.08);
+        border: 1px solid rgba(248, 113, 113, 0.2);
+        color: #f87171;
+      }
+      .form-btn-danger:hover {
+        background: rgba(248, 113, 113, 0.14);
+      }
+      .form-btn-full {
+        grid-column: 1/-1;
+      }
+
+      /* light modal */
+      body.light .modal-box {
+        background: linear-gradient(160deg, #f5f2ff 0%, #ece6ff 100%);
+        border-color: rgba(100, 65, 160, 0.2);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+      }
+      body.light .modal-close {
+        background: rgba(100, 65, 160, 0.08);
+        color: var(--text2);
+      }
+      body.light .modal-close:hover {
+        background: rgba(100, 65, 160, 0.15);
+      }
+      body.light .modal-star {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.12),
+          rgba(100, 65, 160, 0.1)
+        );
+        border-color: rgba(100, 65, 160, 0.2);
+      }
+      body.light .toggle-btn {
+        background: rgba(100, 65, 160, 0.05);
+        border-color: rgba(100, 65, 160, 0.15);
+      }
+      body.light .toggle-btn:hover {
+        background: rgba(100, 65, 160, 0.1);
+      }
+      body.light .toggle-btn.selected {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.15),
+          rgba(100, 65, 160, 0.12)
+        );
+        border-color: rgba(100, 65, 160, 0.4);
+        color: var(--violet);
+      }
+      body.light .form-select,
+      body.light .form-input {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.95),
+          rgba(238, 232, 255, 0.95)
+        );
+        border-color: rgba(100, 65, 160, 0.15);
+        color: var(--text);
+      }
+      body.light .form-select:focus,
+      body.light .form-input:focus {
+        border-color: rgba(100, 65, 160, 0.4);
+        box-shadow: 0 0 0 3px rgba(100, 65, 160, 0.07);
+      }
+      body.light .form-select option {
+        background: #f5f2ff;
+      }
+      body.light .form-btn-ghost {
+        background: rgba(100, 65, 160, 0.06);
+        border-color: rgba(100, 65, 160, 0.16);
+      }
+      body.light .form-btn-ghost:hover {
+        background: rgba(100, 65, 160, 0.12);
+      }
+
+      /* ─── USER EDIT VIEW ─── */
+      .user-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px 32px 40px;
+      }
+      .user-scroll::-webkit-scrollbar {
+        width: 3px;
+      }
+      .user-scroll::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.2);
+        border-radius: 2px;
+      }
+
+      .user-page-inner {
+        max-width: 520px;
+        margin: 0 auto;
+      }
+      .user-page-header {
+        margin-bottom: 32px;
+      }
+      .user-page-eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--violet);
+        margin-bottom: 8px;
+      }
+      .user-page-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+      .user-page-sub {
+        font-size: 12px;
+        color: var(--text2);
+        font-weight: 300;
+      }
+
+      .user-card {
+        background: linear-gradient(
+          135deg,
+          rgba(20, 16, 58, 0.9),
+          rgba(12, 10, 40, 0.9)
+        );
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px 26px;
+        margin-bottom: 16px;
+      }
+      body.light .user-card {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.97),
+          rgba(238, 232, 255, 0.97)
+        );
+        border-color: rgba(100, 65, 160, 0.12);
+      }
+      .user-card-title {
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .user-card-title::before {
+        content: "◈";
+        color: var(--gold);
+        font-size: 9px;
+      }
+
+      .user-email-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        padding: 12px 14px;
+        background: rgba(124, 92, 252, 0.05);
+        border: 1px solid rgba(124, 92, 252, 0.1);
+        border-radius: 12px;
+      }
+      body.light .user-email-row {
+        background: rgba(100, 65, 160, 0.05);
+        border-color: rgba(100, 65, 160, 0.1);
+      }
+      .user-email-icon {
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .user-email-text {
+        font-size: 13px;
+        color: var(--text2);
+      }
+
+      .pw-strength {
+        margin-top: 7px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+      .pw-bar {
+        height: 3px;
+        flex: 1;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.07);
+        overflow: hidden;
+      }
+      body.light .pw-bar {
+        background: rgba(0, 0, 0, 0.08);
+      }
+      .pw-fill {
+        height: 100%;
+        border-radius: 2px;
+        width: 0;
+        transition: width 0.4s ease;
+      }
+      .pw-label {
+        font-size: 10px;
+        color: var(--muted);
+        min-width: 24px;
+        text-align: right;
+      }
+
+      .danger-zone {
+        background: rgba(248, 113, 113, 0.05);
+        border: 1px solid rgba(248, 113, 113, 0.15);
+        border-radius: 16px;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      body.light .danger-zone {
+        background: rgba(248, 113, 113, 0.04);
+        border-color: rgba(248, 113, 113, 0.12);
+      }
+      .danger-zone-text {
+      }
+      .danger-zone-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #f87171;
+        margin-bottom: 3px;
+      }
+      .danger-zone-desc {
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .danger-btn {
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        background: rgba(248, 113, 113, 0.1);
+        border: 1px solid rgba(248, 113, 113, 0.22);
+        color: #f87171;
+        font-size: 12px;
+        font-family: "Noto Sans KR", sans-serif;
+        white-space: nowrap;
+        transition: all 0.15s;
+        flex-shrink: 0;
+      }
+      .danger-btn:hover {
+        background: rgba(248, 113, 113, 0.18);
+      }
+
+      /* ─── THEME TOGGLE BUTTON ─── */
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        border: none;
+        cursor: pointer;
+        background: rgba(124, 92, 252, 0.1);
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        color: var(--violet);
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+      .theme-toggle:hover {
+        background: rgba(124, 92, 252, 0.2);
+        transform: scale(1.07);
+      }
+
+      /* ─── LIGHT MODE ─── */
+      body.light {
+        --bg: #f8f6ff;
+        --bg2: #f2eeff;
+        --surface: #ece8ff;
+        --card: #f5f2ff;
+        --card2: #f0ecff;
+        --border: rgba(100, 65, 200, 0.12);
+        --border-h: rgba(100, 65, 200, 0.26);
+        --purple: #6d4fc2;
+        --indigo: #4e4bc0;
+        --violet: #7c5cf0;
+        --gold: #b8860b;
+        --gold2: #c49a1a;
+        --text: #1a1040;
+        --text2: rgba(30, 15, 70, 0.62);
+        --muted: rgba(80, 55, 150, 0.42);
+      }
+
+      /* sidebar light */
+      body.light .sidebar {
+        background: linear-gradient(180deg, #ede8ff 0%, #e4dcff 100%);
+      }
+      body.light .sidebar::before {
+        background: radial-gradient(
+          circle,
+          rgba(124, 92, 252, 0.07) 0%,
+          transparent 70%
+        );
+      }
+      body.light .sb-logo-text {
+        background: linear-gradient(90deg, #3b2a6e, #7c5cf0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      body.light .sb-conv:hover {
+        background: rgba(100, 65, 160, 0.08);
+        color: rgba(30, 15, 70, 0.75);
+      }
+      body.light .sb-conv.active {
+        background: rgba(100, 65, 160, 0.1);
+        color: rgba(30, 15, 70, 0.9);
+        border-color: rgba(100, 65, 160, 0.18);
+      }
+      body.light .sb-profile:hover {
+        background: rgba(100, 65, 160, 0.07);
+      }
+      body.light .sb-nav-item:hover,
+      body.light .sb-nav-item.active {
+        color: var(--violet);
+      }
+      body.light .sb-nav-item.active {
+        background: rgba(100, 65, 160, 0.08);
+        border-color: rgba(100, 65, 160, 0.18);
+      }
+      body.light .sb-nav-item::before {
+        background: linear-gradient(
+          90deg,
+          rgba(100, 65, 160, 0.12),
+          transparent
+        );
+      }
+
+      /* topbar light */
+      body.light .topbar {
+        background: rgba(248, 246, 255, 0.9);
+      }
+      body.light .theme-toggle {
+        background: rgba(100, 65, 160, 0.08);
+        border-color: rgba(100, 65, 160, 0.18);
+        color: var(--violet);
+      }
+      body.light .theme-toggle:hover {
+        background: rgba(100, 65, 160, 0.15);
+      }
+
+      /* fortune cards light */
+      body.light .fortune-score-row {
+        background: linear-gradient(
+          135deg,
+          rgba(245, 240, 255, 0.95),
+          rgba(232, 224, 255, 0.95)
+        );
+        border-color: rgba(100, 65, 160, 0.14);
+      }
+      body.light .fortune-score-row::before {
+        background: radial-gradient(
+          circle,
+          rgba(124, 92, 252, 0.06) 0%,
+          transparent 65%
+        );
+      }
+      body.light .score-num {
+        background: linear-gradient(135deg, #3b2a6e, #7c5cf0 50%, #b8860b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      body.light .fortune-desc-tag {
+        background: rgba(184, 134, 11, 0.1);
+        border-color: rgba(184, 134, 11, 0.28);
+      }
+      body.light .cat-card {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.97),
+          rgba(238, 232, 255, 0.97)
+        );
+        border-color: rgba(100, 65, 200, 0.12);
+      }
+      body.light .cat-card:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(252, 250, 255, 1),
+          rgba(242, 236, 255, 1)
+        );
+      }
+      body.light .cat-icon {
+        background: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.07);
+      }
+      body.light .lucky-card {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.95),
+          rgba(238, 232, 255, 0.95)
+        );
+        border-color: rgba(100, 65, 200, 0.12);
+      }
+      body.light .advice-card {
+        background: linear-gradient(
+          135deg,
+          rgba(100, 65, 160, 0.07),
+          rgba(70, 50, 140, 0.05)
+        );
+        border-color: rgba(100, 65, 160, 0.16);
+      }
+
+      /* chat bubbles light */
+      body.light .bubble-user {
+        background: linear-gradient(135deg, #5550d0, #7c5cf0);
+      }
+      body.light .bubble-ai {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.98),
+          rgba(238, 232, 255, 0.98)
+        );
+        color: rgba(30, 15, 70, 0.78);
+        border-color: rgba(100, 65, 160, 0.16);
+      }
+      body.light .bubble-ai::before {
+        color: var(--gold);
+      }
+      body.light .chat-input-row {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.95),
+          rgba(238, 232, 255, 0.95)
+        );
+        border-color: rgba(100, 65, 160, 0.18);
+      }
+      body.light .chat-input-row:focus-within {
+        border-color: rgba(100, 65, 160, 0.4);
+        box-shadow: 0 0 0 3px rgba(100, 65, 160, 0.07);
+      }
+      body.light .chat-input {
+        color: var(--text);
+      }
+      body.light .chat-input-area {
+        background: rgba(248, 246, 255, 0.85);
+      }
+
+      /* saju pillars light */
+      body.light .pillar {
+        background: linear-gradient(
+          160deg,
+          rgba(248, 245, 255, 0.97),
+          rgba(238, 232, 255, 0.97)
+        );
+      }
+      body.light .pillar-head {
+        background: rgba(100, 65, 160, 0.04);
+        border-bottom-color: rgba(100, 65, 160, 0.1);
+      }
+      body.light .elem {
+        background: rgba(0, 0, 0, 0.04);
+        border-color: rgba(0, 0, 0, 0.07);
+      }
+      body.light .ohaeng-section,
+      body.light .birth-card {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.95),
+          rgba(238, 232, 255, 0.95)
+        );
+      }
+      body.light .ohaeng-track {
+        background: rgba(0, 0, 0, 0.06);
+      }
+      body.light .birth-pill {
+        background: rgba(100, 65, 160, 0.07);
+        border-color: rgba(100, 65, 160, 0.16);
+      }
+
+      /* stars lighter in light mode */
+      body.light #c {
+        opacity: 0.18;
+      }
+
+      /* transition for theme switch */
+      body,
+      body * {
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease,
+          color 0.3s ease;
+      }
+      body #c,
+      body .ring-prog,
+      body .cat-fill,
+      body .ohaeng-bar,
+      body .fade-in {
+        transition: none;
+      }
+
+      /* ─── MOBILE HAMBURGER ─── */
+      .topbar-hamburger {
+        display: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        border: none;
+        cursor: pointer;
+        background: rgba(124, 92, 252, 0.1);
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        color: var(--violet);
+        font-size: 18px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+      .topbar-hamburger:hover {
+        background: rgba(124, 92, 252, 0.2);
+      }
+      body.light .topbar-hamburger {
+        background: rgba(100, 65, 160, 0.08);
+        border-color: rgba(100, 65, 160, 0.18);
+        color: var(--violet);
+      }
+
+      .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 19;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(3px);
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+      .sidebar-backdrop.open {
+        opacity: 1;
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 768px) {
+        body {
+          overflow: hidden;
+        }
+
+        /* sidebar: hidden drawer */
+        .sidebar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          z-index: 20;
+          transform: translateX(-100%);
+          transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+          box-shadow: none;
+        }
+        .sidebar.mobile-open {
+          transform: translateX(0);
+          box-shadow: 6px 0 32px rgba(0, 0, 0, 0.45);
+        }
+        .sidebar-backdrop {
+          display: block;
+        }
+
+        /* hamburger visible */
+        .topbar-hamburger {
+          display: flex;
+        }
+        .topbar-date {
+          display: none;
+        }
+        .topbar-btn-ghost {
+          display: none;
+        }
+        .topbar-actions {
+          gap: 6px;
+        }
+        .topbar {
+          padding: 0 14px;
+        }
+
+        /* main full width */
+        .main {
+          width: 100vw;
+        }
+
+        /* fortune */
+        .fortune-scroll,
+        .saju-scroll,
+        .user-scroll {
+          padding: 18px 16px 32px;
+        }
+        .fortune-score-row {
+          grid-template-columns: 1fr;
+          text-align: center;
+          padding: 22px 20px;
+          gap: 20px;
+        }
+        .score-ring-wrap {
+          margin: 0 auto;
+        }
+        .fortune-header {
+          flex-direction: column;
+          gap: 14px;
+          align-items: flex-start;
+          margin-bottom: 20px;
+        }
+        .cat-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+        .lucky-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .fortune-cal {
+          padding: 18px 14px 16px;
+        }
+        .fortune-cal-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .fortune-cal-nav {
+          align-self: stretch;
+          justify-content: space-between;
+        }
+        .fortune-cal-legend {
+          gap: 8px;
+        }
+        .cal-day {
+          border-radius: 8px;
+          font-size: 10px;
+        }
+        .cal-day-num {
+          font-size: 10px;
+        }
+        .cal-day-emoji {
+          font-size: 11px;
+        }
+
+        /* pillars 2x2 */
+        .pillars-wrap {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+        .pillar-hanzi {
+          font-size: 32px !important;
+        }
+
+        /* user page */
+        .user-page-inner {
+          max-width: 100%;
+        }
+        .danger-zone {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .danger-btn {
+          width: 100%;
+        }
+
+        /* modal full-screen on mobile */
+        .modal-overlay {
+          align-items: flex-end;
+        }
+        .modal-box {
+          max-width: 100%;
+          border-radius: 24px 24px 0 0;
+          padding: 24px 20px 32px;
+          max-height: 92vh;
+        }
+        .form-btn-row {
+          grid-template-columns: 1fr 1fr;
+        }
+        .saju-title-row {
+          flex-direction: column;
+          gap: 10px;
+          align-items: flex-start;
+        }
+      }
+
+      /* ─── CONFIRM MODAL ─── */
+      .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(4, 3, 18, 0.72);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .confirm-overlay.open {
+        display: flex;
+      }
+
+      .confirm-box {
+        width: 100%;
+        max-width: 360px;
+        margin: 16px;
+        background: linear-gradient(160deg, #100d38 0%, #08071e 100%);
+        border: 1px solid rgba(124, 92, 252, 0.22);
+        border-radius: 24px;
+        padding: 32px 28px 26px;
+        position: relative;
+        box-shadow:
+          0 24px 64px rgba(0, 0, 0, 0.65),
+          0 0 0 1px rgba(124, 92, 252, 0.07);
+        animation: confirmIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-align: center;
+      }
+      body.light .confirm-box {
+        background: linear-gradient(160deg, #f5f2ff 0%, #ece6ff 100%);
+        border-color: rgba(100, 65, 160, 0.2);
+        box-shadow: 0 24px 64px rgba(100, 65, 160, 0.18);
+      }
+      @keyframes confirmIn {
+        from {
+          opacity: 0;
+          transform: scale(0.88) translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      @keyframes confirmOut {
+        from {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: scale(0.92) translateY(8px);
+        }
+      }
+
+      /* icon badge */
+      .confirm-icon-wrap {
+        width: 64px;
+        height: 64px;
+        border-radius: 20px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        position: relative;
+      }
+      .confirm-icon-wrap::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 28px;
+        opacity: 0.5;
+        pointer-events: none;
+        animation: confirmGlow 2.2s ease-in-out infinite;
+      }
+      @keyframes confirmGlow {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.4;
+        }
+        50% {
+          transform: scale(1.08);
+          opacity: 0.7;
+        }
+      }
+
+      /* danger variant */
+      .confirm-icon-wrap.danger {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 113, 113, 0.18),
+          rgba(239, 68, 68, 0.1)
+        );
+        border: 1px solid rgba(248, 113, 113, 0.3);
+        box-shadow: 0 0 24px rgba(239, 68, 68, 0.2);
+      }
+      .confirm-icon-wrap.danger::after {
+        background: radial-gradient(
+          circle,
+          rgba(239, 68, 68, 0.12) 0%,
+          transparent 70%
+        );
+      }
+      body.light .confirm-icon-wrap.danger {
+        background: linear-gradient(
+          135deg,
+          rgba(220, 38, 38, 0.1),
+          rgba(239, 68, 68, 0.06)
+        );
+        border-color: rgba(220, 38, 38, 0.22);
+        box-shadow: 0 0 18px rgba(220, 38, 38, 0.12);
+      }
+
+      /* primary variant */
+      .confirm-icon-wrap.primary {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.2),
+          rgba(124, 92, 252, 0.14)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.3);
+        box-shadow: 0 0 24px rgba(99, 102, 241, 0.22);
+      }
+      .confirm-icon-wrap.primary::after {
+        background: radial-gradient(
+          circle,
+          rgba(124, 92, 252, 0.12) 0%,
+          transparent 70%
+        );
+      }
+      body.light .confirm-icon-wrap.primary {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.12),
+          rgba(100, 65, 160, 0.08)
+        );
+        border-color: rgba(100, 65, 160, 0.25);
+        box-shadow: 0 0 18px rgba(100, 65, 160, 0.12);
+      }
+
+      .confirm-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 20px;
+        color: var(--text);
+        margin-bottom: 8px;
+        line-height: 1.25;
+      }
+      .confirm-desc {
+        font-family: "Noto Serif KR", serif;
+        font-size: 13px;
+        color: var(--text2);
+        font-weight: 300;
+        line-height: 1.7;
+        margin-bottom: 26px;
+      }
+
+      /* close X */
+      .confirm-close {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        border: none;
+        background: rgba(124, 92, 252, 0.08);
+        color: var(--muted);
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s;
+      }
+      .confirm-close:hover {
+        background: rgba(124, 92, 252, 0.18);
+        color: var(--text);
+      }
+      body.light .confirm-close {
+        background: rgba(100, 65, 160, 0.07);
+      }
+      body.light .confirm-close:hover {
+        background: rgba(100, 65, 160, 0.14);
+      }
+
+      /* footer buttons */
+      .confirm-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .confirm-btn {
+        padding: 12px 10px;
+        border-radius: 14px;
+        border: none;
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 13.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.18s;
+        letter-spacing: 0.02em;
+      }
+      .confirm-btn-cancel {
+        background: rgba(124, 92, 252, 0.08);
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        color: var(--text2);
+      }
+      .confirm-btn-cancel:hover {
+        background: rgba(124, 92, 252, 0.15);
+        color: var(--text);
+      }
+      body.light .confirm-btn-cancel {
+        background: rgba(100, 65, 160, 0.07);
+        border-color: rgba(100, 65, 160, 0.15);
+      }
+      body.light .confirm-btn-cancel:hover {
+        background: rgba(100, 65, 160, 0.13);
+      }
+
+      .confirm-btn-danger {
+        background: linear-gradient(135deg, #dc2626, #ef4444);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.32);
+      }
+      .confirm-btn-danger:hover {
+        box-shadow: 0 6px 22px rgba(239, 68, 68, 0.48);
+        transform: translateY(-1px);
+      }
+      .confirm-btn-danger:active {
+        transform: translateY(0);
+      }
+
+      .confirm-btn-primary {
+        background: linear-gradient(135deg, #6366f1, #7c5cfc);
+        color: #fff;
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.32);
+      }
+      .confirm-btn-primary:hover {
+        box-shadow: 0 6px 22px rgba(99, 102, 241, 0.48);
+        transform: translateY(-1px);
+      }
+      .confirm-btn-primary:active {
+        transform: translateY(0);
+      }
+
+      /* checkbox option (선택적 "다시 보지 않기") */
+      .confirm-check-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .confirm-check-row input[type="checkbox"] {
+        accent-color: var(--purple);
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 480px) {
+        .confirm-box {
+          padding: 28px 20px 22px;
+          border-radius: 20px;
+        }
+        .confirm-footer {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .cat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .lucky-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .topbar-btn-primary span {
+          display: none;
+        }
+        .fortune-main-title {
+          font-size: 22px;
+        }
+        .pillars-wrap {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .date-group {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      /* ─── NEW CHAT VIEW ─── */
+      .newchat-wrap {
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 48px 32px 32px;
+        gap: 0;
+      }
+      .newchat-wrap::-webkit-scrollbar {
+        width: 3px;
+      }
+      .newchat-wrap::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.2);
+        border-radius: 2px;
+      }
+
+      .newchat-hero {
+        text-align: center;
+        margin-bottom: 36px;
+        max-width: 520px;
+        width: 100%;
+      }
+      .newchat-orb {
+        width: 88px;
+        height: 88px;
+        background: linear-gradient(
+          135deg,
+          #6366f1 0%,
+          #a78bfa 60%,
+          #f0c060 100%
+        );
+        border-radius: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        margin: 0 auto 24px;
+        box-shadow:
+          0 0 0 1px rgba(124, 92, 252, 0.25),
+          0 0 40px rgba(99, 102, 241, 0.4),
+          0 0 80px rgba(99, 102, 241, 0.15);
+        animation: orbFloat 4s ease-in-out infinite;
+        position: relative;
+      }
+      .newchat-orb::after {
+        content: "";
+        position: absolute;
+        inset: -12px;
+        border-radius: 40px;
+        background: radial-gradient(
+          circle,
+          rgba(124, 92, 252, 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      @keyframes orbFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+          box-shadow:
+            0 0 0 1px rgba(124, 92, 252, 0.25),
+            0 0 40px rgba(99, 102, 241, 0.4),
+            0 0 80px rgba(99, 102, 241, 0.15);
+        }
+        50% {
+          transform: translateY(-6px);
+          box-shadow:
+            0 0 0 1px rgba(124, 92, 252, 0.35),
+            0 0 55px rgba(99, 102, 241, 0.55),
+            0 0 100px rgba(99, 102, 241, 0.22);
+        }
+      }
+      body.light .newchat-orb {
+        box-shadow:
+          0 0 0 1px rgba(100, 65, 160, 0.2),
+          0 0 30px rgba(109, 79, 194, 0.3),
+          0 0 60px rgba(109, 79, 194, 0.1);
+      }
+
+      .newchat-eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+      }
+      .newchat-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 30px;
+        color: var(--text);
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+      .newchat-sub {
+        font-family: "Noto Serif KR", serif;
+        font-size: 13px;
+        color: var(--text2);
+        font-weight: 300;
+        line-height: 1.7;
+      }
+
+      /* Mini fortune strip */
+      .newchat-fortune-strip {
+        width: 100%;
+        max-width: 520px;
+        background: linear-gradient(
+          135deg,
+          rgba(20, 16, 58, 0.9),
+          rgba(12, 10, 40, 0.9)
+        );
+        border: 1px solid rgba(130, 90, 255, 0.15);
+        border-radius: 18px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 28px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .newchat-fortune-strip:hover {
+        border-color: rgba(130, 90, 255, 0.28);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+      }
+      body.light .newchat-fortune-strip {
+        background: linear-gradient(
+          135deg,
+          rgba(245, 240, 255, 0.95),
+          rgba(232, 224, 255, 0.95)
+        );
+        border-color: rgba(100, 65, 160, 0.14);
+      }
+      body.light .newchat-fortune-strip:hover {
+        box-shadow: 0 8px 24px rgba(100, 65, 160, 0.12);
+      }
+      .newchat-fortune-strip-icon {
+        font-size: 26px;
+        flex-shrink: 0;
+      }
+      .newchat-fortune-strip-label {
+        font-size: 9.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 3px;
+      }
+      .newchat-fortune-strip-text {
+        font-family: "Noto Serif KR", serif;
+        font-size: 12.5px;
+        color: var(--text2);
+        font-weight: 300;
+        line-height: 1.55;
+      }
+      .newchat-fortune-strip-score {
+        margin-left: auto;
+        flex-shrink: 0;
+        text-align: center;
+      }
+      .newchat-fortune-strip-num {
+        font-family: "DM Serif Display", serif;
+        font-size: 30px;
+        line-height: 1;
+        background: linear-gradient(135deg, #a78bfa, #f0c060);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      body.light .newchat-fortune-strip-num {
+        background: linear-gradient(135deg, #6d4fc2, #b8860b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .newchat-fortune-strip-denom {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      /* Prompt chips */
+      .newchat-prompts-title {
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 12px;
+        width: 100%;
+        max-width: 520px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .newchat-prompts-title::before {
+        content: "✦";
+        color: var(--gold);
+        font-size: 8px;
+      }
+      .newchat-chips {
+        width: 100%;
+        max-width: 520px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+      .newchat-chip {
+        background: linear-gradient(
+          135deg,
+          rgba(20, 16, 58, 0.88),
+          rgba(12, 10, 38, 0.88)
+        );
+        border: 1px solid rgba(130, 90, 255, 0.15);
+        border-radius: 14px;
+        padding: 14px 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+        overflow: hidden;
+        text-align: left;
+      }
+      .newchat-chip::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(124, 92, 252, 0.1),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.2s;
+        border-radius: 14px;
+      }
+      .newchat-chip:hover {
+        border-color: rgba(130, 90, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      }
+      .newchat-chip:hover::before {
+        opacity: 1;
+      }
+      body.light .newchat-chip {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.97),
+          rgba(238, 232, 255, 0.97)
+        );
+        border-color: rgba(100, 65, 200, 0.12);
+      }
+      body.light .newchat-chip:hover {
+        box-shadow: 0 6px 18px rgba(100, 65, 160, 0.1);
+        border-color: rgba(100, 65, 200, 0.25);
+      }
+      .newchat-chip-emoji {
+        font-size: 20px;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .newchat-chip-text {
+        font-size: 12.5px;
+        color: var(--text2);
+        line-height: 1.5;
+      }
+      .newchat-chip-text strong {
+        display: block;
+        color: var(--text);
+        font-size: 13px;
+        margin-bottom: 2px;
+        font-weight: 600;
+      }
+
+      /* Input at bottom */
+      .newchat-input-wrap {
+        width: 100%;
+        max-width: 520px;
+      }
+      .newchat-input-box {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 55, 0.9),
+          rgba(12, 10, 38, 0.9)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.22);
+        border-radius: 18px;
+        padding: 12px 14px 12px 20px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .newchat-input-box:focus-within {
+        border-color: rgba(124, 92, 252, 0.5);
+        box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.08);
+      }
+      body.light .newchat-input-box {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.95),
+          rgba(238, 232, 255, 0.95)
+        );
+        border-color: rgba(100, 65, 160, 0.2);
+      }
+      body.light .newchat-input-box:focus-within {
+        border-color: rgba(100, 65, 160, 0.42);
+        box-shadow: 0 0 0 3px rgba(100, 65, 160, 0.07);
+      }
+      .newchat-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-size: 13.5px;
+        font-family: "Noto Sans KR", sans-serif;
+        resize: none;
+        min-height: 24px;
+        max-height: 120px;
+        line-height: 1.5;
+      }
+      .newchat-input::placeholder {
+        color: var(--muted);
+      }
+
+      @media (max-width: 768px) {
+        .newchat-wrap {
+          padding: 32px 16px 24px;
+        }
+        .newchat-chips {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .newchat-title {
+          font-size: 24px;
+        }
+        .newchat-orb {
+          width: 72px;
+          height: 72px;
+          font-size: 32px;
+          border-radius: 22px;
+        }
+      }
+      @media (max-width: 480px) {
+        .newchat-chips {
+          grid-template-columns: 1fr;
+        }
+        .newchat-fortune-strip {
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+      }
+
+      /* ─── SEARCH VIEW ─── */
+      .search-wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .search-header {
+        padding: 24px 28px 0;
+        flex-shrink: 0;
+      }
+      .search-eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--violet);
+        margin-bottom: 6px;
+      }
+      .search-page-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        color: var(--text);
+        margin-bottom: 20px;
+      }
+
+      /* search bar */
+      .search-bar-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 55, 0.9),
+          rgba(12, 10, 38, 0.9)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.22);
+        border-radius: 14px;
+        padding: 10px 14px 10px 16px;
+        margin-bottom: 14px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .search-bar-row:focus-within {
+        border-color: rgba(124, 92, 252, 0.5);
+        box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.07);
+      }
+      body.light .search-bar-row {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.97),
+          rgba(238, 232, 255, 0.97)
+        );
+        border-color: rgba(100, 65, 160, 0.18);
+      }
+      body.light .search-bar-row:focus-within {
+        border-color: rgba(100, 65, 160, 0.4);
+        box-shadow: 0 0 0 3px rgba(100, 65, 160, 0.07);
+      }
+      .search-bar-icon {
+        font-size: 16px;
+        flex-shrink: 0;
+        color: var(--muted);
+      }
+      .search-bar-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-size: 13.5px;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      .search-bar-input::placeholder {
+        color: var(--muted);
+      }
+      .search-bar-clear {
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 14px;
+        padding: 2px 4px;
+        border-radius: 6px;
+        transition: all 0.15s;
+        flex-shrink: 0;
+      }
+      .search-bar-clear:hover {
+        color: var(--violet);
+        background: rgba(124, 92, 252, 0.1);
+      }
+
+      /* filter chips row */
+      .search-filters {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        padding-bottom: 14px;
+        scrollbar-width: none;
+      }
+      .search-filters::-webkit-scrollbar {
+        display: none;
+      }
+      .search-filter-chip {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        white-space: nowrap;
+        border: 1px solid var(--border);
+        color: var(--text2);
+        background: rgba(255, 255, 255, 0.03);
+        transition: all 0.16s;
+        font-family: "Noto Sans KR", sans-serif;
+        flex-shrink: 0;
+      }
+      .search-filter-chip:hover {
+        border-color: var(--border-h);
+        color: var(--violet);
+        background: rgba(124, 92, 252, 0.07);
+      }
+      .search-filter-chip.active {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.18),
+          rgba(124, 92, 252, 0.14)
+        );
+        border-color: rgba(124, 92, 252, 0.4);
+        color: var(--violet);
+        font-weight: 600;
+      }
+      body.light .search-filter-chip {
+        background: rgba(0, 0, 0, 0.03);
+      }
+      body.light .search-filter-chip:hover {
+        background: rgba(100, 65, 160, 0.07);
+      }
+      body.light .search-filter-chip.active {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.1),
+          rgba(100, 65, 160, 0.08)
+        );
+        border-color: rgba(100, 65, 160, 0.35);
+      }
+
+      /* results meta */
+      .search-meta {
+        padding: 0 28px;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .search-count {
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .search-count strong {
+        color: var(--violet);
+        font-weight: 600;
+      }
+      .search-sort {
+        display: flex;
+        gap: 4px;
+      }
+      .search-sort-btn {
+        padding: 4px 10px;
+        border-radius: 7px;
+        font-size: 11px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        font-family: "Noto Sans KR", sans-serif;
+        transition: all 0.15s;
+      }
+      .search-sort-btn:hover {
+        color: var(--text2);
+      }
+      .search-sort-btn.active {
+        background: rgba(124, 92, 252, 0.1);
+        color: var(--violet);
+      }
+      body.light .search-sort-btn.active {
+        background: rgba(100, 65, 160, 0.08);
+      }
+
+      /* result list */
+      .search-results {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px 28px 32px;
+      }
+      .search-results::-webkit-scrollbar {
+        width: 3px;
+      }
+      .search-results::-webkit-scrollbar-thumb {
+        background: rgba(124, 92, 252, 0.2);
+        border-radius: 2px;
+      }
+
+      .search-result-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        padding: 16px 18px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: linear-gradient(
+          135deg,
+          rgba(18, 14, 52, 0.85),
+          rgba(12, 10, 38, 0.85)
+        );
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .search-result-item::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          rgba(124, 92, 252, 0.06),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .search-result-item:hover {
+        border-color: var(--border-h);
+        transform: translateX(3px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      }
+      .search-result-item:hover::before {
+        opacity: 1;
+      }
+      body.light .search-result-item {
+        background: linear-gradient(
+          135deg,
+          rgba(248, 245, 255, 0.97),
+          rgba(238, 232, 255, 0.97)
+        );
+        border-color: rgba(100, 65, 200, 0.12);
+      }
+      body.light .search-result-item:hover {
+        border-color: rgba(100, 65, 200, 0.26);
+        box-shadow: 0 4px 16px rgba(100, 65, 160, 0.1);
+      }
+
+      .search-result-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.18),
+          rgba(124, 92, 252, 0.12)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      body.light .search-result-icon {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.1),
+          rgba(100, 65, 160, 0.08)
+        );
+        border-color: rgba(100, 65, 160, 0.18);
+      }
+
+      .search-result-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .search-result-title {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .search-result-title mark {
+        background: rgba(124, 92, 252, 0.2);
+        color: var(--violet);
+        border-radius: 3px;
+        padding: 0 2px;
+      }
+      body.light .search-result-title mark {
+        background: rgba(100, 65, 160, 0.12);
+      }
+      .search-result-preview {
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.5;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-bottom: 8px;
+      }
+      .search-result-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 10.5px;
+        color: var(--muted);
+      }
+      .search-result-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-size: 10px;
+        background: rgba(124, 92, 252, 0.1);
+        border: 1px solid rgba(124, 92, 252, 0.18);
+        color: var(--violet);
+      }
+      body.light .search-result-tag {
+        background: rgba(100, 65, 160, 0.07);
+        border-color: rgba(100, 65, 160, 0.15);
+      }
+      .search-result-chevron {
+        font-size: 12px;
+        color: var(--muted);
+        flex-shrink: 0;
+        margin-left: auto;
+        align-self: center;
+      }
+
+      /* empty state */
+      .search-empty {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 24px;
+        text-align: center;
+        gap: 12px;
+      }
+      .search-empty.show {
+        display: flex;
+      }
+      .search-empty-icon {
+        font-size: 44px;
+        opacity: 0.5;
+      }
+      .search-empty-title {
+        font-family: "Noto Serif KR", serif;
+        font-size: 15px;
+        color: var(--text2);
+        font-weight: 300;
+      }
+      .search-empty-sub {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 768px) {
+        .search-header {
+          padding: 18px 16px 0;
+        }
+        .search-meta {
+          padding: 0 16px;
+        }
+        .search-results {
+          padding: 8px 16px 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div
+      class="sidebar-backdrop"
+      id="sidebar-backdrop"
+      onclick="closeMobileSidebar()"
+    ></div>
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+      <div class="sb-logo">
+        <div class="sb-logo-gem">✦</div>
+        <div>
+          <div class="sb-logo-text">SAJU TALK</div>
+          <div class="sb-logo-sub">AI 사주 상담</div>
+        </div>
+      </div>
+
+      <nav class="sb-nav">
+        <div class="sb-nav-item" onclick="showView('newchat')" id="nav-newchat">
+          <span class="sb-nav-icon">✏️</span> 새 상담
+        </div>
+        <div class="sb-nav-item" onclick="showView('search')" id="nav-search">
+          <span class="sb-nav-icon">🔍</span> 상담 검색
+        </div>
+        <div
+          class="sb-nav-item active"
+          onclick="showView('fortune')"
+          id="nav-today"
+        >
+          <span class="sb-nav-icon">⭐</span> 오늘의 운세
+        </div>
+        <div class="sb-nav-item" onclick="showView('saju')" id="nav-saju">
+          <span class="sb-nav-icon">☯</span> 사주 원국
+        </div>
+      </nav>
+
+      <div class="sb-divider"></div>
+      <div class="sb-section">상담 내역</div>
+
+      <div class="sb-convs">
+        <div class="sb-conv" onclick="showView('chat')">
+          <div class="sb-conv-dot"></div>
+          올해 재물운과 투자 시기를...
+        </div>
+        <div class="sb-conv" onclick="showView('chat')">
+          <div class="sb-conv-dot"></div>
+          결혼 시기에 대해서 궁금해요
+        </div>
+        <div class="sb-conv active" onclick="showView('chat')">
+          <div class="sb-conv-dot"></div>
+          직장 이직 고민 상담합니다
+        </div>
+        <div class="sb-conv" onclick="showView('chat')">
+          <div class="sb-conv-dot"></div>
+          내년 운세 전반적으로 봐주세요
+        </div>
+        <div class="sb-conv" onclick="showView('chat')">
+          <div class="sb-conv-dot"></div>
+          사업 시작 시기가 언제일까요
+        </div>
+        <div class="sb-conv" onclick="showView('chat')">
+          <div class="sb-conv-dot"></div>
+          건강운과 주의해야 할 점은?
+        </div>
+        <div class="sb-conv" onclick="showView('chat')">
+          <div class="sb-conv-dot"></div>
+          올해 인간관계 운세가 궁금해요
+        </div>
+      </div>
+
+      <div class="sb-bottom" style="position: relative">
+        <!-- 설정 메뉴 팝업 -->
+        <div class="settings-menu" id="settings-menu">
+          <div
+            class="menu-item"
+            onclick="
+              showView('user');
+              closeMenu();
+            "
+          >
+            <span class="menu-item-icon">👤</span> 회원 정보
+          </div>
+          <div
+            class="menu-item"
+            onclick="
+              openModal('saju-modal');
+              closeMenu();
+            "
+          >
+            <span class="menu-item-icon">☯</span> 사주 정보 수정
+          </div>
+          <div class="menu-divider"></div>
+          <div
+            class="menu-item danger"
+            onclick="
+              openConfirm('danger');
+              closeMenu();
+            "
+          >
+            <span class="menu-item-icon">🗑</span> 채팅 기록 삭제
+          </div>
+          <div class="menu-item danger" onclick="closeMenu()">
+            <span class="menu-item-icon">↪</span> 로그아웃
+          </div>
+        </div>
+
+        <button
+          class="sb-settings-btn"
+          id="settings-btn"
+          onclick="toggleMenu()"
+        >
+          <div class="sb-avatar">🌙</div>
+          <div style="text-align: left">
+            <div class="sb-profile-name">이채연</div>
+            <div class="sb-profile-email">1989.08.17 · 양력 · 술시</div>
+          </div>
+          <span class="sb-settings-chevron">▲</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── MAIN ── -->
+    <main class="main">
+      <!-- topbar -->
+      <div class="topbar">
+        <div class="topbar-title">
+          <div class="topbar-dot"></div>
+          <span id="topbar-label">오늘의 운세</span>
+        </div>
+        <div class="topbar-date">2026년 4월 10일 목요일</div>
+        <div class="topbar-actions">
+          <button
+            class="topbar-hamburger"
+            onclick="openMobileSidebar()"
+            title="메뉴"
+          >
+            ☰
+          </button>
+          <button
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            id="theme-btn"
+            title="라이트/다크 모드"
+          >
+            🌙
+          </button>
+          <button
+            class="topbar-btn topbar-btn-ghost"
+            onclick="openConfirm('primary')"
+            title="확인 모달 예시"
+          >
+            확인 모달
+          </button>
+          <button
+            class="topbar-btn topbar-btn-ghost"
+            onclick="showView('saju')"
+          >
+            사주 원국 보기
+          </button>
+          <button
+            class="topbar-btn topbar-btn-primary"
+            onclick="showView('chat')"
+          >
+            ✦ 새 상담
+          </button>
+        </div>
+      </div>
+
+      <!-- ── FORTUNE VIEW ── -->
+      <div class="view active" id="view-fortune">
+        <div class="fortune-scroll">
+          <div class="fortune-header fade-in">
+            <div class="fortune-header-left">
+              <div class="fortune-eyebrow">Daily Fortune · 오늘의 운세</div>
+              <div class="fortune-main-title">오늘의 전체운</div>
+              <div class="fortune-sub">여성 · 1989.8.17 · 양력 · 술시</div>
+            </div>
+            <button class="dl-btn">
+              <span class="dl-btn-icon">⬇</span> 운세 카드 저장
+            </button>
+          </div>
+
+          <div class="fortune-score-row fade-in">
+            <div class="score-ring-wrap">
+              <svg width="130" height="130" viewBox="0 0 130 130">
+                <defs>
+                  <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#a78bfa" />
+                    <stop offset="50%" stop-color="#7c5cfc" />
+                    <stop offset="100%" stop-color="#f0c060" />
+                  </linearGradient>
+                </defs>
+                <circle
+                  cx="65"
+                  cy="65"
+                  r="54"
+                  fill="none"
+                  stroke="rgba(255,255,255,.05)"
+                  stroke-width="8"
+                />
+                <circle
+                  id="main-ring"
+                  cx="65"
+                  cy="65"
+                  r="54"
+                  fill="none"
+                  stroke="url(#rg)"
+                  stroke-width="8"
+                  stroke-linecap="round"
+                  class="ring-prog"
+                />
+              </svg>
+              <div class="score-text">
+                <div class="score-num" id="main-score-num">0</div>
+                <div class="score-denom">/ 100</div>
+                <div class="score-label">전체운</div>
+              </div>
+            </div>
+            <div class="fortune-desc-col">
+              <div class="fortune-desc-tag">✦ &nbsp;오늘의 기운</div>
+              <div class="fortune-desc-text">
+                오늘은 깊은 생각과 통찰력이 빛나는 하루입니다.<br />
+                중요한 결정을 내리기 전 충분히 숙고하는 시간을 가지세요.<br />
+                윗사람의 조언이 큰 도움이 될 수 있습니다.
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-grid">
+            <div class="cat-card fade-in">
+              <div class="cat-top">
+                <div class="cat-icon">💰</div>
+                <div class="cat-score" style="color: #fbbf24" data-score="75">
+                  0
+                </div>
+              </div>
+              <div class="cat-name">재물운</div>
+              <div class="cat-bar">
+                <div class="cat-fill" data-width="75"></div>
+              </div>
+            </div>
+            <div class="cat-card fade-in">
+              <div class="cat-top">
+                <div class="cat-icon">💕</div>
+                <div class="cat-score" style="color: #f472b6" data-score="68">
+                  0
+                </div>
+              </div>
+              <div class="cat-name">연애운</div>
+              <div class="cat-bar">
+                <div
+                  class="cat-fill"
+                  style="background: #f472b6; box-shadow: 0 0 7px #f472b6"
+                  data-width="68"
+                ></div>
+              </div>
+            </div>
+            <div class="cat-card fade-in">
+              <div class="cat-top">
+                <div class="cat-icon">🌿</div>
+                <div class="cat-score" style="color: #34d399" data-score="72">
+                  0
+                </div>
+              </div>
+              <div class="cat-name">건강운</div>
+              <div class="cat-bar">
+                <div
+                  class="cat-fill"
+                  style="background: #34d399; box-shadow: 0 0 7px #34d399"
+                  data-width="72"
+                ></div>
+              </div>
+            </div>
+            <div class="cat-card fade-in">
+              <div class="cat-top">
+                <div class="cat-icon">💼</div>
+                <div class="cat-score" style="color: #60a5fa" data-score="82">
+                  0
+                </div>
+              </div>
+              <div class="cat-name">직장운</div>
+              <div class="cat-bar">
+                <div
+                  class="cat-fill"
+                  style="background: #60a5fa; box-shadow: 0 0 7px #60a5fa"
+                  data-width="82"
+                ></div>
+              </div>
+            </div>
+            <div class="cat-card fade-in">
+              <div class="cat-top">
+                <div class="cat-icon">📚</div>
+                <div class="cat-score" style="color: #a78bfa" data-score="88">
+                  0
+                </div>
+              </div>
+              <div class="cat-name">학업운</div>
+              <div class="cat-bar">
+                <div
+                  class="cat-fill"
+                  style="background: #a78bfa; box-shadow: 0 0 7px #a78bfa"
+                  data-width="88"
+                ></div>
+              </div>
+            </div>
+            <div class="cat-card fade-in">
+              <div class="cat-top">
+                <div class="cat-icon">✈️</div>
+                <div class="cat-score" style="color: #2dd4bf" data-score="65">
+                  0
+                </div>
+              </div>
+              <div class="cat-name">여행운</div>
+              <div class="cat-bar">
+                <div
+                  class="cat-fill"
+                  style="background: #2dd4bf; box-shadow: 0 0 7px #2dd4bf"
+                  data-width="65"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lucky-grid fade-in">
+            <div class="lucky-card">
+              <div class="lucky-label">럭키 컬러</div>
+              <div class="lucky-val">
+                <div
+                  class="lucky-dot"
+                  style="background: #eab308; box-shadow: 0 0 8px #eab308"
+                ></div>
+                노란색
+              </div>
+            </div>
+            <div class="lucky-card">
+              <div class="lucky-label">럭키 넘버</div>
+              <div
+                class="lucky-val"
+                style="
+                  font-family: &quot;DM Serif Display&quot;, serif;
+                  font-size: 22px;
+                  color: var(--gold);
+                "
+              >
+                7
+              </div>
+            </div>
+            <div class="lucky-card">
+              <div class="lucky-label">럭키 아이템</div>
+              <div class="lucky-val">📖 &nbsp;책</div>
+            </div>
+            <div class="lucky-card">
+              <div class="lucky-label">럭키 타임</div>
+              <div class="lucky-val" style="font-size: 13px">
+                오전 9시 ~ 11시
+              </div>
+            </div>
+          </div>
+
+          <div class="advice-card fade-in">
+            <span class="advice-star">✦</span>
+            <div class="advice-text">
+              오늘은 깊은 사색과 학습에 집중하기 좋은 날입니다. 내면의 지혜를
+              활용하여 중요한 결정을 내리고, 윗사람의 조언을 귀담아들으세요.
+              다만, 생각이 너무 많아 행동이 늦어지지 않도록 주의하며 균형을 찾는
+              것이 중요합니다.
+            </div>
+          </div>
+
+          <!-- ── FORTUNE CALENDAR ── -->
+          <div class="fortune-cal fade-in">
+            <div class="fortune-cal-header">
+              <div>
+                <div class="fortune-cal-title-row">
+                  <span class="fortune-cal-icon">📅</span>
+                  <span class="fortune-cal-title">운세 달력</span>
+                </div>
+                <div class="fortune-cal-sub" style="margin-top: 3px">운세를 확인한 날의 기록</div>
+              </div>
+              <div>
+                <div class="fortune-cal-nav">
+                  <button onclick="calPrev()" aria-label="이전 달">‹</button>
+                  <span class="fortune-cal-month" id="cal-month-label"></span>
+                  <button onclick="calNext()" aria-label="다음 달">›</button>
+                </div>
+                <div class="fortune-cal-legend" style="margin-top: 8px; justify-content: flex-end;">
+                  <span class="cal-legend-item">✨ 좋음</span>
+                  <span class="cal-legend-item">🙂 보통</span>
+                  <span class="cal-legend-item">😔 나쁨</span>
+                </div>
+              </div>
+            </div>
+            <div class="fortune-cal-grid" id="fortune-cal-grid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CHAT VIEW ── -->
+      <div class="view" id="view-chat">
+        <div class="chat-wrap">
+          <div class="chat-msgs" id="chat-msgs">
+            <div class="msg-row ai fade-in">
+              <div class="ai-avatar">✦</div>
+              <div>
+                <div class="bubble bubble-ai">
+                  안녕하세요. 저는 30년 경력의 사주 전문가입니다.<br />
+                  사주팔자를 바탕으로 솔직하고 깊이 있는 상담을 드리겠습니다.<br />
+                  무엇이든 편하게 여쭤보세요 🌙
+                </div>
+                <div
+                  class="bubble-time"
+                  style="margin-top: 4px; display: block; padding-left: 4px"
+                >
+                  오후 2:28
+                </div>
+              </div>
+            </div>
+
+            <div class="msg-row user fade-in">
+              <div class="bubble-time">오후 2:30</div>
+              <div class="bubble bubble-user">올해 재물운은 어떤가요?</div>
+            </div>
+
+            <div class="msg-row ai fade-in">
+              <div class="ai-avatar">✦</div>
+              <div>
+                <div class="bubble bubble-ai">
+                  사주를 살펴보니, 올해는
+                  <strong style="color: var(--gold)">경금(庚金)</strong>의
+                  기운이 강하게 작용하는 해입니다.<br /><br />
+                  재물운은 상반기보다
+                  <strong style="color: var(--violet)"
+                    >하반기부터 서서히 상승</strong
+                  >하는 흐름입니다. 특히 7월~9월 사이에 예상치 못한 수입이
+                  생기거나 투자한 것들이 결실을 맺는 시기가 찾아올 수
+                  있습니다.<br /><br />
+                  다만 <strong style="color: #f87171">충(沖)의 기운</strong>이
+                  있어 계획 없는 투기나 단기 투자는 피하시는 것이 좋겠습니다.
+                  안정적인 적금이나 장기 투자가 올해 팔자에는 더 잘 맞습니다.
+                </div>
+                <div
+                  class="bubble-time"
+                  style="margin-top: 4px; display: block; padding-left: 4px"
+                >
+                  오후 2:31
+                </div>
+              </div>
+            </div>
+
+            <div class="msg-row user fade-in">
+              <div class="bubble-time">오후 2:33</div>
+              <div class="bubble bubble-user">
+                구체적으로 어떤 분야 투자가 좋을까요?
+              </div>
+            </div>
+
+            <div
+              class="msg-row ai fade-in"
+              id="typing-row"
+              style="display: none"
+            >
+              <div class="ai-avatar">✦</div>
+              <div class="bubble bubble-ai" style="padding: 8px 18px">
+                <div class="typing-dots">
+                  <div class="typing-dot"></div>
+                  <div class="typing-dot"></div>
+                  <div class="typing-dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-area">
+            <button
+              class="scroll-to-bottom"
+              id="scroll-to-bottom-btn"
+              onclick="scrollToBottom()"
+              title="최하단으로 이동"
+              aria-label="최하단으로 이동"
+            >
+              <svg viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="chat-input-row">
+              <textarea
+                class="chat-input"
+                placeholder="사주에 대해 무엇이든 물어보세요..."
+                rows="1"
+                onkeydown="handleKey(event)"
+                oninput="autoResize(this)"
+              ></textarea>
+              <button class="send-btn" onclick="sendMsg()">↑</button>
+            </div>
+            <div class="chat-hint-row">
+              <span class="chat-hint"
+                >✦ &nbsp;사주 원국 기반으로 개인화된 상담을 드립니다</span
+              >
+              <button
+                class="chat-clear-btn"
+                onclick="openChatClearConfirm()"
+                title="대화 전체 삭제"
+              >
+                🗑 전체삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── NEW CHAT VIEW ── -->
+      <div class="view" id="view-newchat">
+        <div class="newchat-wrap">
+          <!-- Hero -->
+          <div class="newchat-hero fade-in">
+            <div class="newchat-orb">🔮</div>
+            <div class="newchat-eyebrow">New Consultation · 새 상담</div>
+            <div class="newchat-title">무엇이든 물어보세요</div>
+            <div class="newchat-sub">
+              30년 경력의 AI 사주 전문가가<br />
+              사주팔자를 바탕으로 깊이 있는 상담을 드립니다.
+            </div>
+          </div>
+
+          <!-- 오늘의 운세 미리보기 strip -->
+          <div
+            class="newchat-fortune-strip fade-in"
+            onclick="showView('fortune')"
+          >
+            <div class="newchat-fortune-strip-icon">⭐</div>
+            <div>
+              <div class="newchat-fortune-strip-label">Today · 오늘의 운세</div>
+              <div class="newchat-fortune-strip-text">
+                깊은 통찰력이 빛나는 하루 · 중요한 결정을 내리기 전 충분히
+                숙고하세요
+              </div>
+            </div>
+            <div class="newchat-fortune-strip-score">
+              <div class="newchat-fortune-strip-num">78</div>
+              <div class="newchat-fortune-strip-denom">/ 100</div>
+            </div>
+          </div>
+
+          <!-- Prompt chips -->
+          <div class="newchat-prompts-title fade-in">추천 상담 주제</div>
+          <div class="newchat-chips">
+            <div
+              class="newchat-chip fade-in"
+              onclick="
+                startNewChat('올해 재물운과 투자 시기가 언제인지 알고 싶어요')
+              "
+            >
+              <span class="newchat-chip-emoji">💰</span>
+              <div class="newchat-chip-text">
+                <strong>재물운 · 투자</strong>
+                올해 재물운과 투자 시기
+              </div>
+            </div>
+            <div
+              class="newchat-chip fade-in"
+              onclick="
+                startNewChat('결혼 시기와 인연에 대해 사주로 알려주세요')
+              "
+            >
+              <span class="newchat-chip-emoji">💕</span>
+              <div class="newchat-chip-text">
+                <strong>연애운 · 결혼</strong>
+                결혼 시기와 인연 상담
+              </div>
+            </div>
+            <div
+              class="newchat-chip fade-in"
+              onclick="
+                startNewChat('이직이나 직장 변동 시기에 대해 알고 싶어요')
+              "
+            >
+              <span class="newchat-chip-emoji">💼</span>
+              <div class="newchat-chip-text">
+                <strong>직장운 · 이직</strong>
+                이직 시기와 직장 운세
+              </div>
+            </div>
+            <div
+              class="newchat-chip fade-in"
+              onclick="
+                startNewChat('올해 건강 운세와 주의해야 할 부분이 있나요')
+              "
+            >
+              <span class="newchat-chip-emoji">🌿</span>
+              <div class="newchat-chip-text">
+                <strong>건강운</strong>
+                건강 운세와 주의사항
+              </div>
+            </div>
+            <div
+              class="newchat-chip fade-in"
+              onclick="startNewChat('사업을 시작하기 좋은 시기가 언제일까요')"
+            >
+              <span class="newchat-chip-emoji">🚀</span>
+              <div class="newchat-chip-text">
+                <strong>사업운 · 창업</strong>
+                사업 시작 최적 시기
+              </div>
+            </div>
+            <div
+              class="newchat-chip fade-in"
+              onclick="
+                startNewChat('내 사주의 오행 균형과 성격에 대해 알려주세요')
+              "
+            >
+              <span class="newchat-chip-emoji">☯</span>
+              <div class="newchat-chip-text">
+                <strong>사주 해석</strong>
+                오행 균형과 타고난 성격
+              </div>
+            </div>
+          </div>
+
+          <!-- Input -->
+          <div class="newchat-input-wrap fade-in">
+            <div class="newchat-input-box">
+              <textarea
+                class="newchat-input"
+                id="newchat-input"
+                placeholder="사주에 대해 무엇이든 직접 입력해 보세요..."
+                rows="1"
+                onkeydown="handleNewChatKey(event)"
+                oninput="autoResize(this)"
+              ></textarea>
+              <button class="send-btn" onclick="startNewChatFromInput()">
+                ↑
+              </button>
+            </div>
+            <div class="chat-hint" style="margin-top: 10px">
+              ✦ &nbsp;사주 원국 기반으로 개인화된 상담을 드립니다
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SEARCH VIEW ── -->
+      <div class="view" id="view-search">
+        <div class="search-wrap">
+          <!-- Header + search bar -->
+          <div class="search-header">
+            <div class="search-eyebrow">Search · 상담 검색</div>
+            <div class="search-page-title">상담 내역 검색</div>
+
+            <div class="search-bar-row">
+              <span class="search-bar-icon">🔍</span>
+              <input
+                class="search-bar-input"
+                id="search-input"
+                type="text"
+                placeholder="키워드로 상담 내역을 검색하세요..."
+                oninput="handleSearch(this.value)"
+              />
+              <button
+                class="search-bar-clear"
+                id="search-clear"
+                onclick="clearSearch()"
+                style="display: none"
+              >
+                ✕
+              </button>
+            </div>
+
+            <!-- Filter chips -->
+            <div class="search-filters">
+              <div
+                class="search-filter-chip active"
+                onclick="filterSearch(this, '전체')"
+              >
+                전체
+              </div>
+              <div
+                class="search-filter-chip"
+                onclick="filterSearch(this, '재물운')"
+              >
+                💰 재물운
+              </div>
+              <div
+                class="search-filter-chip"
+                onclick="filterSearch(this, '연애운')"
+              >
+                💕 연애운
+              </div>
+              <div
+                class="search-filter-chip"
+                onclick="filterSearch(this, '직장운')"
+              >
+                💼 직장운
+              </div>
+              <div
+                class="search-filter-chip"
+                onclick="filterSearch(this, '건강운')"
+              >
+                🌿 건강운
+              </div>
+              <div
+                class="search-filter-chip"
+                onclick="filterSearch(this, '사업운')"
+              >
+                🚀 사업운
+              </div>
+              <div
+                class="search-filter-chip"
+                onclick="filterSearch(this, '학업운')"
+              >
+                📚 학업운
+              </div>
+              <div
+                class="search-filter-chip"
+                onclick="filterSearch(this, '여행운')"
+              >
+                ✈️ 여행운
+              </div>
+            </div>
+          </div>
+
+          <!-- Meta row -->
+          <div class="search-meta">
+            <div class="search-count" id="search-count">
+              <strong>7</strong>개의 상담 내역
+            </div>
+            <div class="search-sort">
+              <button
+                class="search-sort-btn active"
+                onclick="setSort(this, '최신순')"
+              >
+                최신순
+              </button>
+              <button
+                class="search-sort-btn"
+                onclick="setSort(this, '오래된순')"
+              >
+                오래된순
+              </button>
+            </div>
+          </div>
+
+          <!-- Result list -->
+          <div class="search-results" id="search-results">
+            <div class="search-result-item fade-in" onclick="showView('chat')">
+              <div class="search-result-icon">💼</div>
+              <div class="search-result-body">
+                <div class="search-result-title">직장 이직 고민 상담합니다</div>
+                <div class="search-result-preview">
+                  올해 하반기 이직을 고려하고 있는데, 사주상으로 이직 시기가
+                  언제가 좋은지 궁금합니다. 현재 직장에서의 갈등도 있고...
+                </div>
+                <div class="search-result-meta">
+                  <span>2026.04.08</span>
+                  <span class="search-result-tag">💼 직장운</span>
+                  <span>메시지 12개</span>
+                </div>
+              </div>
+              <div class="search-result-chevron">›</div>
+            </div>
+
+            <div class="search-result-item fade-in" onclick="showView('chat')">
+              <div class="search-result-icon">💰</div>
+              <div class="search-result-body">
+                <div class="search-result-title">
+                  올해 재물운과 투자 시기를 알고 싶어요
+                </div>
+                <div class="search-result-preview">
+                  주식 투자를 시작하려 하는데 사주상 재물운이 어떤지, 특히
+                  하반기 투자 시기가 언제인지 알고 싶습니다...
+                </div>
+                <div class="search-result-meta">
+                  <span>2026.04.05</span>
+                  <span class="search-result-tag">💰 재물운</span>
+                  <span>메시지 8개</span>
+                </div>
+              </div>
+              <div class="search-result-chevron">›</div>
+            </div>
+
+            <div class="search-result-item fade-in" onclick="showView('chat')">
+              <div class="search-result-icon">💕</div>
+              <div class="search-result-body">
+                <div class="search-result-title">
+                  결혼 시기에 대해서 궁금해요
+                </div>
+                <div class="search-result-preview">
+                  지금 만나는 사람이 있는데 결혼 시기가 올해 안에 가능할지,
+                  사주상 인연이 맞는지 상담받고 싶습니다...
+                </div>
+                <div class="search-result-meta">
+                  <span>2026.03.28</span>
+                  <span class="search-result-tag">💕 연애운</span>
+                  <span>메시지 15개</span>
+                </div>
+              </div>
+              <div class="search-result-chevron">›</div>
+            </div>
+
+            <div class="search-result-item fade-in" onclick="showView('chat')">
+              <div class="search-result-icon">⭐</div>
+              <div class="search-result-body">
+                <div class="search-result-title">
+                  내년 운세 전반적으로 봐주세요
+                </div>
+                <div class="search-result-preview">
+                  2027년 전반적인 운세를 알고 싶습니다. 특히 재물, 건강,
+                  대인관계 부분에서 주의할 점이 있는지...
+                </div>
+                <div class="search-result-meta">
+                  <span>2026.03.20</span>
+                  <span class="search-result-tag">⭐ 전체운</span>
+                  <span>메시지 20개</span>
+                </div>
+              </div>
+              <div class="search-result-chevron">›</div>
+            </div>
+
+            <div class="search-result-item fade-in" onclick="showView('chat')">
+              <div class="search-result-icon">🚀</div>
+              <div class="search-result-body">
+                <div class="search-result-title">
+                  사업 시작 시기가 언제일까요
+                </div>
+                <div class="search-result-preview">
+                  오랫동안 준비해온 카페 창업을 올해 시작하려 합니다. 사주상
+                  창업하기 좋은 시기가 언제인지 알고 싶어요...
+                </div>
+                <div class="search-result-meta">
+                  <span>2026.03.15</span>
+                  <span class="search-result-tag">🚀 사업운</span>
+                  <span>메시지 10개</span>
+                </div>
+              </div>
+              <div class="search-result-chevron">›</div>
+            </div>
+
+            <div class="search-result-item fade-in" onclick="showView('chat')">
+              <div class="search-result-icon">🌿</div>
+              <div class="search-result-body">
+                <div class="search-result-title">
+                  건강운과 주의해야 할 점은?
+                </div>
+                <div class="search-result-preview">
+                  최근 몸이 자주 피곤하고 소화도 잘 안되는데, 사주상 건강에 특히
+                  주의해야 할 시기가 있는지 궁금합니다...
+                </div>
+                <div class="search-result-meta">
+                  <span>2026.03.10</span>
+                  <span class="search-result-tag">🌿 건강운</span>
+                  <span>메시지 9개</span>
+                </div>
+              </div>
+              <div class="search-result-chevron">›</div>
+            </div>
+
+            <div class="search-result-item fade-in" onclick="showView('chat')">
+              <div class="search-result-icon">👥</div>
+              <div class="search-result-body">
+                <div class="search-result-title">
+                  올해 인간관계 운세가 궁금해요
+                </div>
+                <div class="search-result-preview">
+                  직장에서 대인관계가 힘들고 친구 관계도 소원해지는 느낌입니다.
+                  사주상 인간관계 운세가 어떤지...
+                </div>
+                <div class="search-result-meta">
+                  <span>2026.03.05</span>
+                  <span class="search-result-tag">👥 인간관계</span>
+                  <span>메시지 11개</span>
+                </div>
+              </div>
+              <div class="search-result-chevron">›</div>
+            </div>
+
+            <!-- Empty state (hidden by default) -->
+            <div class="search-empty" id="search-empty">
+              <div class="search-empty-icon">🔭</div>
+              <div class="search-empty-title">검색 결과가 없습니다</div>
+              <div class="search-empty-sub">다른 키워드로 검색해보세요</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── USER EDIT VIEW ── -->
+      <div class="view" id="view-user">
+        <div class="user-scroll">
+          <div class="user-page-inner">
+            <div class="user-page-header fade-in">
+              <div class="user-page-eyebrow">Account · 계정 설정</div>
+              <div class="user-page-title">회원 정보</div>
+              <div class="user-page-sub">
+                이메일 및 비밀번호를 변경할 수 있습니다
+              </div>
+            </div>
+
+            <div class="user-card fade-in">
+              <div class="user-card-title">계정 이메일</div>
+              <div class="user-email-row">
+                <span class="user-email-icon">✉️</span>
+                <span class="user-email-text">test@test.com</span>
+              </div>
+              <div class="form-group" style="margin-bottom: 16px">
+                <div class="form-label">
+                  <span class="form-required">*</span> 현재 비밀번호
+                </div>
+                <div class="form-input-wrap">
+                  <input
+                    type="password"
+                    class="form-input"
+                    placeholder="현재 비밀번호를 입력해주세요. (8자 이상)"
+                  />
+                  <span class="form-input-icon">🔒</span>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 8px">
+                <div class="form-label">
+                  <span class="form-required">*</span> 새 비밀번호
+                </div>
+                <div class="form-input-wrap">
+                  <input
+                    type="password"
+                    class="form-input"
+                    placeholder="새 비밀번호를 입력해주세요. (8자 이상)"
+                    id="new-pw-input"
+                    oninput="checkPwStrength(this.value)"
+                  />
+                  <span class="form-input-icon">✏️</span>
+                </div>
+                <div class="pw-strength">
+                  <div class="pw-bar">
+                    <div class="pw-fill" id="pw-bar-1"></div>
+                  </div>
+                  <div class="pw-bar">
+                    <div class="pw-fill" id="pw-bar-2"></div>
+                  </div>
+                  <div class="pw-bar">
+                    <div class="pw-fill" id="pw-bar-3"></div>
+                  </div>
+                  <div class="pw-bar">
+                    <div class="pw-fill" id="pw-bar-4"></div>
+                  </div>
+                  <div class="pw-label" id="pw-label"></div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 0">
+                <div class="form-label">
+                  <span class="form-required">*</span> 새 비밀번호 확인
+                </div>
+                <div class="form-input-wrap">
+                  <input
+                    type="password"
+                    class="form-input"
+                    placeholder="새 비밀번호를 한번 더 입력해주세요."
+                  />
+                  <span class="form-input-icon">✔️</span>
+                </div>
+              </div>
+              <div style="margin-top: 22px">
+                <button
+                  class="form-btn form-btn-primary"
+                  style="width: 100%; padding: 13px"
+                >
+                  수정하기
+                </button>
+              </div>
+            </div>
+
+            <div class="danger-zone fade-in">
+              <div class="danger-zone-text">
+                <div class="danger-zone-label">계정 탈퇴</div>
+                <div class="danger-zone-desc">
+                  탈퇴 시 모든 상담 내역이 삭제되며 복구할 수 없습니다.
+                </div>
+              </div>
+              <button class="danger-btn">탈퇴하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SAJU WONKUK VIEW ── -->
+      <div class="view" id="view-saju">
+        <div class="saju-scroll">
+          <div class="saju-title-row fade-in">
+            <div class="saju-label">
+              사주 원국
+              <span
+                style="
+                  font-size: 14px;
+                  font-family: &quot;Noto Serif KR&quot;, serif;
+                  color: var(--text2);
+                  margin-left: 4px;
+                "
+                >四柱原局</span
+              >
+              <span class="saju-label-ko"></span>
+            </div>
+            <div class="saju-badge">✦ &nbsp;1989.08.17 · 술시(戌時)</div>
+          </div>
+
+          <div class="pillars-wrap">
+            <!-- 년주 -->
+            <div
+              class="pillar fade-in"
+              style="border-color: rgba(74, 222, 128, 0.2)"
+            >
+              <div class="pillar-head">
+                <div class="pillar-pos">년주 (年柱)</div>
+                <div class="pillar-title">Year Pillar</div>
+              </div>
+              <div class="pillar-body">
+                <div class="pillar-hanzi">
+                  <span class="oh-wood" style="font-size: 40px">甲</span>
+                  <span class="oh-water" style="font-size: 40px">子</span>
+                </div>
+                <div class="pillar-ohaeng oh-bg-wood oh-wood">
+                  목(木) · 수(水)
+                </div>
+                <div class="pillar-element">
+                  <div class="elem oh-bg-wood">
+                    <div class="elem-label">천간</div>
+                    <span class="oh-wood">갑(甲)</span>
+                  </div>
+                  <div class="elem oh-bg-water">
+                    <div class="elem-label">지지</div>
+                    <span class="oh-water">자(子)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 월주 -->
+            <div
+              class="pillar fade-in"
+              style="border-color: rgba(203, 213, 225, 0.2)"
+            >
+              <div class="pillar-head">
+                <div class="pillar-pos">월주 (月柱)</div>
+                <div class="pillar-title">Month Pillar</div>
+              </div>
+              <div class="pillar-body">
+                <div class="pillar-hanzi">
+                  <span class="oh-metal" style="font-size: 40px">庚</span>
+                  <span class="oh-metal" style="font-size: 40px">申</span>
+                </div>
+                <div class="pillar-ohaeng oh-bg-metal oh-metal">금(金)</div>
+                <div class="pillar-element">
+                  <div class="elem oh-bg-metal">
+                    <div class="elem-label">천간</div>
+                    <span class="oh-metal">경(庚)</span>
+                  </div>
+                  <div class="elem oh-bg-metal">
+                    <div class="elem-label">지지</div>
+                    <span class="oh-metal">신(申)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 일주 -->
+            <div
+              class="pillar fade-in"
+              style="
+                border-color: rgba(96, 165, 250, 0.3);
+                box-shadow: 0 0 20px rgba(96, 165, 250, 0.06);
+              "
+            >
+              <div
+                class="pillar-head"
+                style="
+                  background: rgba(96, 165, 250, 0.06);
+                  border-bottom-color: rgba(96, 165, 250, 0.2);
+                "
+              >
+                <div class="pillar-pos" style="color: var(--blue)">
+                  일주 (日柱) · 나
+                </div>
+                <div class="pillar-title">Day Pillar</div>
+              </div>
+              <div class="pillar-body">
+                <div class="pillar-hanzi">
+                  <span class="oh-water" style="font-size: 40px">壬</span>
+                  <span class="oh-fire" style="font-size: 40px">午</span>
+                </div>
+                <div class="pillar-ohaeng oh-bg-water oh-water">
+                  수(水) · 화(火)
+                </div>
+                <div class="pillar-element">
+                  <div class="elem oh-bg-water">
+                    <div class="elem-label">천간</div>
+                    <span class="oh-water">임(壬)</span>
+                  </div>
+                  <div class="elem oh-bg-fire">
+                    <div class="elem-label">지지</div>
+                    <span class="oh-fire">오(午)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 시주 -->
+            <div
+              class="pillar fade-in"
+              style="border-color: rgba(248, 113, 113, 0.2)"
+            >
+              <div class="pillar-head">
+                <div class="pillar-pos">시주 (時柱)</div>
+                <div class="pillar-title">Hour Pillar</div>
+              </div>
+              <div class="pillar-body">
+                <div class="pillar-hanzi">
+                  <span class="oh-fire" style="font-size: 40px">丙</span>
+                  <span class="oh-earth" style="font-size: 40px">戌</span>
+                </div>
+                <div class="pillar-ohaeng oh-bg-fire oh-fire">
+                  화(火) · 토(土)
+                </div>
+                <div class="pillar-element">
+                  <div class="elem oh-bg-fire">
+                    <div class="elem-label">천간</div>
+                    <span class="oh-fire">병(丙)</span>
+                  </div>
+                  <div class="elem oh-bg-earth">
+                    <div class="elem-label">지지</div>
+                    <span class="oh-earth">술(戌)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ohaeng-section fade-in">
+            <div class="ohaeng-title">오행 분포 (五行 分布)</div>
+            <div class="ohaeng-bars">
+              <div class="ohaeng-row">
+                <div class="ohaeng-name oh-wood">목(木)</div>
+                <div class="ohaeng-track">
+                  <div
+                    class="ohaeng-bar oh-bg-wood"
+                    style="background: #4ade80"
+                    data-w="25"
+                  ></div>
+                </div>
+                <div class="ohaeng-count">1</div>
+              </div>
+              <div class="ohaeng-row">
+                <div class="ohaeng-name oh-fire">화(火)</div>
+                <div class="ohaeng-track">
+                  <div
+                    class="ohaeng-bar oh-bg-fire"
+                    style="background: #f87171"
+                    data-w="50"
+                  ></div>
+                </div>
+                <div class="ohaeng-count">2</div>
+              </div>
+              <div class="ohaeng-row">
+                <div class="ohaeng-name oh-earth">토(土)</div>
+                <div class="ohaeng-track">
+                  <div
+                    class="ohaeng-bar oh-bg-earth"
+                    style="background: #fbbf24"
+                    data-w="25"
+                  ></div>
+                </div>
+                <div class="ohaeng-count">1</div>
+              </div>
+              <div class="ohaeng-row">
+                <div class="ohaeng-name oh-metal">금(金)</div>
+                <div class="ohaeng-track">
+                  <div
+                    class="ohaeng-bar oh-bg-metal"
+                    style="background: #cbd5e1"
+                    data-w="50"
+                  ></div>
+                </div>
+                <div class="ohaeng-count">2</div>
+              </div>
+              <div class="ohaeng-row">
+                <div class="ohaeng-name oh-water">수(水)</div>
+                <div class="ohaeng-track">
+                  <div
+                    class="ohaeng-bar oh-bg-water"
+                    style="background: #60a5fa"
+                    data-w="50"
+                  ></div>
+                </div>
+                <div class="ohaeng-count">2</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="birth-card fade-in">
+            <div class="birth-title">사주 정보</div>
+            <div class="birth-pills">
+              <div class="birth-pill">
+                <span class="birth-pill-label">성별</span> 여성
+              </div>
+              <div class="birth-pill">
+                <span class="birth-pill-label">생년월일</span> 1989년 8월 17일
+              </div>
+              <div class="birth-pill">
+                <span class="birth-pill-label">역법</span> 양력
+              </div>
+              <div class="birth-pill">
+                <span class="birth-pill-label">태어난 시</span> 술시 (戌時 ·
+                오후 7~9시)
+              </div>
+              <div class="birth-pill">
+                <span class="birth-pill-label">일간</span>
+                <span class="oh-water">임수 (壬水)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ── 사주 정보 입력 모달 ── -->
+    <div
+      class="modal-overlay"
+      id="saju-modal"
+      onclick="handleOverlayClick(event, 'saju-modal')"
+    >
+      <div class="modal-box">
+        <button class="modal-close" onclick="closeModal('saju-modal')">
+          ✕
+        </button>
+        <div class="modal-star">☯</div>
+        <div class="modal-title">사주 정보 입력</div>
+        <div class="modal-sub">
+          생년월일을 입력하면 오늘의 운세를 알려드려요
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span class="form-required">*</span> 성별
+          </div>
+          <div class="toggle-group">
+            <button class="toggle-btn" onclick="selectToggle(this, 'gender')">
+              남성
+            </button>
+            <button
+              class="toggle-btn selected"
+              onclick="selectToggle(this, 'gender')"
+            >
+              여성
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span class="form-required">*</span> 양/음력
+          </div>
+          <div class="toggle-group">
+            <button
+              class="toggle-btn selected"
+              onclick="selectToggle(this, 'cal')"
+            >
+              양력
+            </button>
+            <button class="toggle-btn" onclick="selectToggle(this, 'cal')">
+              음력
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span class="form-required">*</span> 생년월일
+          </div>
+          <div class="date-group">
+            <select class="form-select">
+              <option>1989년</option>
+              <option>1990년</option>
+              <option>1991년</option>
+              <option>1992년</option>
+              <option>1993년</option>
+              <option>1994년</option>
+              <option>1995년</option>
+            </select>
+            <select class="form-select">
+              <option>8월</option>
+              <option>1월</option>
+              <option>2월</option>
+              <option>3월</option>
+              <option>4월</option>
+              <option>5월</option>
+              <option>6월</option>
+              <option>7월</option>
+              <option>9월</option>
+              <option>10월</option>
+              <option>11월</option>
+              <option>12월</option>
+            </select>
+            <select class="form-select">
+              <option>17일</option>
+              <option>1일</option>
+              <option>2일</option>
+              <option>3일</option>
+              <option>4일</option>
+              <option>5일</option>
+              <option>10일</option>
+              <option>15일</option>
+              <option>20일</option>
+              <option>25일</option>
+              <option>30일</option>
+              <option>31일</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span class="form-required">*</span> 태어난 시간
+          </div>
+          <select class="form-select" style="width: 100%">
+            <option>戌(술) 19:30 ~ 21:29</option>
+            <option>子(자) 23:30 ~ 01:29</option>
+            <option>丑(축) 01:30 ~ 03:29</option>
+            <option>寅(인) 03:30 ~ 05:29</option>
+            <option>卯(묘) 05:30 ~ 07:29</option>
+            <option>辰(진) 07:30 ~ 09:29</option>
+            <option>巳(사) 09:30 ~ 11:29</option>
+            <option>午(오) 11:30 ~ 13:29</option>
+            <option>未(미) 13:30 ~ 15:29</option>
+            <option>申(신) 15:30 ~ 17:29</option>
+            <option>酉(유) 17:30 ~ 19:29</option>
+            <option>亥(해) 21:30 ~ 23:29</option>
+          </select>
+        </div>
+
+        <div class="form-btn-row">
+          <button
+            class="form-btn form-btn-primary"
+            onclick="closeModal('saju-modal')"
+          >
+            저장하기
+          </button>
+          <button class="form-btn form-btn-danger">삭제하기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONFIRM MODAL (danger: 채팅 기록 삭제) ── -->
+    <div
+      class="confirm-overlay"
+      id="confirm-modal-danger"
+      onclick="handleConfirmOverlay(event, 'confirm-modal-danger')"
+    >
+      <div class="confirm-box">
+        <button
+          class="confirm-close"
+          onclick="closeConfirm('confirm-modal-danger')"
+        >
+          ✕
+        </button>
+
+        <div class="confirm-icon-wrap danger">🗑</div>
+        <div class="confirm-title">채팅 기록 삭제</div>
+        <div class="confirm-desc">
+          모든 상담 내역이 영구적으로 삭제됩니다.<br />
+          이 작업은 되돌릴 수 없습니다.
+        </div>
+
+        <div class="confirm-check-row">
+          <input type="checkbox" id="confirm-noshow" />
+          <label for="confirm-noshow">다시 묻지 않기</label>
+        </div>
+
+        <div class="confirm-footer">
+          <button
+            class="confirm-btn confirm-btn-cancel"
+            onclick="closeConfirm('confirm-modal-danger')"
+          >
+            취소
+          </button>
+          <button
+            class="confirm-btn confirm-btn-danger"
+            onclick="closeConfirm('confirm-modal-danger')"
+          >
+            삭제하기
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONFIRM MODAL (primary: 일반 확인) ── -->
+    <div
+      class="confirm-overlay"
+      id="confirm-modal-primary"
+      onclick="handleConfirmOverlay(event, 'confirm-modal-primary')"
+    >
+      <div class="confirm-box">
+        <button
+          class="confirm-close"
+          onclick="closeConfirm('confirm-modal-primary')"
+        >
+          ✕
+        </button>
+
+        <div class="confirm-icon-wrap primary">✦</div>
+        <div class="confirm-title">오늘의 운세 저장</div>
+        <div class="confirm-desc">
+          오늘의 운세 카드를 이미지로 저장할까요?<br />
+          갤러리에 PNG 파일로 저장됩니다.
+        </div>
+
+        <div class="confirm-footer">
+          <button
+            class="confirm-btn confirm-btn-cancel"
+            onclick="closeConfirm('confirm-modal-primary')"
+          >
+            취소
+          </button>
+          <button
+            class="confirm-btn confirm-btn-primary"
+            onclick="closeConfirm('confirm-modal-primary')"
+          >
+            저장하기
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 채팅 전체삭제 심플 컨펌 모달 ── -->
+    <div
+      class="simple-confirm-overlay"
+      id="chat-clear-modal"
+      onclick="if (event.target === this) closeChatClearConfirm();"
+    >
+      <div class="simple-confirm-box" id="chat-clear-box">
+        <span class="sc-icon">🗑️</span>
+        <div class="sc-title">대화를 전체 삭제할까요?</div>
+        <div class="sc-desc">
+          현재 채팅방의 모든 대화 내용이<br />
+          <strong>영구적으로 삭제</strong>되며 복구할 수 없습니다.
+        </div>
+        <div class="sc-footer">
+          <button
+            class="sc-btn sc-btn-cancel"
+            onclick="closeChatClearConfirm()"
+          >
+            취소
+          </button>
+          <button class="sc-btn sc-btn-delete" onclick="doChatClear()">
+            삭제
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ── Stars
+      (function () {
+        const canvas = document.getElementById("c");
+        const ctx = canvas.getContext("2d");
+        let W,
+          H,
+          stars = [];
+        function resize() {
+          W = canvas.width = window.innerWidth;
+          H = canvas.height = window.innerHeight;
+          stars = Array.from({ length: 180 }, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.3 + 0.2,
+            a: Math.random() * 0.55 + 0.08,
+            sp: Math.random() * 0.4 + 0.1,
+            ph: Math.random() * Math.PI * 2,
+          }));
+        }
+        let t = 0;
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          t += 0.006;
+          stars.forEach((s) => {
+            const a = s.a * (0.65 + 0.35 * Math.sin(t * s.sp + s.ph));
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(195,175,255,${a})`;
+            ctx.fill();
+          });
+          requestAnimationFrame(draw);
+        }
+        window.addEventListener("resize", resize);
+        resize();
+        draw();
+      })();
+
+      // ── View switching
+      function showView(name) {
+        document
+          .querySelectorAll(".view")
+          .forEach((v) => v.classList.remove("active"));
+        document.getElementById("view-" + name).classList.add("active");
+
+        const labels = {
+          fortune: "오늘의 운세",
+          chat: "사주 상담",
+          saju: "사주 원국",
+          user: "회원 정보",
+          newchat: "새 상담",
+          search: "상담 검색",
+        };
+        document.getElementById("topbar-label").textContent =
+          labels[name] || name;
+
+        document
+          .querySelectorAll(".sb-nav-item")
+          .forEach((el) => el.classList.remove("active"));
+        const map = {
+          fortune: "nav-today",
+          chat: "nav-today",
+          saju: "nav-saju",
+          newchat: "nav-newchat",
+          search: "nav-search",
+        };
+        if (map[name])
+          document.getElementById(map[name]).classList.add("active");
+
+        if (name === "fortune") initFortune();
+        if (name === "saju") initSaju();
+        if (name === "search") initSearch();
+        if (name === "chat") {
+          // 채팅 뷰로 전환 시 스크롤 버튼 상태 즉시 갱신
+          requestAnimationFrame(() => {
+            const msgs = document.getElementById("chat-msgs");
+            const btn  = document.getElementById("scroll-to-bottom-btn");
+            if (!msgs || !btn) return;
+            const dist = msgs.scrollHeight - msgs.scrollTop - msgs.clientHeight;
+            btn.classList.toggle("visible", dist > 80);
+          });
+        }
+
+        // Close mobile sidebar on view change
+        closeMobileSidebar();
+      }
+
+      // ── New Chat helpers
+      function startNewChat(prompt) {
+        showView("chat");
+        // Pre-fill the input
+        const inp = document.querySelector(".chat-input");
+        if (inp) {
+          inp.value = prompt;
+          autoResize(inp);
+          inp.focus();
+        }
+      }
+      function startNewChatFromInput() {
+        const inp = document.getElementById("newchat-input");
+        if (!inp || !inp.value.trim()) return;
+        const txt = inp.value.trim();
+        inp.value = "";
+        showView("chat");
+        // Small delay so view switch animates first
+        setTimeout(() => {
+          const chatInp = document.querySelector(".chat-input");
+          if (chatInp) {
+            chatInp.value = txt;
+            autoResize(chatInp);
+          }
+          sendMsg();
+        }, 80);
+      }
+      function handleNewChatKey(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          startNewChatFromInput();
+        }
+      }
+
+      // ── Search helpers
+      const SEARCH_DATA = [
+        {
+          title: "직장 이직 고민 상담합니다",
+          preview:
+            "올해 하반기 이직을 고려하고 있는데, 사주상 이직 시기가 언제가 좋은지 궁금합니다.",
+          tag: "직장운",
+          icon: "💼",
+          date: "2026.04.08",
+          msgs: 12,
+        },
+        {
+          title: "올해 재물운과 투자 시기를 알고 싶어요",
+          preview:
+            "주식 투자를 시작하려 하는데 사주상 재물운이 어떤지 알고 싶습니다.",
+          tag: "재물운",
+          icon: "💰",
+          date: "2026.04.05",
+          msgs: 8,
+        },
+        {
+          title: "결혼 시기에 대해서 궁금해요",
+          preview:
+            "지금 만나는 사람이 있는데 결혼 시기가 올해 안에 가능할지 상담받고 싶습니다.",
+          tag: "연애운",
+          icon: "💕",
+          date: "2026.03.28",
+          msgs: 15,
+        },
+        {
+          title: "내년 운세 전반적으로 봐주세요",
+          preview:
+            "2027년 전반적인 운세를 알고 싶습니다. 특히 재물, 건강, 대인관계 부분에서 주의할 점이 있는지.",
+          tag: "전체운",
+          icon: "⭐",
+          date: "2026.03.20",
+          msgs: 20,
+        },
+        {
+          title: "사업 시작 시기가 언제일까요",
+          preview:
+            "오랫동안 준비해온 카페 창업을 올해 시작하려 합니다. 사주상 창업하기 좋은 시기가 언제인지.",
+          tag: "사업운",
+          icon: "🚀",
+          date: "2026.03.15",
+          msgs: 10,
+        },
+        {
+          title: "건강운과 주의해야 할 점은?",
+          preview:
+            "최근 몸이 자주 피곤하고 소화도 잘 안되는데, 사주상 건강에 특히 주의해야 할 시기가 있는지.",
+          tag: "건강운",
+          icon: "🌿",
+          date: "2026.03.10",
+          msgs: 9,
+        },
+        {
+          title: "올해 인간관계 운세가 궁금해요",
+          preview:
+            "직장에서 대인관계가 힘들고 친구 관계도 소원해지는 느낌입니다. 사주상 인간관계 운세가 어떤지.",
+          tag: "인간관계",
+          icon: "👥",
+          date: "2026.03.05",
+          msgs: 11,
+        },
+      ];
+      let searchKeyword = "";
+      let searchFilter = "전체";
+
+      function initSearch() {
+        renderSearchResults();
+      }
+
+      function handleSearch(val) {
+        searchKeyword = val.trim();
+        document.getElementById("search-clear").style.display = val
+          ? "block"
+          : "none";
+        renderSearchResults();
+      }
+      function clearSearch() {
+        const inp = document.getElementById("search-input");
+        inp.value = "";
+        inp.focus();
+        handleSearch("");
+      }
+      function filterSearch(el, filter) {
+        searchFilter = filter;
+        document
+          .querySelectorAll(".search-filter-chip")
+          .forEach((c) => c.classList.remove("active"));
+        el.classList.add("active");
+        renderSearchResults();
+      }
+      function setSort(el, mode) {
+        document
+          .querySelectorAll(".search-sort-btn")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+        renderSearchResults(mode === "오래된순");
+      }
+
+      function renderSearchResults(reverse = false) {
+        const container = document.getElementById("search-results");
+        const empty = document.getElementById("search-empty");
+        let data = SEARCH_DATA.filter((d) => {
+          const matchFilter =
+            searchFilter === "전체" ||
+            d.tag.includes(
+              searchFilter.replace(/[💰💕💼🌿🚀📚✈️]/g, "").trim(),
+            );
+          const matchKey =
+            !searchKeyword ||
+            d.title.includes(searchKeyword) ||
+            d.preview.includes(searchKeyword);
+          return matchFilter && matchKey;
+        });
+        if (reverse) data = [...data].reverse();
+
+        // Remove old rendered items (keep empty state)
+        container
+          .querySelectorAll(".search-result-item")
+          .forEach((el) => el.remove());
+        empty.classList.toggle("show", data.length === 0);
+
+        document.getElementById("search-count").innerHTML =
+          `<strong>${data.length}</strong>개의 상담 내역`;
+
+        data.forEach((d, i) => {
+          const title = searchKeyword
+            ? d.title.replace(
+                new RegExp(searchKeyword, "g"),
+                `<mark>${searchKeyword}</mark>`,
+              )
+            : d.title;
+          const div = document.createElement("div");
+          div.className = "search-result-item fade-in";
+          div.style.animationDelay = i * 0.05 + "s";
+          div.onclick = () => showView("chat");
+          div.innerHTML = `
+            <div class="search-result-icon">${d.icon}</div>
+            <div class="search-result-body">
+              <div class="search-result-title">${title}</div>
+              <div class="search-result-preview">${d.preview}</div>
+              <div class="search-result-meta">
+                <span>${d.date}</span>
+                <span class="search-result-tag">${d.icon} ${d.tag}</span>
+                <span>메시지 ${d.msgs}개</span>
+              </div>
+            </div>
+            <div class="search-result-chevron">›</div>`;
+          container.insertBefore(div, empty);
+        });
+      }
+
+      // ── Fortune animations
+      function initFortune() {
+        // score ring
+        const circ = 339.3;
+        const score = 78;
+        const offset = circ * (1 - score / 100);
+        setTimeout(() => {
+          const ring = document.getElementById("main-ring");
+          if (ring) ring.style.strokeDashoffset = offset;
+        }, 100);
+
+        // count up main score
+        countUp(document.getElementById("main-score-num"), 0, 78, 1400);
+
+        // cat scores + bars
+        document.querySelectorAll(".cat-score").forEach((el) => {
+          const s = parseInt(el.dataset.score);
+          countUp(el, 0, s, 1200);
+        });
+        setTimeout(() => {
+          document.querySelectorAll(".cat-fill").forEach((el) => {
+            el.style.width = el.dataset.width + "%";
+          });
+        }, 150);
+
+        // fortune calendar
+        renderCalendar();
+      }
+
+      // ── Fortune Calendar ──────────────────────────────────────────
+      // Mock data: dates the user has viewed fortune + overall score
+      const FORTUNE_HISTORY = {
+        "2026-04-01": 82,
+        "2026-04-02": 44,
+        "2026-04-03": 67,
+        "2026-04-05": 91,
+        "2026-04-06": 55,
+        "2026-04-07": 30,
+        "2026-04-08": 78,
+        "2026-04-09": 63,
+        "2026-04-10": 88,
+        "2026-04-11": 51,
+        "2026-04-12": 72,
+        "2026-04-13": 78,
+        "2026-03-28": 60,
+        "2026-03-29": 85,
+        "2026-03-30": 42,
+        "2026-03-31": 74,
+      };
+
+      function fortuneEmoji(score) {
+        if (score >= 70) return "✨";
+        if (score >= 50) return "🙂";
+        return "😔";
+      }
+
+      const calToday = new Date(2026, 3, 13); // April 13, 2026
+      let calYear  = calToday.getFullYear();
+      let calMonth = calToday.getMonth(); // 0-indexed
+
+      function renderCalendar() {
+        const grid  = document.getElementById("fortune-cal-grid");
+        const label = document.getElementById("cal-month-label");
+        if (!grid || !label) return;
+
+        const monthNames = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+        label.textContent = `${calYear}년 ${monthNames[calMonth]}`;
+
+        const dows = ["일","월","화","수","목","금","토"];
+        let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join("");
+
+        const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+        const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+        // empty cells before first day
+        for (let i = 0; i < firstDay; i++) {
+          html += `<div class="cal-day empty"></div>`;
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+          const mm   = String(calMonth + 1).padStart(2, "0");
+          const dd   = String(d).padStart(2, "0");
+          const key  = `${calYear}-${mm}-${dd}`;
+          const dow  = (firstDay + d - 1) % 7; // 0=Sun, 6=Sat
+          const score = FORTUNE_HISTORY[key];
+          const isToday = (
+            calYear  === calToday.getFullYear() &&
+            calMonth === calToday.getMonth()    &&
+            d        === calToday.getDate()
+          );
+          const isFuture = new Date(calYear, calMonth, d) > calToday;
+
+          let cls = "cal-day";
+          if (dow === 0) cls += " sun";
+          if (dow === 6) cls += " sat";
+          if (isToday)  cls += " today";
+          if (isFuture) cls += " future";
+          if (score !== undefined) cls += " has-fortune";
+
+          const emoji = score !== undefined ? `<span class="cal-day-emoji">${fortuneEmoji(score)}</span>` : "";
+          html += `<div class="${cls}" title="${score !== undefined ? `전체운 ${score}점` : ""}">`
+                + `<span class="cal-day-num">${d}</span>${emoji}</div>`;
+        }
+
+        grid.innerHTML = html;
+      }
+
+      function calPrev() {
+        calMonth--;
+        if (calMonth < 0) { calMonth = 11; calYear--; }
+        renderCalendar();
+      }
+      function calNext() {
+        const now = new Date(calYear, calMonth + 1, 1);
+        if (now > new Date(calToday.getFullYear(), calToday.getMonth() + 1, 1)) return;
+        calMonth++;
+        if (calMonth > 11) { calMonth = 0; calYear++; }
+        renderCalendar();
+      }
+
+      function countUp(el, from, to, dur) {
+        if (!el) return;
+        const start = performance.now();
+        function tick(now) {
+          const p = Math.min((now - start) / dur, 1);
+          const ease = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(from + (to - from) * ease);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      // ── Saju animations
+      function initSaju() {
+        setTimeout(() => {
+          document.querySelectorAll(".ohaeng-bar").forEach((el) => {
+            el.style.width = el.dataset.w + "%";
+          });
+        }, 200);
+      }
+
+      // ── Scroll to bottom
+      (function initScrollToBottom() {
+        const msgs = document.getElementById("chat-msgs");
+        const btn  = document.getElementById("scroll-to-bottom-btn");
+        if (!msgs || !btn) return;
+
+        function updateVisibility() {
+          const distanceFromBottom = msgs.scrollHeight - msgs.scrollTop - msgs.clientHeight;
+          if (distanceFromBottom > 80) {
+            btn.classList.add("visible");
+          } else {
+            btn.classList.remove("visible");
+          }
+        }
+
+        msgs.addEventListener("scroll", updateVisibility, { passive: true });
+        updateVisibility();
+      })();
+
+      function scrollToBottom() {
+        const msgs = document.getElementById("chat-msgs");
+        if (!msgs) return;
+        msgs.scrollTo({ top: msgs.scrollHeight, behavior: "smooth" });
+      }
+
+      // ── Chat
+      function handleKey(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendMsg();
+        }
+      }
+      function autoResize(el) {
+        el.style.height = "auto";
+        el.style.height = Math.min(el.scrollHeight, 120) + "px";
+      }
+      const aiResponses = [
+        "임수(壬水) 일간으로 태어나신 분은 지혜롭고 유연한 성격을 지니셨습니다.\n\n올해 운세를 살펴보면, 수(水)의 기운이 강한 해로 직관과 통찰력이 더욱 빛을 발하는 시기입니다. 특히 인간관계에서 좋은 조력자를 만날 가능성이 높습니다.",
+        "좋은 질문이십니다. 사주상으로 보면 부동산보다는 금융 자산, 특히 분산 투자가 유리한 구조입니다.\n\n하반기 9~11월이 재물이 들어오는 길한 시기이니 그때를 주목하세요.",
+        "사주 원국에서 오행의 균형을 보면, 금(金)과 수(水)가 강하고 목(木)이 약한 편입니다.\n\n이런 구조는 냉철한 판단력은 있지만 추진력이 다소 약할 수 있습니다. 초록색 식물을 가까이 두시면 목(木)의 기운을 보완하는 데 도움이 됩니다.",
+      ];
+      let aiIdx = 0;
+      function sendMsg() {
+        const inp = document.querySelector(".chat-input");
+        const txt = inp.value.trim();
+        if (!txt) return;
+        const msgs = document.getElementById("chat-msgs");
+
+        // user bubble
+        const userRow = document.createElement("div");
+        userRow.className = "msg-row user";
+        userRow.innerHTML = `<div class="bubble-time" style="align-self:flex-end;">${getTime()}</div><div class="bubble bubble-user">${escHtml(txt)}</div>`;
+        msgs.appendChild(userRow);
+
+        inp.value = "";
+        inp.style.height = "auto";
+        msgs.scrollTop = msgs.scrollHeight;
+
+        // typing
+        const typingRow = document.createElement("div");
+        typingRow.className = "msg-row ai";
+        typingRow.innerHTML = `<div class="ai-avatar">✦</div><div class="bubble bubble-ai" style="padding:8px 18px;"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+        msgs.appendChild(typingRow);
+        msgs.scrollTop = msgs.scrollHeight;
+
+        setTimeout(
+          () => {
+            typingRow.remove();
+            const res = aiResponses[aiIdx % aiResponses.length];
+            aiIdx++;
+            const aiRow = document.createElement("div");
+            aiRow.className = "msg-row ai";
+            aiRow.innerHTML = `<div class="ai-avatar">✦</div><div><div class="bubble bubble-ai">${res.replace(/\n/g, "<br/>")}</div><div class="bubble-time" style="margin-top:4px;display:block;padding-left:4px;">${getTime()}</div></div>`;
+            msgs.appendChild(aiRow);
+            msgs.scrollTop = msgs.scrollHeight;
+          },
+          1600 + Math.random() * 800,
+        );
+      }
+      function getTime() {
+        const d = new Date();
+        const h = d.getHours();
+        const m = String(d.getMinutes()).padStart(2, "0");
+        return `${h >= 12 ? "오후" : "오전"} ${h > 12 ? h - 12 : h}:${m}`;
+      }
+      function escHtml(s) {
+        return s
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      // ── Theme toggle
+      function toggleTheme() {
+        const isLight = document.body.classList.toggle("light");
+        document.getElementById("theme-btn").textContent = isLight
+          ? "🌙"
+          : "☀️";
+      }
+
+      // ── Mobile sidebar
+      function openMobileSidebar() {
+        document.querySelector(".sidebar").classList.add("mobile-open");
+        const bd = document.getElementById("sidebar-backdrop");
+        bd.classList.add("open");
+      }
+      function closeMobileSidebar() {
+        document.querySelector(".sidebar").classList.remove("mobile-open");
+        document.getElementById("sidebar-backdrop").classList.remove("open");
+      }
+
+      // ── Settings menu
+      function toggleMenu() {
+        const menu = document.getElementById("settings-menu");
+        const btn = document.getElementById("settings-btn");
+        const isOpen = menu.classList.toggle("open");
+        btn.classList.toggle("open", isOpen);
+      }
+      function closeMenu() {
+        document.getElementById("settings-menu").classList.remove("open");
+        document.getElementById("settings-btn").classList.remove("open");
+      }
+      document.addEventListener("click", (e) => {
+        const sb = document.querySelector(".sb-bottom");
+        if (sb && !sb.contains(e.target)) closeMenu();
+      });
+
+      // ── Modal
+      function openModal(id) {
+        document.getElementById(id).classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      function handleOverlayClick(e, id) {
+        if (e.target === document.getElementById(id)) closeModal(id);
+      }
+
+      // ── Chat clear confirm
+      function openChatClearConfirm() {
+        document.getElementById("chat-clear-modal").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeChatClearConfirm() {
+        const box = document.getElementById("chat-clear-box");
+        box.style.animation = "scBoxOut 0.18s ease forwards";
+        setTimeout(() => {
+          document.getElementById("chat-clear-modal").classList.remove("open");
+          document.body.style.overflow = "";
+          box.style.animation = "";
+        }, 160);
+      }
+      function doChatClear() {
+        // 실제 앱에서는 API 호출
+        const msgs = document.getElementById("chat-msgs");
+        // 첫 번째 AI 인사 메시지만 남기고 삭제
+        const rows = msgs.querySelectorAll(".msg-row");
+        rows.forEach((r, i) => {
+          if (i > 0) r.remove();
+        });
+        closeChatClearConfirm();
+      }
+
+      // ── Confirm Modal
+      function openConfirm(type) {
+        const id =
+          type === "danger" ? "confirm-modal-danger" : "confirm-modal-primary";
+        document.getElementById(id).classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeConfirm(id) {
+        const el = document.getElementById(id);
+        // 닫힘 애니메이션
+        el.style.animation = "none";
+        const box = el.querySelector(".confirm-box");
+        if (box) {
+          box.style.animation = "confirmOut 0.2s ease forwards";
+        }
+        setTimeout(() => {
+          el.classList.remove("open");
+          document.body.style.overflow = "";
+          if (box) box.style.animation = "";
+          el.style.animation = "";
+        }, 180);
+      }
+      function handleConfirmOverlay(e, id) {
+        if (e.target === document.getElementById(id)) closeConfirm(id);
+      }
+
+      // ── Toggle buttons (gender, calendar)
+      function selectToggle(el, group) {
+        el.closest(".toggle-group")
+          .querySelectorAll(".toggle-btn")
+          .forEach((b) => b.classList.remove("selected"));
+        el.classList.add("selected");
+      }
+
+      // ── Password strength
+      function checkPwStrength(v) {
+        const bars = [1, 2, 3, 4].map((i) =>
+          document.getElementById("pw-bar-" + i),
+        );
+        const label = document.getElementById("pw-label");
+        if (!bars[0]) return;
+        let score = 0;
+        if (v.length >= 8) score++;
+        if (/[A-Z]/.test(v)) score++;
+        if (/[0-9]/.test(v)) score++;
+        if (/[^A-Za-z0-9]/.test(v)) score++;
+        const colors = ["#f87171", "#fb923c", "#fbbf24", "#34d399"];
+        const labels = ["약함", "보통", "강함", "매우 강함"];
+        bars.forEach((b, i) => {
+          b.style.width = i < score ? "100%" : "0%";
+          b.style.background = score > 0 ? colors[score - 1] : "transparent";
+        });
+        label.textContent = score > 0 ? labels[score - 1] : "";
+        label.style.color = score > 0 ? colors[score - 1] : "";
+      }
+
+      // ── Init
+      window.addEventListener("load", () => {
+        initFortune();
+      });
+    </script>
+  </body>
+</html>

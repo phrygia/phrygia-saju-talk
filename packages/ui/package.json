@@ -2,25 +2,52 @@
   "name": "@repo/ui",
   "version": "0.0.0",
   "private": true,
+  "imports": {
+    "#styles": "./src/styles.css"
+  },
   "exports": {
-    "./*": "./src/*.tsx"
+    "./button": "./src/button.tsx",
+    "./components/*": "./src/components/*.tsx",
+    "./components/menu": "./src/components/menu.tsx",
+    "./components/skeleton": "./src/components/skeleton.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./styles.css": "./src/styles.css"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@storybook/react": "^10.3.1",
+    "@storybook/react-vite": "^10.3.1",
+    "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
-    "typescript": "5.9.2"
+    "postcss": "^8.5.8",
+    "sass": "^1.98.0",
+    "storybook": "^10.3.1",
+    "typescript": "5.9.2",
+    "vite": "^8.0.1"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-toast": "^1.2.15",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.577.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.2"
   }
 }
