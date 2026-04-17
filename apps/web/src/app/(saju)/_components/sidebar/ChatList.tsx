@@ -55,11 +55,9 @@ export default function ChatList() {
   const params = useParams();
   const supabase = useMemo(() => createClient(), []);
   const userId = useUserStore((s) => s.user?.id);
-  const selectedId = typeof params?.id === "string" ? params.id : "";
   const observerTarget = useRef<HTMLDivElement>(null);
-  const hasNextPageRef = useRef(false);
-  const isFetchingNextPageRef = useRef(false);
-  const fetchNextPageRef = useRef<() => void>(() => undefined);
+
+  const selectedId = typeof params?.id === "string" ? params.id : "";
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery<
@@ -131,30 +129,21 @@ export default function ChatList() {
       },
       getNextPageParam: (lastPage) => lastPage.nextPageParam,
       initialPageParam: null,
+      refetchOnMount: false,
       refetchOnWindowFocus: false,
     });
 
   const list = data.pages.flatMap((page) => page.items);
 
   useEffect(() => {
-    hasNextPageRef.current = Boolean(hasNextPage);
-    isFetchingNextPageRef.current = isFetchingNextPage;
-    fetchNextPageRef.current = () => {
-      void fetchNextPage();
-    };
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  useEffect(() => {
-    if (!observerTarget.current) return;
+    if (!hasNextPage || isFetchingNextPage || !observerTarget.current) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (
-          entries[0]?.isIntersecting &&
-          hasNextPageRef.current &&
-          !isFetchingNextPageRef.current
-        ) {
-          fetchNextPageRef.current();
+        if (entries[0]?.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
         }
       },
       { threshold: 0.1 },
@@ -163,7 +152,7 @@ export default function ChatList() {
     observer.observe(observerTarget.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
     <div>

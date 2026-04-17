@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -10,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
 import { createClient } from "@/src/lib/supabase/client";
-import AuthLayout from "@/src/components/auth/AuthLayout";
+import { loginPageType } from "@/src/app/types/user";
 import { useUserStore } from "@/src/store/user.store";
 
 const loginSchema = z.object({
@@ -20,11 +19,14 @@ const loginSchema = z.object({
     .min(8, { message: "비밀번호는 8자리 이상이어야 합니다." }),
 });
 
-export default function LoginPage() {
+export default function LoginPage({
+  onChangeTab,
+}: {
+  onChangeTab: (status: loginPageType) => void;
+}) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const setUser = useUserStore((s) => s.setUser);
-
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -64,55 +66,52 @@ export default function LoginPage() {
   };
 
   return (
-    <AuthLayout>
-      <div className="mb-7 space-y-1">
-        <h1 className="text-xl font-semibold text-foreground text-center">
-          로그인
-        </h1>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-5">
+        <Input
+          type="email"
+          label="이메일"
+          labelRequired
+          id="email"
+          placeholder="이메일을 입력해주세요."
+          variant={errors.email ? "error" : "default"}
+          errorMessage={errors.email?.message}
+          style={{ background: "white" }}
+          {...register("email")}
+        />
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-5">
-          <Input
-            type="email"
-            label="이메일"
-            labelRequired
-            id="email"
-            placeholder="이메일을 입력해주세요."
-            variant={errors.email ? "error" : "default"}
-            errorMessage={errors.email?.message}
-            {...register("email")}
-          />
-        </div>
-        <div className="mb-5">
-          <Input
-            type="password"
-            label="비밀번호"
-            labelRequired
-            id="password"
-            minLength={8}
-            variant={errors.password ? "error" : "default"}
-            errorMessage={errors.password?.message}
-            placeholder="비밀번호를 입력해주세요. (8자이상)"
-            {...register("password")}
-          />
-        </div>
-        <Button
-          type="submit"
-          size="lg"
-          fullWidth
-          className="mt-6 font-semibold !h-[48px]"
-          loading={isSubmitting}
-          disabled={loading}
+      <div className="mb-5 pb-5">
+        <Input
+          type="password"
+          label="비밀번호"
+          labelRequired
+          id="password"
+          minLength={8}
+          variant={errors.password ? "error" : "default"}
+          errorMessage={errors.password?.message}
+          placeholder="비밀번호를 입력해주세요. (8자이상)"
+          style={{ background: "white" }}
+          {...register("password")}
+        />
+        <button
+          type="button"
+          className="float-right mt-3 text-violet text-[11.5px]"
+          onClick={() => onChangeTab("forgotPassword")}
         >
-          {isSubmitting ? "로그인 중..." : "로그인"}
-        </Button>
-      </form>
-      <Link
-        href="/signup"
-        className="h-[48px] flex items-center justify-center text-center mt-2 rounded border border-[var(--default-border-color)] bg-white hover:bg-[#d9d9d9] transition-all hover:font-semibold  text-black"
+          비밀번호를 잊으셨나요?
+        </button>
+      </div>
+      <Button
+        type="submit"
+        size="lg"
+        fullWidth
+        className="mt-6 font-semibold !h-[48px]"
+        loading={isSubmitting}
+        disabled={loading}
+        style={{ borderRadius: 12 }}
       >
-        회원가입
-      </Link>
-    </AuthLayout>
+        {isSubmitting ? "로그인 중..." : "로그인"}
+      </Button>
+    </form>
   );
 }

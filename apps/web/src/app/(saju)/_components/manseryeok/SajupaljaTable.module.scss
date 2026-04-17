@@ -1,5 +1,21 @@
 .tableWrap {
   font-family: "Noto Sans KR", sans-serif;
+
+  --table-border: rgba(130, 90, 255, 0.24);
+  --table-fg: rgba(220, 205, 255, 0.92);
+  --table-fg-sub: rgba(200, 180, 255, 0.72);
+  --table-fg-muted: rgba(170, 145, 255, 0.58);
+  --table-header-bg: rgba(18, 14, 52, 0.9);
+  --table-label-bg: rgba(14, 12, 42, 0.9);
+}
+
+:global(.light) .tableWrap {
+  --table-border: rgba(100, 65, 160, 0.16);
+  --table-fg: rgba(30, 15, 70, 0.9);
+  --table-fg-sub: rgba(30, 15, 70, 0.62);
+  --table-fg-muted: rgba(80, 55, 130, 0.5);
+  --table-header-bg: var(--surface);
+  --table-label-bg: var(--surface);
 }
 
 .hint {
@@ -7,9 +23,9 @@
   align-items: flex-start;
   gap: 6px;
   font-size: 12px;
-  color: var(--foreground-sub);
+  color: var(--table-fg-sub);
   padding: 10px 14px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--table-border);
   border-radius: 8px;
   margin-bottom: 12px;
   line-height: 1.6;
@@ -22,7 +38,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid var(--border);
+  border: 1px solid var(--table-border);
   border-radius: 10px;
   overflow: hidden;
   min-width: 480px;
@@ -33,17 +49,19 @@
   font-size: 12px;
   font-weight: 600;
   text-align: center;
-  color: var(--foreground-sub);
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  color: var(--table-fg);
+  background: var(--table-header-bg);
+  border-bottom: 1px solid var(--table-border);
+  border-right: 1px solid var(--table-border);
 
-  &:last-child { border-right: none; }
+  &:last-child {
+    border-right: none;
+  }
 }
 
 .tr {
   &:not(:last-child) td {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--table-border);
   }
 }
 
@@ -51,24 +69,25 @@
   padding: 10px 8px;
   text-align: center;
   vertical-align: middle;
-  border-right: 1px solid var(--border);
+  border-right: 1px solid var(--table-border);
   font-size: 12px;
 
-  &:last-child { border-right: none; }
+  &:last-child {
+    border-right: none;
+  }
 }
 
 .ilganTd {
-  background: var(--hover);
+  background: rgba(124, 92, 252, 0.1);
 }
 
 .labelTd {
   font-size: 11px;
   font-weight: 600;
-  color: var(--foreground-sub);
-  background: var(--surface);
+  color: var(--table-fg);
+  background: var(--table-label-bg);
   min-width: 64px;
 }
-
 
 .cheonganChar {
   display: inline-block;
@@ -76,7 +95,6 @@
   font-weight: 700;
   line-height: 1;
 }
-
 
 .ilganCircle {
   display: inline-flex;
@@ -89,7 +107,6 @@
   border: 1.5px solid var(--border-hover);
 }
 
-
 .jijiChar {
   display: inline-block;
   font-size: 30px;
@@ -97,45 +114,53 @@
   line-height: 1;
 }
 
-
 .termBtn {
   font-size: inherit;
   font-weight: inherit;
-  color: var(--foreground-sub);
+  color: var(--table-fg);
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
   text-decoration: underline;
-  text-decoration-color: rgba(99, 102, 241, 0.5);
+  text-decoration-color: rgba(99, 102, 241, 0.55);
   text-underline-offset: 3px;
   font-family: "Noto Sans KR", sans-serif;
   transition: color 0.15s;
 
   &:hover {
-    color: #6366f1;
-    text-decoration-color: #6366f1;
+    color: #818cf8;
+    text-decoration-color: #818cf8;
   }
 }
 
+:global(.light) .termBtn:hover {
+  color: #6366f1;
+  text-decoration-color: #6366f1;
+}
 
 .sipshinBtn {
   font-size: 13px;
-  color: var(--foreground-sub);
+  color: var(--table-fg);
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   font-family: "Noto Sans KR", sans-serif;
 
   &:hover {
-    background: rgba(99, 102, 241, 0.1);
-    color: #6366f1;
+    background: rgba(99, 102, 241, 0.12);
+    color: #818cf8;
   }
 }
 
+:global(.light) .sipshinBtn:hover {
+  color: #6366f1;
+}
 
 .sipshinBtnIlgan {
   border: 1px solid rgba(99, 102, 241, 0.35);
@@ -147,7 +172,6 @@
     background: rgba(99, 102, 241, 0.14);
   }
 }
-
 
 .jijangganCell {
   display: flex;
@@ -172,10 +196,9 @@
 }
 
 .jijangganSipshin {
-  color: var(--foreground-muted);
+  color: var(--table-fg-sub);
   font-size: 10.5px;
 }
-
 
 .gilshinCell {
   display: flex;
@@ -186,16 +209,14 @@
 
 .gilshinText {
   font-size: 11px;
-  color: var(--foreground-muted);
+  color: var(--table-fg-sub);
   line-height: 1.5;
 }
 
-
 .bodyText {
   font-size: 11.5px;
-  color: var(--foreground-sub);
+  color: var(--table-fg);
 }
-
 
 .unseongCell {
   display: flex;
@@ -207,14 +228,13 @@
 .unseongMain {
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--foreground);
+  color: var(--table-fg);
 }
 
 .unseongSub {
   font-size: 10.5px;
-  color: var(--foreground-muted);
+  color: var(--table-fg-sub);
 }
-
 
 .gongmangTd {
   text-align: center;
@@ -229,10 +249,10 @@
 .gongmangHangul {
   font-size: 14px;
   font-weight: 700;
-  color: var(--foreground);
+  color: var(--table-fg);
 }
 
 .gongmangHanja {
   font-size: 12px;
-  color: var(--foreground-muted);
+  color: var(--table-fg-sub);
 }

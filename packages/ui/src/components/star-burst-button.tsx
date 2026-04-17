@@ -1,7 +1,7 @@
 "use client";
 
-import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 import styles from "./star-burst-button.module.scss";
 
@@ -76,7 +76,7 @@ function StarBurstButton({
   const colors: string[] =
     VARIANT_COLORS[variant ?? "default"] ?? VARIANT_COLORS["default"]!;
 
-  const handleClick = React.useCallback(
+  const handleButtonEffect = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled) return;
 
@@ -107,19 +107,21 @@ function StarBurstButton({
       setTimeout(() => {
         setParticles((prev) => prev.filter((p) => !ids.has(p.id)));
       }, 750);
-
-      onClick?.(e);
     },
-    [disabled, particleCount, colors, onClick],
+    [disabled, particleCount, colors],
   );
 
   return (
     <button
       disabled={disabled}
       className={cn(
+        "outline-none",
         starBurstButtonVariants({ variant, size, fullWidth, className }),
       )}
-      onClick={handleClick}
+      onMouseEnter={handleButtonEffect}
+      onClick={(e) => {
+        if (onClick) onClick?.(e);
+      }}
       {...props}
     >
       {children}

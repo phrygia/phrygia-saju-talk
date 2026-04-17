@@ -72,42 +72,6 @@ export async function getChatMessage(
   return { success: true, data: messages };
 }
 
-export async function searchMessages(
-  query: string,
-  pageParam: MessageCursor | null = null,
-) {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError || !user) {
-    return { success: false, message: "회원정보가 없습니다." };
-  }
-  const cursor = pageParam;
-
-  let messageQuery = supabase
-    .from(messagesTableName)
-    .select("*")
-    .eq("user_id", user.id)
-    .ilike("content", `%${query.trim()}%`)
-    .order("created_at", { ascending: false })
-    .order("id", { ascending: false })
-    .limit(DEFAULT_PAGE_SIZE);
-
-  messageQuery = applyMessageCursor(messageQuery, cursor);
-
-  const { data, error } = await messageQuery;
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  return data ?? [];
-}
-
 export async function saveChatMessage(
   conversationId: string,
   role: "user" | "assistant",

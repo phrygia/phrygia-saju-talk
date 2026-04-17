@@ -69,8 +69,7 @@ saju-talk/
 │           │   │   ├── chat/              # AI 스트리밍 엔드포인트
 │           │   │   ├── fortune/           # 운세 생성 엔드포인트
 │           │   │   └── manseryeok/        # 만세력 생성 엔드포인트
-│           │   ├── login/
-│           │   └── signup/
+│           │   └── login/
 │           ├── components/     # 공유 컴포넌트
 │           ├── store/          # Zustand 스토어
 │           ├── lib/            # 유틸리티 (사주 계산, Supabase 클라이언트 등)

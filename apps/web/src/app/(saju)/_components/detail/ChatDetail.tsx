@@ -34,6 +34,8 @@ import { type SajuQuestion } from "@/src/app/(saju)/_constants/saju";
 import { BirthInfo } from "@/src/app/types/fortune";
 import RecommendSajuQuestions from "@/src/app/(saju)/_components/saju/RecommendSajuQuestions";
 import styles from "./ChatDetail.module.scss";
+import { Button } from "@repo/ui/components/button";
+import { set } from "zod";
 
 interface ChatDetailProps {
   initialMessages: Messages[];
@@ -81,6 +83,7 @@ export default function ChatDetail({
             calendarType: initialProfile.calendarType,
             birthDate: initialProfile.birthDate,
             birthTime: initialProfile.birthTime,
+            name: initialProfile?.name,
           }
         : undefined,
     },
@@ -265,7 +268,21 @@ export default function ChatDetail({
 
   return (
     <>
-      <ChatHeader title="사주 상담">
+      <ChatHeader
+        title="사주 상담"
+        hideNewConversationButton
+        rightButton={
+          <Button
+            type="button"
+            size="sm"
+            variant="secondary"
+            className="px-2.5 min-h-[30px] !hidden md:!block"
+            onClick={() => setModalOpen(true)}
+          >
+            상담 삭제하기
+          </Button>
+        }
+      >
         {initialMessages?.[0]?.profile && (
           <SimpleBirthInfo initialBirthInfo={initialMessages?.[0]?.profile} />
         )}
@@ -386,11 +403,15 @@ export default function ChatDetail({
         onClose={() => setModalOpen(false)}
         onConfirm={handleDeleteConversation}
         disabled={loading || isLoading}
-      >
-        <h2 className="mb-10 text-lg font-semibold">
-          상담을 삭제하시겠습니까?
-        </h2>
-      </ConfirmModal>
+        icon="🗑"
+        title="상담 내역 삭제"
+        subtitle={
+          <>
+            상담 내역이 영구적으로 삭제됩니다.
+            <br /> 이 작업은 되돌릴 수 없습니다.
+          </>
+        }
+      />
     </>
   );
 }

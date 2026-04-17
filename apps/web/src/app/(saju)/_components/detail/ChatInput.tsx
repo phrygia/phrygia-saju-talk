@@ -46,7 +46,7 @@ export default function ChatInput({
       return toast.error("로그인이 필요합니다.");
     }
 
-    if (!initialBirthInfo) return openBirthInfoModal();
+    if (!initialBirthInfo?.birthDate) return openBirthInfoModal();
 
     setLoading(true);
 

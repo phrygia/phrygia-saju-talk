@@ -1,6 +1,8 @@
 "use client";
 
 import React, { Suspense, memo, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/src/store/user.store";
 import { ChatSidebar } from "@/src/app/(saju)/_components/sidebar/ChatSidebar";
 
@@ -15,15 +17,31 @@ export default function ChatLayout({
   initialProfile: any;
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  // 마운트 시 및 서버 데이터 변경 시 store 동기화
   useEffect(() => {
     useUserStore.setState({
-      ...(initialUser?.id
-        ? { user: { id: initialUser.id, email: initialUser.email } }
-        : {}),
-      ...(initialProfile ? { birthInfo: initialProfile } : {}),
+      user: initialUser?.id
+        ? { id: initialUser.id, email: initialUser.email }
+        : null,
+      birthInfo: initialProfile ?? null,
       isLoading: false,
     });
-  }, []);
+  }, [initialUser, initialProfile]);
+
+  useEffect(() => {
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        useUserStore.setState({ isLoading: false });
+        router.refresh();
+        // void queryClient.invalidateQueries();
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, [router, queryClient]);
 
   return (
     <div className="flex h-screen text-foreground">

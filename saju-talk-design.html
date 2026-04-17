@@ -833,8 +833,12 @@
         padding-bottom: 8px;
         font-weight: 500;
       }
-      .cal-dow:first-child { color: #f87171; }
-      .cal-dow:last-child  { color: #93c5fd; }
+      .cal-dow:first-child {
+        color: #f87171;
+      }
+      .cal-dow:last-child {
+        color: #93c5fd;
+      }
       .cal-day {
         aspect-ratio: 1;
         border-radius: 10px;
@@ -849,7 +853,9 @@
         position: relative;
         transition: background 0.15s;
       }
-      .cal-day.empty { pointer-events: none; }
+      .cal-day.empty {
+        pointer-events: none;
+      }
       .cal-day.today {
         background: rgba(124, 92, 252, 0.14);
         border: 1px solid rgba(124, 92, 252, 0.35);
@@ -870,9 +876,15 @@
         font-size: 13px;
         line-height: 1;
       }
-      .cal-day.sun .cal-day-num { color: #fca5a5; }
-      .cal-day.sat .cal-day-num { color: #93c5fd; }
-      .cal-day.today .cal-day-num { color: var(--violet); }
+      .cal-day.sun .cal-day-num {
+        color: #fca5a5;
+      }
+      .cal-day.sat .cal-day-num {
+        color: #93c5fd;
+      }
+      .cal-day.today .cal-day-num {
+        color: var(--violet);
+      }
       .cal-day.future {
         opacity: 0.28;
         pointer-events: none;
@@ -2290,6 +2302,571 @@
         background: rgba(248, 113, 113, 0.18);
       }
 
+      /* ─── GUNGHAP VIEW ─── */
+      .gunghap-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 28px 32px 48px;
+      }
+      .gunghap-scroll::-webkit-scrollbar { width: 3px; }
+      .gunghap-scroll::-webkit-scrollbar-track { background: transparent; }
+      .gunghap-scroll::-webkit-scrollbar-thumb { background: rgba(124,92,252,.2); border-radius: 2px; }
+
+      /* page header */
+      .gq-page-header { margin-bottom: 28px; }
+      .gq-eyebrow {
+        font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+        color: var(--rose); margin-bottom: 8px;
+        display: flex; align-items: center; gap: 6px;
+      }
+      .gq-eyebrow::before { content: "✦"; font-size: 8px; }
+      .gq-page-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px; color: var(--text); line-height: 1.2; margin-bottom: 4px;
+      }
+      .gq-page-sub { font-size: 12px; color: var(--text2); font-weight: 300; }
+
+      /* two-col layout: my card + form */
+      .gq-two-col {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 0;
+        align-items: start;
+        margin-bottom: 8px;
+      }
+
+      /* my info card */
+      .gq-my-card {
+        background: linear-gradient(135deg, rgba(20,16,58,.9), rgba(12,10,40,.9));
+        border: 1px solid rgba(167,139,250,.22);
+        border-radius: 20px;
+        padding: 22px 20px;
+        display: flex; flex-direction: column; align-items: center;
+        text-align: center; gap: 6px;
+        position: relative; overflow: hidden;
+      }
+      .gq-my-card::before {
+        content: ""; position: absolute; top: -40px; left: -40px;
+        width: 150px; height: 150px;
+        background: radial-gradient(circle, rgba(167,139,250,.1) 0%, transparent 65%);
+        pointer-events: none;
+      }
+      .gq-card-tag {
+        font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase;
+        color: var(--violet); background: rgba(124,92,252,.1);
+        border: 1px solid rgba(124,92,252,.22);
+        padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+      }
+      .gq-card-tag.partner { color: var(--rose); background: rgba(244,114,182,.1); border-color: rgba(244,114,182,.22); }
+      .gq-person-hanzi {
+        font-family: "DM Serif Display", serif; font-size: 52px;
+        background: linear-gradient(135deg, #a78bfa, #60a5fa);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text; line-height: 1;
+        filter: drop-shadow(0 0 18px rgba(167,139,250,.4));
+        margin-bottom: 2px;
+      }
+      .gq-person-hanzi.fire {
+        background: linear-gradient(135deg, #f472b6, #f0c060);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        filter: drop-shadow(0 0 18px rgba(244,114,182,.4));
+      }
+      .gq-person-name { font-size: 14px; color: var(--text); font-weight: 500; }
+      .gq-person-birth { font-size: 11.5px; color: var(--text2); }
+      .gq-person-cal {
+        font-size: 10px; color: var(--muted); background: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.07); padding: 2px 8px; border-radius: 10px;
+        margin-top: 2px;
+      }
+      .gq-pillar-row {
+        display: flex; gap: 5px; margin-top: 8px; justify-content: center;
+      }
+      .gq-pillar-mini {
+        font-family: "DM Serif Display", serif; font-size: 15px;
+        background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+        border-radius: 8px; padding: 4px 8px; color: var(--text2);
+        letter-spacing: .04em;
+      }
+
+      /* VS connector */
+      .gq-vs-col {
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center; padding: 0 16px; min-height: 200px;
+        gap: 8px;
+      }
+      .gq-vs-line { flex: 1; width: 1px; background: linear-gradient(to bottom, transparent, rgba(244,114,182,.3), transparent); min-height: 40px; }
+      .gq-vs-orb {
+        width: 44px; height: 44px; border-radius: 50%;
+        background: linear-gradient(135deg, rgba(167,139,250,.15), rgba(244,114,182,.12));
+        border: 1px solid rgba(244,114,182,.28);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px; flex-shrink: 0;
+        box-shadow: 0 0 20px rgba(244,114,182,.18);
+      }
+
+      /* partner form card */
+      .gq-form-card {
+        background: linear-gradient(135deg, rgba(20,16,58,.9), rgba(12,10,40,.9));
+        border: 1px solid rgba(244,114,182,.18);
+        border-radius: 20px;
+        padding: 22px 20px;
+        position: relative; overflow: hidden;
+      }
+      .gq-form-card::before {
+        content: ""; position: absolute; bottom: -40px; right: -40px;
+        width: 150px; height: 150px;
+        background: radial-gradient(circle, rgba(244,114,182,.08) 0%, transparent 65%);
+        pointer-events: none;
+      }
+      .gq-text-input {
+        width: 100%; padding: 9px 12px; border-radius: 10px;
+        background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+        color: var(--text); font-family: "Noto Sans KR", sans-serif;
+        font-size: 12.5px; outline: none; transition: border-color .18s;
+      }
+      .gq-text-input::placeholder { color: var(--muted); }
+      .gq-text-input:focus { border-color: rgba(244,114,182,.4); box-shadow: 0 0 0 3px rgba(244,114,182,.06); }
+      body.light .gq-text-input {
+        background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.1); color: var(--text);
+      }
+
+      .gq-analyze-btn {
+        width: 100%; margin-top: 18px;
+        padding: 13px; border-radius: 12px; border: none;
+        background: linear-gradient(135deg, rgba(167,139,250,.25), rgba(244,114,182,.2));
+        border: 1px solid rgba(244,114,182,.35);
+        color: #f0d4f8; font-size: 13.5px; font-weight: 600;
+        font-family: "Noto Sans KR", sans-serif;
+        cursor: pointer; transition: all .22s;
+        letter-spacing: .04em;
+      }
+      .gq-analyze-btn:hover {
+        background: linear-gradient(135deg, rgba(167,139,250,.38), rgba(244,114,182,.32));
+        box-shadow: 0 6px 24px rgba(244,114,182,.25);
+        transform: translateY(-2px);
+      }
+
+      /* ── back button ── */
+      .gq-back-btn {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 7px 14px; border-radius: 9px; border: none;
+        background: rgba(124,92,252,.1); border: 1px solid rgba(124,92,252,.2);
+        color: var(--violet); font-size: 12px; font-family: "Noto Sans KR", sans-serif;
+        cursor: pointer; transition: all .15s; margin-bottom: 24px;
+      }
+      .gq-back-btn:hover { background: rgba(124,92,252,.18); }
+
+      /* ── persons bar ── */
+      .gq-persons-bar {
+        display: flex; align-items: center; gap: 12px;
+        background: linear-gradient(135deg, rgba(18,14,52,.95), rgba(12,10,40,.95));
+        border: 1px solid rgba(130,90,255,.16);
+        border-radius: 18px; padding: 16px 20px; margin-bottom: 22px;
+      }
+      .gq-person-pill {
+        flex: 1; display: flex; align-items: center; gap: 12px;
+      }
+      .gq-person-pill.partner { flex-direction: row-reverse; }
+      .gq-pill-hanzi {
+        font-family: "DM Serif Display", serif; font-size: 32px;
+        width: 52px; height: 52px; border-radius: 14px;
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.2);
+      }
+      .gq-pill-hanzi.fire-pill {
+        background: rgba(244,114,182,.1); border-color: rgba(244,114,182,.2);
+      }
+      .gq-pill-name { font-size: 13px; color: var(--text); font-weight: 500; }
+      .gq-pill-info { font-size: 10.5px; color: var(--text2); margin-top: 2px; }
+      .gq-pill.partner { text-align: right; }
+      .gq-compat-symbol {
+        font-size: 22px; flex-shrink: 0;
+        filter: drop-shadow(0 0 12px rgba(244,114,182,.5));
+      }
+
+      /* ── main score ── */
+      .gq-main-score {
+        display: grid; grid-template-columns: auto 1fr;
+        gap: 28px; align-items: center;
+        background: linear-gradient(135deg, rgba(20,16,58,.95), rgba(12,10,40,.95));
+        border: 1px solid rgba(244,114,182,.18);
+        border-radius: 22px; padding: 26px 28px; margin-bottom: 20px;
+        position: relative; overflow: hidden;
+      }
+      .gq-main-score::before {
+        content: ""; position: absolute; top: -60px; right: -60px;
+        width: 240px; height: 240px;
+        background: radial-gradient(circle, rgba(244,114,182,.09) 0%, transparent 65%);
+        pointer-events: none;
+      }
+      .gq-score-ring-wrap {
+        position: relative; width: 160px; height: 160px; flex-shrink: 0;
+      }
+      .gq-score-ring-wrap svg { transform: rotate(-90deg); }
+      .gq-ring-prog {
+        stroke-dasharray: 427; stroke-dashoffset: 427;
+        transition: stroke-dashoffset 1.4s cubic-bezier(.25,.46,.45,.94);
+      }
+      .gq-score-inner {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+      }
+      .gq-score-num {
+        font-family: "DM Serif Display", serif; font-size: 46px; line-height: 1;
+        background: linear-gradient(135deg, #e8e0ff, #f472b6 50%, #f0c060);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      }
+      .gq-score-denom { font-size: 11px; color: var(--muted); margin-top: 3px; }
+      .gq-score-verdict {
+        font-size: 11px; color: var(--rose); letter-spacing: .1em;
+        margin-top: 5px; font-weight: 600;
+      }
+      .gq-score-tag {
+        display: inline-flex; align-items: center; gap: 5px;
+        background: rgba(244,114,182,.1); border: 1px solid rgba(244,114,182,.25);
+        color: var(--rose); font-size: 10px; letter-spacing: .1em;
+        padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+      }
+      .gq-score-text {
+        font-family: "Noto Serif KR", serif; font-size: 13.5px;
+        line-height: 1.9; color: var(--text2); font-weight: 300;
+      }
+
+      /* ── cat grid ── */
+      .gq-cat-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 12px; margin-bottom: 20px;
+      }
+      .gq-cat-card {
+        background: linear-gradient(135deg, rgba(18,14,52,.95), rgba(12,10,38,.95));
+        border: 1px solid rgba(130,90,255,.13);
+        border-radius: 16px; padding: 16px 14px;
+        transition: all .22s; cursor: default;
+        position: relative; overflow: hidden;
+      }
+      .gq-cat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(0,0,0,.3); }
+      .gq-cat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+      .gq-cat-icon { font-size: 20px; }
+      .gq-cat-score { font-family: "DM Serif Display", serif; font-size: 22px; }
+      .gq-cat-name { font-size: 11.5px; color: var(--text2); margin-bottom: 8px; }
+      .gq-cat-bar {
+        height: 3px; background: rgba(255,255,255,.06); border-radius: 2px; overflow: hidden;
+      }
+      .gq-cat-fill { height: 100%; border-radius: 2px; transition: width 1.2s cubic-bezier(.25,.46,.45,.94); }
+      /* 역방향: 갈등 지수는 낮을수록 좋음 */
+      .gq-cat-card.inverse .gq-cat-name::after { content: " (낮을수록↓)"; font-size: 9px; color: var(--muted); }
+
+      /* ── 합충 section ── */
+      .gq-hap-section {
+        background: linear-gradient(135deg, rgba(18,14,52,.9), rgba(12,10,40,.9));
+        border: 1px solid rgba(130,90,255,.13);
+        border-radius: 18px; padding: 20px; margin-bottom: 20px;
+      }
+      .gq-section-title {
+        font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+        color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+      }
+      .gq-hap-grid { display: flex; flex-direction: column; gap: 9px; }
+      .gq-hap-item {
+        display: flex; align-items: flex-start; gap: 11px;
+        padding: 10px 12px; border-radius: 11px;
+        border: 1px solid transparent;
+      }
+      .gq-hap-item.good  { background: rgba(52,211,153,.06); border-color: rgba(52,211,153,.18); }
+      .gq-hap-item.mid   { background: rgba(167,139,250,.06); border-color: rgba(167,139,250,.15); }
+      .gq-hap-item.caution { background: rgba(248,113,113,.05); border-color: rgba(248,113,113,.16); }
+      .gq-hap-badge {
+        font-family: "DM Serif Display", serif; font-size: 16px;
+        width: 30px; height: 30px; border-radius: 8px;
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      }
+      .good  .gq-hap-badge { color: #34d399; background: rgba(52,211,153,.1); }
+      .mid   .gq-hap-badge { color: var(--violet); background: rgba(167,139,250,.1); }
+      .caution .gq-hap-badge { color: #f87171; background: rgba(248,113,113,.1); }
+      .gq-hap-content {}
+      .gq-hap-title { font-size: 12px; color: var(--text); font-weight: 500; margin-bottom: 2px; }
+      .gq-hap-desc  { font-size: 11.5px; color: var(--text2); line-height: 1.6; }
+
+      /* ── advice ── */
+      .gq-advice {
+        background: linear-gradient(135deg, rgba(240,192,96,.07), rgba(167,139,250,.05));
+        border: 1px solid rgba(240,192,96,.2);
+        border-radius: 18px; padding: 20px 22px;
+        display: flex; gap: 14px; align-items: flex-start;
+      }
+      .gq-advice-star {
+        color: var(--gold); font-size: 16px; flex-shrink: 0; margin-top: 2px;
+        filter: drop-shadow(0 0 8px rgba(240,192,96,.6));
+      }
+      .gq-advice-text {
+        font-family: "Noto Serif KR", serif; font-size: 13.5px;
+        line-height: 1.9; color: var(--text2); font-weight: 300;
+      }
+
+      /* light mode overrides */
+      body.light .gq-my-card,
+      body.light .gq-form-card,
+      body.light .gq-main-score,
+      body.light .gq-cat-card,
+      body.light .gq-hap-section,
+      body.light .gq-persons-bar {
+        background: linear-gradient(135deg, rgba(248,245,255,.97), rgba(238,232,255,.97));
+      }
+      body.light .gq-text-input {
+        background: rgba(0,0,0,.03); border-color: rgba(100,65,160,.14);
+      }
+      body.light .gq-text-input:focus { border-color: rgba(200,80,160,.4); }
+      body.light .gq-analyze-btn {
+        background: linear-gradient(135deg, rgba(124,92,240,.18), rgba(200,80,160,.15));
+        border-color: rgba(200,80,160,.3); color: #7c2a8a;
+      }
+      body.light .gq-cat-bar { background: rgba(0,0,0,.06); }
+
+      /* responsive */
+      @media (max-width: 900px) {
+        .gq-two-col { grid-template-columns: 1fr; }
+        .gq-vs-col { flex-direction: row; min-height: unset; padding: 12px 0; }
+        .gq-vs-line { flex: 1; width: unset; height: 1px;
+          background: linear-gradient(to right, transparent, rgba(244,114,182,.3), transparent); min-height: unset; }
+        .gq-cat-grid { grid-template-columns: repeat(2, 1fr); }
+        .gq-main-score { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+        .gq-persons-bar { flex-direction: column; gap: 8px; }
+        .gq-person-pill.partner { flex-direction: row; }
+      }
+      @media (max-width: 480px) {
+        .gq-cat-grid { grid-template-columns: repeat(2, 1fr); }
+        .gunghap-scroll { padding: 20px 16px 40px; }
+      }
+
+      /* ─── 404 NOT FOUND ─── */
+      .nf-wrap {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        position: relative;
+        overflow: hidden;
+        padding: 40px 24px;
+      }
+
+      /* 배경 glow orbs */
+      .nf-orb1 {
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(124,92,252,0.13) 0%, transparent 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -62%);
+        pointer-events: none;
+      }
+      .nf-orb2 {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 20%);
+        pointer-events: none;
+      }
+
+      /* 404 큰 숫자 */
+      .nf-number {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(96px, 18vw, 160px);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, rgba(220,210,255,0.9) 0%, rgba(124,92,252,0.6) 60%, rgba(91,87,240,0.4) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        text-shadow: none;
+        filter: drop-shadow(0 0 40px rgba(124,92,252,0.35));
+        margin-bottom: 4px;
+        animation: nfFloat 6s ease-in-out infinite;
+      }
+
+      @keyframes nfFloat {
+        0%, 100% { transform: translateY(0px); }
+        50%       { transform: translateY(-10px); }
+      }
+
+      /* 음양 심볼 */
+      .nf-symbol {
+        font-size: 28px;
+        opacity: 0.45;
+        margin-bottom: 20px;
+        animation: nfSpin 20s linear infinite;
+        display: inline-block;
+      }
+      @keyframes nfSpin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+
+      /* 제목 */
+      .nf-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      /* 설명 */
+      .nf-desc {
+        font-size: 13px;
+        color: var(--text2);
+        text-align: center;
+        line-height: 1.8;
+        max-width: 340px;
+        margin-bottom: 32px;
+      }
+      .nf-desc em {
+        font-style: normal;
+        color: var(--violet);
+        opacity: 0.9;
+      }
+
+      /* 사주 패 카드 장식 */
+      .nf-cards {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 36px;
+      }
+      .nf-card {
+        width: 44px;
+        height: 62px;
+        border-radius: 8px;
+        border: 1px solid rgba(124,92,252,0.22);
+        background: rgba(124,92,252,0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--muted);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+      }
+      .nf-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(124,92,252,0.1), transparent);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .nf-card:nth-child(2) {
+        transform: translateY(-6px);
+        border-color: rgba(124,92,252,0.35);
+        background: rgba(124,92,252,0.12);
+        color: var(--violet);
+      }
+      .nf-card:nth-child(2)::before { opacity: 1; }
+      .nf-card:nth-child(3) { transform: translateY(-2px); }
+      .nf-cards:hover .nf-card { transform: translateY(0) !important; }
+      .nf-cards:hover .nf-card:nth-child(2) { transform: translateY(-10px) !important; }
+
+      /* 버튼 그룹 */
+      .nf-btns {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .nf-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 11px 24px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #6366f1, #7c5cfc);
+        border: none;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      .nf-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 28px rgba(99,102,241,0.5);
+      }
+      .nf-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 11px 20px;
+        border-radius: 12px;
+        background: rgba(124,92,252,0.08);
+        border: 1px solid rgba(124,92,252,0.22);
+        color: var(--text2);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      .nf-btn-secondary:hover {
+        background: rgba(124,92,252,0.14);
+        border-color: rgba(124,92,252,0.4);
+        color: var(--violet);
+      }
+
+      /* 하단 경로 표시 */
+      .nf-path {
+        margin-top: 28px;
+        font-size: 11px;
+        color: var(--muted);
+        background: rgba(124,92,252,0.06);
+        border: 1px solid rgba(124,92,252,0.12);
+        border-radius: 8px;
+        padding: 7px 14px;
+        font-family: monospace;
+        letter-spacing: 0.04em;
+      }
+
+      /* light mode */
+      body.light .nf-number {
+        background: linear-gradient(135deg, #4338ca 0%, #7c5cfc 50%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        filter: drop-shadow(0 0 30px rgba(99,102,241,0.2));
+      }
+      body.light .nf-card {
+        background: rgba(100,65,160,0.05);
+        border-color: rgba(100,65,160,0.18);
+      }
+      body.light .nf-card:nth-child(2) {
+        background: rgba(100,65,160,0.1);
+        border-color: rgba(100,65,160,0.3);
+      }
+      body.light .nf-btn-secondary {
+        background: rgba(100,65,160,0.06);
+        border-color: rgba(100,65,160,0.2);
+      }
+      body.light .nf-btn-secondary:hover {
+        background: rgba(100,65,160,0.12);
+        border-color: rgba(100,65,160,0.35);
+      }
+      body.light .nf-path {
+        background: rgba(100,65,160,0.04);
+        border-color: rgba(100,65,160,0.12);
+      }
+      body.light .nf-orb1 {
+        background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+      }
+
       /* ─── THEME TOGGLE BUTTON ─── */
       .theme-toggle {
         width: 36px;
@@ -3470,58 +4047,234 @@
         background: rgba(124, 92, 252, 0.1);
       }
 
-      /* filter chips row */
-      .search-filters {
+      /* ── 최근 검색어 ── */
+      .search-recent {
         display: flex;
-        gap: 6px;
-        overflow-x: auto;
+        align-items: flex-start;
+        gap: 8px;
         padding-bottom: 14px;
-        scrollbar-width: none;
+        flex-wrap: wrap;
       }
-      .search-filters::-webkit-scrollbar {
+      .search-recent.hidden {
         display: none;
       }
-      .search-filter-chip {
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        cursor: pointer;
+      .search-recent-label {
+        font-size: 10.5px;
+        color: var(--muted);
         white-space: nowrap;
-        border: 1px solid var(--border);
-        color: var(--text2);
-        background: rgba(255, 255, 255, 0.03);
-        transition: all 0.16s;
-        font-family: "Noto Sans KR", sans-serif;
+        padding-top: 5px;
         flex-shrink: 0;
       }
-      .search-filter-chip:hover {
-        border-color: var(--border-h);
-        color: var(--violet);
-        background: rgba(124, 92, 252, 0.07);
+      .search-recent-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        flex: 1;
       }
-      .search-filter-chip.active {
+      .search-recent-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        border: 1px solid var(--border-h);
+        background: rgba(124, 92, 252, 0.06);
+        font-size: 12px;
+        color: var(--text2);
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      .search-recent-chip:hover {
+        background: rgba(124, 92, 252, 0.13);
+        color: var(--violet);
+        border-color: rgba(124, 92, 252, 0.4);
+      }
+      body.light .search-recent-chip {
+        background: rgba(100, 65, 160, 0.05);
+        border-color: rgba(100, 65, 160, 0.18);
+      }
+      body.light .search-recent-chip:hover {
+        background: rgba(100, 65, 160, 0.1);
+      }
+      .search-recent-del {
+        font-size: 9px;
+        color: var(--muted);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+        opacity: 0.7;
+        transition:
+          color 0.12s,
+          opacity 0.12s;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+      .search-recent-chip:hover .search-recent-del {
+        opacity: 1;
+        color: var(--rose);
+      }
+      .search-recent-clear-all {
+        font-size: 10.5px;
+        color: var(--muted);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: "Noto Sans KR", sans-serif;
+        padding: 4px 2px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: color 0.15s;
+      }
+      .search-recent-clear-all:hover {
+        color: var(--violet);
+      }
+
+      /* ── 검색 전 초기 화면 ── */
+      .search-initial {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 28px 24px;
+        flex: 1;
+      }
+      .search-initial.show {
+        display: flex;
+      }
+      .search-initial-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.14),
+          rgba(124, 92, 252, 0.09)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        margin-bottom: 14px;
+      }
+      .search-initial-title {
+        font-family: "Noto Serif KR", serif;
+        font-size: 15px;
+        color: var(--text);
+        font-weight: 400;
+        margin-bottom: 5px;
+      }
+      .search-initial-sub {
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-bottom: 28px;
+      }
+      .search-initial-recent {
+        width: 100%;
+      }
+      .search-initial-recent-label {
+        font-size: 10.5px;
+        color: var(--muted);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .search-initial-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+      body.light .search-initial-icon {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.08),
+          rgba(100, 65, 160, 0.05)
+        );
+        border-color: rgba(100, 65, 160, 0.16);
+      }
+
+      /* ── 상담 내역 없는 빈 화면 ── */
+      .search-no-history {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        padding: 40px 24px 60px;
+        text-align: center;
+        gap: 14px;
+      }
+      .search-no-history.show {
+        display: flex;
+      }
+      .search-no-history-orb {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.15),
+          rgba(124, 92, 252, 0.1)
+        );
+        border: 1px solid rgba(124, 92, 252, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 4px;
+      }
+      .search-no-history-title {
+        font-family: "Noto Serif KR", serif;
+        font-size: 16px;
+        color: var(--text);
+        font-weight: 400;
+      }
+      .search-no-history-sub {
+        font-size: 12.5px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .search-no-history-btn {
+        margin-top: 6px;
+        padding: 10px 24px;
+        border-radius: 50px;
         background: linear-gradient(
           135deg,
           rgba(99, 102, 241, 0.18),
           rgba(124, 92, 252, 0.14)
         );
-        border-color: rgba(124, 92, 252, 0.4);
+        border: 1px solid rgba(124, 92, 252, 0.35);
         color: var(--violet);
-        font-weight: 600;
+        font-size: 13px;
+        font-family: "Noto Sans KR", sans-serif;
+        cursor: pointer;
+        transition: all 0.18s;
       }
-      body.light .search-filter-chip {
-        background: rgba(0, 0, 0, 0.03);
+      .search-no-history-btn:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.26),
+          rgba(124, 92, 252, 0.22)
+        );
+        box-shadow: 0 4px 16px rgba(124, 92, 252, 0.2);
       }
-      body.light .search-filter-chip:hover {
-        background: rgba(100, 65, 160, 0.07);
+      body.light .search-no-history-orb {
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.08),
+          rgba(100, 65, 160, 0.06)
+        );
+        border-color: rgba(100, 65, 160, 0.16);
       }
-      body.light .search-filter-chip.active {
+      body.light .search-no-history-btn {
         background: linear-gradient(
           135deg,
           rgba(99, 102, 241, 0.1),
           rgba(100, 65, 160, 0.08)
         );
-        border-color: rgba(100, 65, 160, 0.35);
+        border-color: rgba(100, 65, 160, 0.28);
       }
 
       /* results meta */
@@ -3583,140 +4336,44 @@
 
       .search-result-item {
         display: flex;
-        gap: 14px;
-        align-items: flex-start;
-        padding: 16px 18px;
-        border-radius: 16px;
-        border: 1px solid var(--border);
-        background: linear-gradient(
-          135deg,
-          rgba(18, 14, 52, 0.85),
-          rgba(12, 10, 38, 0.85)
-        );
-        margin-bottom: 10px;
+        flex-direction: column;
+        gap: 5px;
+        padding: 13px 16px;
+        border-radius: 12px;
+        border-left: 2px solid transparent;
+        margin-bottom: 2px;
         cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
-        overflow: hidden;
-      }
-      .search-result-item::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          90deg,
-          rgba(124, 92, 252, 0.06),
-          transparent
-        );
-        opacity: 0;
-        transition: opacity 0.2s;
+        transition: background 0.15s, border-color 0.15s;
       }
       .search-result-item:hover {
-        border-color: var(--border-h);
-        transform: translateX(3px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-      }
-      .search-result-item:hover::before {
-        opacity: 1;
-      }
-      body.light .search-result-item {
-        background: linear-gradient(
-          135deg,
-          rgba(248, 245, 255, 0.97),
-          rgba(238, 232, 255, 0.97)
-        );
-        border-color: rgba(100, 65, 200, 0.12);
+        background: rgba(124, 92, 252, 0.07);
+        border-left-color: rgba(124, 92, 252, 0.5);
       }
       body.light .search-result-item:hover {
-        border-color: rgba(100, 65, 200, 0.26);
-        box-shadow: 0 4px 16px rgba(100, 65, 160, 0.1);
+        background: rgba(100, 65, 160, 0.06);
+        border-left-color: rgba(100, 65, 160, 0.35);
       }
-
-      .search-result-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        background: linear-gradient(
-          135deg,
-          rgba(99, 102, 241, 0.18),
-          rgba(124, 92, 252, 0.12)
-        );
-        border: 1px solid rgba(124, 92, 252, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        flex-shrink: 0;
-      }
-      body.light .search-result-icon {
-        background: linear-gradient(
-          135deg,
-          rgba(99, 102, 241, 0.1),
-          rgba(100, 65, 160, 0.08)
-        );
-        border-color: rgba(100, 65, 160, 0.18);
-      }
-
-      .search-result-body {
-        flex: 1;
-        min-width: 0;
-      }
-      .search-result-title {
-        font-size: 13.5px;
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 5px;
+      .search-result-match {
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.5;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .search-result-title mark {
-        background: rgba(124, 92, 252, 0.2);
-        color: var(--violet);
-        border-radius: 3px;
+      .search-result-match mark {
+        background: rgba(240, 192, 96, 0.2);
+        color: var(--gold2);
+        border-radius: 2px;
         padding: 0 2px;
       }
-      body.light .search-result-title mark {
-        background: rgba(100, 65, 160, 0.12);
+      body.light .search-result-match mark {
+        background: rgba(184, 134, 11, 0.13);
+        color: #92650a;
       }
-      .search-result-preview {
-        font-size: 12px;
-        color: var(--text2);
-        line-height: 1.5;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        margin-bottom: 8px;
-      }
-      .search-result-meta {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+      .search-result-date {
         font-size: 10.5px;
         color: var(--muted);
-      }
-      .search-result-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 2px 8px;
-        border-radius: 20px;
-        font-size: 10px;
-        background: rgba(124, 92, 252, 0.1);
-        border: 1px solid rgba(124, 92, 252, 0.18);
-        color: var(--violet);
-      }
-      body.light .search-result-tag {
-        background: rgba(100, 65, 160, 0.07);
-        border-color: rgba(100, 65, 160, 0.15);
-      }
-      .search-result-chevron {
-        font-size: 12px;
-        color: var(--muted);
-        flex-shrink: 0;
-        margin-left: auto;
-        align-self: center;
       }
 
       /* empty state */
@@ -3794,6 +4451,12 @@
         </div>
         <div class="sb-nav-item" onclick="showView('saju')" id="nav-saju">
           <span class="sb-nav-icon">☯</span> 사주 원국
+        </div>
+        <div class="sb-nav-item" onclick="showView('gunghap')" id="nav-gunghap">
+          <span class="sb-nav-icon">💑</span> 궁합 분석
+        </div>
+        <div class="sb-nav-item" onclick="showView('notfound')" id="nav-notfound" style="opacity:0.55">
+          <span class="sb-nav-icon">🔮</span> 404 페이지
         </div>
       </nav>
 
@@ -4138,7 +4801,9 @@
                   <span class="fortune-cal-icon">📅</span>
                   <span class="fortune-cal-title">운세 달력</span>
                 </div>
-                <div class="fortune-cal-sub" style="margin-top: 3px">운세를 확인한 날의 기록</div>
+                <div class="fortune-cal-sub" style="margin-top: 3px">
+                  운세를 확인한 날의 기록
+                </div>
               </div>
               <div>
                 <div class="fortune-cal-nav">
@@ -4146,7 +4811,10 @@
                   <span class="fortune-cal-month" id="cal-month-label"></span>
                   <button onclick="calNext()" aria-label="다음 달">›</button>
                 </div>
-                <div class="fortune-cal-legend" style="margin-top: 8px; justify-content: flex-end;">
+                <div
+                  class="fortune-cal-legend"
+                  style="margin-top: 8px; justify-content: flex-end"
+                >
                   <span class="cal-legend-item">✨ 좋음</span>
                   <span class="cal-legend-item">🙂 보통</span>
                   <span class="cal-legend-item">😔 나쁨</span>
@@ -4427,58 +5095,16 @@
                 ✕
               </button>
             </div>
+          </div>
 
-            <!-- Filter chips -->
-            <div class="search-filters">
-              <div
-                class="search-filter-chip active"
-                onclick="filterSearch(this, '전체')"
-              >
-                전체
-              </div>
-              <div
-                class="search-filter-chip"
-                onclick="filterSearch(this, '재물운')"
-              >
-                💰 재물운
-              </div>
-              <div
-                class="search-filter-chip"
-                onclick="filterSearch(this, '연애운')"
-              >
-                💕 연애운
-              </div>
-              <div
-                class="search-filter-chip"
-                onclick="filterSearch(this, '직장운')"
-              >
-                💼 직장운
-              </div>
-              <div
-                class="search-filter-chip"
-                onclick="filterSearch(this, '건강운')"
-              >
-                🌿 건강운
-              </div>
-              <div
-                class="search-filter-chip"
-                onclick="filterSearch(this, '사업운')"
-              >
-                🚀 사업운
-              </div>
-              <div
-                class="search-filter-chip"
-                onclick="filterSearch(this, '학업운')"
-              >
-                📚 학업운
-              </div>
-              <div
-                class="search-filter-chip"
-                onclick="filterSearch(this, '여행운')"
-              >
-                ✈️ 여행운
-              </div>
+          <!-- 검색 전 초기 화면 -->
+          <div class="search-initial" id="search-initial">
+            <div class="search-initial-icon">🔍</div>
+            <div class="search-initial-title">어떤 상담을 찾고 계세요?</div>
+            <div class="search-initial-sub">
+              메시지 내용으로 상담 내역을 검색해요
             </div>
+            <div class="search-initial-recent" id="search-initial-recent"></div>
           </div>
 
           <!-- Meta row -->
@@ -4502,140 +5128,20 @@
             </div>
           </div>
 
-          <!-- Result list -->
+          <!-- 상담 내역 없음 -->
+          <div class="search-no-history" id="search-no-history">
+            <div class="search-no-history-orb">💬</div>
+            <div class="search-no-history-title">아직 상담 내역이 없어요</div>
+            <div class="search-no-history-sub">
+              AI 사주 상담을 시작하면<br />여기서 내역을 검색할 수 있어요
+            </div>
+            <button class="search-no-history-btn" onclick="showView('newchat')">
+              새 상담 시작하기
+            </button>
+          </div>
+
+          <!-- Result list (JS로 렌더링) -->
           <div class="search-results" id="search-results">
-            <div class="search-result-item fade-in" onclick="showView('chat')">
-              <div class="search-result-icon">💼</div>
-              <div class="search-result-body">
-                <div class="search-result-title">직장 이직 고민 상담합니다</div>
-                <div class="search-result-preview">
-                  올해 하반기 이직을 고려하고 있는데, 사주상으로 이직 시기가
-                  언제가 좋은지 궁금합니다. 현재 직장에서의 갈등도 있고...
-                </div>
-                <div class="search-result-meta">
-                  <span>2026.04.08</span>
-                  <span class="search-result-tag">💼 직장운</span>
-                  <span>메시지 12개</span>
-                </div>
-              </div>
-              <div class="search-result-chevron">›</div>
-            </div>
-
-            <div class="search-result-item fade-in" onclick="showView('chat')">
-              <div class="search-result-icon">💰</div>
-              <div class="search-result-body">
-                <div class="search-result-title">
-                  올해 재물운과 투자 시기를 알고 싶어요
-                </div>
-                <div class="search-result-preview">
-                  주식 투자를 시작하려 하는데 사주상 재물운이 어떤지, 특히
-                  하반기 투자 시기가 언제인지 알고 싶습니다...
-                </div>
-                <div class="search-result-meta">
-                  <span>2026.04.05</span>
-                  <span class="search-result-tag">💰 재물운</span>
-                  <span>메시지 8개</span>
-                </div>
-              </div>
-              <div class="search-result-chevron">›</div>
-            </div>
-
-            <div class="search-result-item fade-in" onclick="showView('chat')">
-              <div class="search-result-icon">💕</div>
-              <div class="search-result-body">
-                <div class="search-result-title">
-                  결혼 시기에 대해서 궁금해요
-                </div>
-                <div class="search-result-preview">
-                  지금 만나는 사람이 있는데 결혼 시기가 올해 안에 가능할지,
-                  사주상 인연이 맞는지 상담받고 싶습니다...
-                </div>
-                <div class="search-result-meta">
-                  <span>2026.03.28</span>
-                  <span class="search-result-tag">💕 연애운</span>
-                  <span>메시지 15개</span>
-                </div>
-              </div>
-              <div class="search-result-chevron">›</div>
-            </div>
-
-            <div class="search-result-item fade-in" onclick="showView('chat')">
-              <div class="search-result-icon">⭐</div>
-              <div class="search-result-body">
-                <div class="search-result-title">
-                  내년 운세 전반적으로 봐주세요
-                </div>
-                <div class="search-result-preview">
-                  2027년 전반적인 운세를 알고 싶습니다. 특히 재물, 건강,
-                  대인관계 부분에서 주의할 점이 있는지...
-                </div>
-                <div class="search-result-meta">
-                  <span>2026.03.20</span>
-                  <span class="search-result-tag">⭐ 전체운</span>
-                  <span>메시지 20개</span>
-                </div>
-              </div>
-              <div class="search-result-chevron">›</div>
-            </div>
-
-            <div class="search-result-item fade-in" onclick="showView('chat')">
-              <div class="search-result-icon">🚀</div>
-              <div class="search-result-body">
-                <div class="search-result-title">
-                  사업 시작 시기가 언제일까요
-                </div>
-                <div class="search-result-preview">
-                  오랫동안 준비해온 카페 창업을 올해 시작하려 합니다. 사주상
-                  창업하기 좋은 시기가 언제인지 알고 싶어요...
-                </div>
-                <div class="search-result-meta">
-                  <span>2026.03.15</span>
-                  <span class="search-result-tag">🚀 사업운</span>
-                  <span>메시지 10개</span>
-                </div>
-              </div>
-              <div class="search-result-chevron">›</div>
-            </div>
-
-            <div class="search-result-item fade-in" onclick="showView('chat')">
-              <div class="search-result-icon">🌿</div>
-              <div class="search-result-body">
-                <div class="search-result-title">
-                  건강운과 주의해야 할 점은?
-                </div>
-                <div class="search-result-preview">
-                  최근 몸이 자주 피곤하고 소화도 잘 안되는데, 사주상 건강에 특히
-                  주의해야 할 시기가 있는지 궁금합니다...
-                </div>
-                <div class="search-result-meta">
-                  <span>2026.03.10</span>
-                  <span class="search-result-tag">🌿 건강운</span>
-                  <span>메시지 9개</span>
-                </div>
-              </div>
-              <div class="search-result-chevron">›</div>
-            </div>
-
-            <div class="search-result-item fade-in" onclick="showView('chat')">
-              <div class="search-result-icon">👥</div>
-              <div class="search-result-body">
-                <div class="search-result-title">
-                  올해 인간관계 운세가 궁금해요
-                </div>
-                <div class="search-result-preview">
-                  직장에서 대인관계가 힘들고 친구 관계도 소원해지는 느낌입니다.
-                  사주상 인간관계 운세가 어떤지...
-                </div>
-                <div class="search-result-meta">
-                  <span>2026.03.05</span>
-                  <span class="search-result-tag">👥 인간관계</span>
-                  <span>메시지 11개</span>
-                </div>
-              </div>
-              <div class="search-result-chevron">›</div>
-            </div>
-
-            <!-- Empty state (hidden by default) -->
             <div class="search-empty" id="search-empty">
               <div class="search-empty-icon">🔭</div>
               <div class="search-empty-title">검색 결과가 없습니다</div>
@@ -4975,6 +5481,311 @@
           </div>
         </div>
       </div>
+      <!-- ── GUNGHAP VIEW ── -->
+      <div class="view" id="view-gunghap">
+        <div class="gunghap-scroll">
+
+          <!-- ══ INPUT STATE ══ -->
+          <div id="gq-input-state">
+            <div class="gq-page-header fade-in">
+              <div class="gq-eyebrow">궁합 · 相性</div>
+              <div class="gq-page-title">궁합 분석</div>
+              <div class="gq-page-sub">두 사람의 사주로 인연의 깊이를 알아보세요</div>
+            </div>
+
+            <div class="gq-two-col fade-in">
+              <!-- 나의 사주 (간략 표기) -->
+              <div class="gq-my-card">
+                <div class="gq-card-tag">나의 사주</div>
+                <div class="gq-person-hanzi">壬</div>
+                <div class="gq-person-name">임수(壬水) · 남성</div>
+                <div class="gq-person-birth">1989. 08. 17 · 술시(戌時)</div>
+                <div class="gq-person-cal">양력</div>
+                <div class="gq-pillar-row">
+                  <div class="gq-pillar-mini" style="color:var(--green)">甲子</div>
+                  <div class="gq-pillar-mini" style="color:var(--muted)">庚申</div>
+                  <div class="gq-pillar-mini" style="color:var(--blue)">壬午</div>
+                  <div class="gq-pillar-mini" style="color:var(--rose)">丙戌</div>
+                </div>
+              </div>
+
+              <!-- VS 연결 -->
+              <div class="gq-vs-col">
+                <div class="gq-vs-line"></div>
+                <div class="gq-vs-orb">💑</div>
+                <div class="gq-vs-line"></div>
+              </div>
+
+              <!-- 상대방 입력 폼 -->
+              <div class="gq-form-card">
+                <div class="gq-card-tag partner">상대방 정보</div>
+
+                <div class="form-group" style="margin-bottom:14px">
+                  <div class="form-label">이름 <span style="color:var(--muted);font-size:10px;font-weight:400">(선택)</span></div>
+                  <input type="text" class="gq-text-input" placeholder="상대방 이름을 입력하세요" id="gq-partner-name">
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label"><span class="form-required">*</span> 성별</div>
+                  <div class="toggle-group">
+                    <button class="toggle-btn selected" onclick="selectToggle(this,'pg')">남성</button>
+                    <button class="toggle-btn" onclick="selectToggle(this,'pg')">여성</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label"><span class="form-required">*</span> 양/음력</div>
+                  <div class="toggle-group">
+                    <button class="toggle-btn selected" onclick="selectToggle(this,'pc')">양력</button>
+                    <button class="toggle-btn" onclick="selectToggle(this,'pc')">음력</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label"><span class="form-required">*</span> 생년월일</div>
+                  <div class="date-group">
+                    <select class="form-select">
+                      <option>1992년</option>
+                      <option>1985년</option><option>1986년</option><option>1987년</option>
+                      <option>1988년</option><option>1989년</option><option>1990년</option>
+                      <option>1991년</option><option>1993년</option><option>1994년</option>
+                      <option>1995년</option><option>1996년</option><option>1997년</option>
+                      <option>1998년</option><option>1999년</option><option>2000년</option>
+                    </select>
+                    <select class="form-select">
+                      <option>3월</option>
+                      <option>1월</option><option>2월</option><option>4월</option>
+                      <option>5월</option><option>6월</option><option>7월</option>
+                      <option>8월</option><option>9월</option><option>10월</option>
+                      <option>11월</option><option>12월</option>
+                    </select>
+                    <select class="form-select">
+                      <option>24일</option>
+                      <option>1일</option><option>5일</option><option>10일</option>
+                      <option>15일</option><option>20일</option><option>25일</option><option>30일</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="form-label"><span class="form-required">*</span> 태어난 시간</div>
+                  <select class="form-select" style="width:100%">
+                    <option>卯(묘) 05:30 ~ 07:29</option>
+                    <option>子(자) 23:30 ~ 01:29</option>
+                    <option>丑(축) 01:30 ~ 03:29</option>
+                    <option>寅(인) 03:30 ~ 05:29</option>
+                    <option>辰(진) 07:30 ~ 09:29</option>
+                    <option>巳(사) 09:30 ~ 11:29</option>
+                    <option>午(오) 11:30 ~ 13:29</option>
+                    <option>未(미) 13:30 ~ 15:29</option>
+                    <option>申(신) 15:30 ~ 17:29</option>
+                    <option>酉(유) 17:30 ~ 19:29</option>
+                    <option>戌(술) 19:30 ~ 21:29</option>
+                    <option>亥(해) 21:30 ~ 23:29</option>
+                    <option>모름</option>
+                  </select>
+                </div>
+
+                <button class="gq-analyze-btn" onclick="showGunghapResult()">
+                  ✦ &nbsp;궁합 분석하기
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ RESULT STATE (JS로 toggle) ══ -->
+          <div id="gq-result-state" style="display:none">
+
+            <button class="gq-back-btn fade-in" onclick="showGunghapInput()">
+              ← 다시 입력
+            </button>
+
+            <!-- 두 사람 정보 바 -->
+            <div class="gq-persons-bar fade-in">
+              <div class="gq-person-pill">
+                <div class="gq-pill-hanzi oh-water">壬</div>
+                <div>
+                  <div class="gq-pill-name">나 · 임수(壬水)</div>
+                  <div class="gq-pill-info">남 · 1989.08.17 · 술시 · 양력</div>
+                </div>
+              </div>
+              <div class="gq-compat-symbol">💑</div>
+              <div class="gq-person-pill partner">
+                <div style="text-align:right">
+                  <div class="gq-pill-name" id="gq-partner-display">김지현 · 정화(丁火)</div>
+                  <div class="gq-pill-info">여 · 1992.03.24 · 묘시 · 양력</div>
+                </div>
+                <div class="gq-pill-hanzi fire-pill oh-fire">丁</div>
+              </div>
+            </div>
+
+            <!-- 메인 궁합 점수 -->
+            <div class="gq-main-score fade-in">
+              <div class="gq-score-ring-wrap">
+                <svg width="160" height="160" viewBox="0 0 160 160">
+                  <defs>
+                    <linearGradient id="gq-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#a78bfa"/>
+                      <stop offset="45%" stop-color="#f472b6"/>
+                      <stop offset="100%" stop-color="#f0c060"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="80" cy="80" r="68" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="10"/>
+                  <circle cx="80" cy="80" r="68" fill="none" stroke="url(#gq-grad)" stroke-width="10"
+                    stroke-linecap="round" id="gq-ring" class="gq-ring-prog"/>
+                </svg>
+                <div class="gq-score-inner">
+                  <div class="gq-score-num">78</div>
+                  <div class="gq-score-denom">/ 100</div>
+                  <div class="gq-score-verdict">좋은 인연</div>
+                </div>
+              </div>
+              <div>
+                <div class="gq-score-tag">✦ 두 사람의 기운</div>
+                <div class="gq-score-text">
+                  수(水)와 화(火)가 만나 서로의 부족함을 채워주는 관계입니다.<br>
+                  처음에는 성격 차이를 느낄 수 있지만, 시간이 지날수록 서로를 더욱 빛나게 만드는 보완 관계로 발전합니다. 임수의 깊은 지혜가 정화의 열정을 다스리고, 정화의 따뜻함이 임수의 차가움을 녹입니다.
+                </div>
+              </div>
+            </div>
+
+            <!-- 6가지 카테고리 -->
+            <div class="gq-cat-grid fade-in">
+              <div class="gq-cat-card">
+                <div class="gq-cat-top">
+                  <div class="gq-cat-icon">💕</div>
+                  <div class="gq-cat-score" style="color:#f472b6">82</div>
+                </div>
+                <div class="gq-cat-name">연애 궁합</div>
+                <div class="gq-cat-bar"><div class="gq-cat-fill" style="width:82%;background:#f472b6;box-shadow:0 0 6px #f472b6"></div></div>
+              </div>
+              <div class="gq-cat-card">
+                <div class="gq-cat-top">
+                  <div class="gq-cat-icon">💍</div>
+                  <div class="gq-cat-score" style="color:#f0c060">75</div>
+                </div>
+                <div class="gq-cat-name">결혼 궁합</div>
+                <div class="gq-cat-bar"><div class="gq-cat-fill" style="width:75%;background:#f0c060;box-shadow:0 0 6px #f0c060"></div></div>
+              </div>
+              <div class="gq-cat-card">
+                <div class="gq-cat-top">
+                  <div class="gq-cat-icon">🧬</div>
+                  <div class="gq-cat-score" style="color:#a78bfa">88</div>
+                </div>
+                <div class="gq-cat-name">성격 궁합</div>
+                <div class="gq-cat-bar"><div class="gq-cat-fill" style="width:88%;background:#a78bfa;box-shadow:0 0 6px #a78bfa"></div></div>
+              </div>
+              <div class="gq-cat-card">
+                <div class="gq-cat-top">
+                  <div class="gq-cat-icon">💰</div>
+                  <div class="gq-cat-score" style="color:#fbbf24">70</div>
+                </div>
+                <div class="gq-cat-name">재물 궁합</div>
+                <div class="gq-cat-bar"><div class="gq-cat-fill" style="width:70%;background:#fbbf24;box-shadow:0 0 6px #fbbf24"></div></div>
+              </div>
+              <div class="gq-cat-card">
+                <div class="gq-cat-top">
+                  <div class="gq-cat-icon">💬</div>
+                  <div class="gq-cat-score" style="color:#2dd4bf">85</div>
+                </div>
+                <div class="gq-cat-name">소통 궁합</div>
+                <div class="gq-cat-bar"><div class="gq-cat-fill" style="width:85%;background:#2dd4bf;box-shadow:0 0 6px #2dd4bf"></div></div>
+              </div>
+              <div class="gq-cat-card inverse">
+                <div class="gq-cat-top">
+                  <div class="gq-cat-icon">⚡</div>
+                  <div class="gq-cat-score" style="color:#f87171">32</div>
+                </div>
+                <div class="gq-cat-name">갈등 지수</div>
+                <div class="gq-cat-bar"><div class="gq-cat-fill" style="width:32%;background:#f87171;box-shadow:0 0 6px #f87171"></div></div>
+              </div>
+            </div>
+
+            <!-- 오행 합충 분석 -->
+            <div class="gq-hap-section fade-in">
+              <div class="gq-section-title">오행 합충 분석</div>
+              <div class="gq-hap-grid">
+                <div class="gq-hap-item good">
+                  <div class="gq-hap-badge">合</div>
+                  <div class="gq-hap-content">
+                    <div class="gq-hap-title">천간합 · 壬丁合 (임정합)</div>
+                    <div class="gq-hap-desc">두 사람의 일간이 서로 합을 이루는 강한 인연의 기운. 자연스러운 끌림과 깊은 유대감이 형성됩니다.</div>
+                  </div>
+                </div>
+                <div class="gq-hap-item mid">
+                  <div class="gq-hap-badge">中</div>
+                  <div class="gq-hap-content">
+                    <div class="gq-hap-title">지지 · 午戌 반합 (화의 기운)</div>
+                    <div class="gq-hap-desc">지지에서 부분적인 합이 형성되어 정서적 안정감을 줍니다. 함께하면 따뜻한 에너지가 생겨납니다.</div>
+                  </div>
+                </div>
+                <div class="gq-hap-item caution">
+                  <div class="gq-hap-badge">沖</div>
+                  <div class="gq-hap-content">
+                    <div class="gq-hap-title">水剋火 · 극의 관계</div>
+                    <div class="gq-hap-desc">오행상 수(水)는 화(火)를 극합니다. 주도권 다툼이나 감정 충돌이 생길 수 있으나, 서로 이해하면 보완 관계로 전환됩니다.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI 종합 조언 -->
+            <div class="gq-advice fade-in">
+              <div class="gq-advice-star">✦</div>
+              <div class="gq-advice-text">
+                두 사람의 인연은 천간합이라는 강한 끌림에서 시작합니다. 임수(壬水)의 깊은 지혜와 정화(丁火)의 따뜻한 열정은 처음엔 달라 보이지만, 시간이 지날수록 서로를 더욱 빛나게 만드는 보완 관계입니다. 중요한 결정은 함께 충분히 이야기하고, 상대의 다름을 존중으로 받아들이세요. 특히 2025년 하반기부터 두 사람의 인연이 더욱 깊어지는 흐름이 보이니, 진지하게 미래를 그려볼 좋은 시기입니다.
+              </div>
+            </div>
+
+          </div><!-- /gq-result-state -->
+        </div><!-- /gunghap-scroll -->
+      </div><!-- /view-gunghap -->
+
+      <!-- ─── 404 NOT FOUND ─── -->
+      <div class="view" id="view-notfound">
+        <div class="nf-wrap">
+          <!-- 배경 glow -->
+          <div class="nf-orb1"></div>
+          <div class="nf-orb2"></div>
+
+          <!-- 404 숫자 -->
+          <div class="nf-number">404</div>
+
+          <!-- 음양 심볼 -->
+          <span class="nf-symbol">☯</span>
+
+          <!-- 사주 카드 장식 -->
+          <div class="nf-cards">
+            <div class="nf-card">甲</div>
+            <div class="nf-card">☽</div>
+            <div class="nf-card">子</div>
+          </div>
+
+          <!-- 제목 -->
+          <div class="nf-title">사주에 없는 경로입니다</div>
+
+          <!-- 설명 -->
+          <p class="nf-desc">
+            요청하신 페이지는 <em>이 세상의 기운</em>에 존재하지 않습니다.<br />
+            사주의 흐름이 끊긴 것처럼, 길을 잃으셨군요.<br />
+            아래 버튼으로 돌아가시면 다시 운세가 열립니다.
+          </p>
+
+          <!-- 버튼 -->
+          <div class="nf-btns">
+            <button class="nf-btn-primary" onclick="showView('fortune')">
+              ✦ 홈으로 돌아가기
+            </button>
+            <button class="nf-btn-secondary" onclick="history.back()">
+              ← 이전 페이지
+            </button>
+          </div>
+
+          <!-- 잘못된 경로 표시 -->
+          <div class="nf-path">/unknown/path/not-found</div>
+        </div>
+      </div><!-- /view-notfound -->
+
     </main>
 
     <!-- ── 사주 정보 입력 모달 ── -->
@@ -5264,6 +6075,8 @@
           user: "회원 정보",
           newchat: "새 상담",
           search: "상담 검색",
+          gunghap: "궁합 분석",
+          notfound: "페이지를 찾을 수 없음",
         };
         document.getElementById("topbar-label").textContent =
           labels[name] || name;
@@ -5277,6 +6090,7 @@
           saju: "nav-saju",
           newchat: "nav-newchat",
           search: "nav-search",
+          gunghap: "nav-gunghap",
         };
         if (map[name])
           document.getElementById(map[name]).classList.add("active");
@@ -5284,11 +6098,12 @@
         if (name === "fortune") initFortune();
         if (name === "saju") initSaju();
         if (name === "search") initSearch();
+        if (name === "gunghap") initGunghap();
         if (name === "chat") {
           // 채팅 뷰로 전환 시 스크롤 버튼 상태 즉시 갱신
           requestAnimationFrame(() => {
             const msgs = document.getElementById("chat-msgs");
-            const btn  = document.getElementById("scroll-to-bottom-btn");
+            const btn = document.getElementById("scroll-to-bottom-btn");
             if (!msgs || !btn) return;
             const dist = msgs.scrollHeight - msgs.scrollTop - msgs.clientHeight;
             btn.classList.toggle("visible", dist > 80);
@@ -5334,76 +6149,175 @@
       }
 
       // ── Search helpers
+      // ── Search Data (메시지 배열로 키워드 검색) ──────────────────
       const SEARCH_DATA = [
         {
           title: "직장 이직 고민 상담합니다",
-          preview:
-            "올해 하반기 이직을 고려하고 있는데, 사주상 이직 시기가 언제가 좋은지 궁금합니다.",
-          tag: "직장운",
-          icon: "💼",
           date: "2026.04.08",
           msgs: 12,
+          messages: [
+            "올해 하반기 이직을 고려하고 있는데 사주상 이직 시기가 언제가 좋을지 궁금합니다.",
+            "현재 직장에서 갈등이 있고 새로운 곳으로 옮기고 싶습니다.",
+            "하반기부터 서서히 변화의 기운이 옵니다. 9월 이후가 이직하기 좋은 시기입니다.",
+            "지금 직장을 다니면서 이직 준비를 병행하는 것이 현명합니다.",
+          ],
         },
         {
           title: "올해 재물운과 투자 시기를 알고 싶어요",
-          preview:
-            "주식 투자를 시작하려 하는데 사주상 재물운이 어떤지 알고 싶습니다.",
-          tag: "재물운",
-          icon: "💰",
           date: "2026.04.05",
           msgs: 8,
+          messages: [
+            "주식 투자를 시작하려 하는데 사주상 재물운이 어떤지 알고 싶습니다.",
+            "특히 하반기 투자 시기가 언제인지 알려주세요.",
+            "재물운은 하반기부터 상승세입니다. 7월~9월 사이 예상치 못한 수입이 생길 수 있어요.",
+            "충(沖)의 기운이 있어 단기 투기는 피하고 장기 투자가 유리합니다.",
+          ],
         },
         {
           title: "결혼 시기에 대해서 궁금해요",
-          preview:
-            "지금 만나는 사람이 있는데 결혼 시기가 올해 안에 가능할지 상담받고 싶습니다.",
-          tag: "연애운",
-          icon: "💕",
           date: "2026.03.28",
           msgs: 15,
+          messages: [
+            "지금 만나는 사람이 있는데 결혼 시기가 올해 안에 가능할지 상담받고 싶습니다.",
+            "사주상 인연이 맞는지도 봐주세요.",
+            "올해 후반부터 인연운이 강해집니다. 결혼 시기는 내년 초가 가장 길합니다.",
+            "배우자궁이 안정적이라 만남을 이어나가면 좋은 결과가 있을 것입니다.",
+          ],
         },
         {
           title: "내년 운세 전반적으로 봐주세요",
-          preview:
-            "2027년 전반적인 운세를 알고 싶습니다. 특히 재물, 건강, 대인관계 부분에서 주의할 점이 있는지.",
-          tag: "전체운",
-          icon: "⭐",
           date: "2026.03.20",
           msgs: 20,
+          messages: [
+            "2027년 전반적인 운세를 알고 싶습니다.",
+            "특히 재물, 건강, 대인관계 부분에서 주의할 점이 있는지 궁금합니다.",
+            "2027년은 관성의 기운이 강한 해입니다. 직장운과 명예운이 상승합니다.",
+            "다만 봄철 건강에 유의하고 과로를 피하는 것이 중요합니다.",
+          ],
         },
         {
           title: "사업 시작 시기가 언제일까요",
-          preview:
-            "오랫동안 준비해온 카페 창업을 올해 시작하려 합니다. 사주상 창업하기 좋은 시기가 언제인지.",
-          tag: "사업운",
-          icon: "🚀",
           date: "2026.03.15",
           msgs: 10,
+          messages: [
+            "오랫동안 준비해온 카페 창업을 올해 시작하려 합니다.",
+            "사주상 창업하기 좋은 시기가 언제인지 알고 싶어요.",
+            "식상생재(食傷生財)의 구조라 사업 운이 좋습니다. 올 가을이 창업 적기입니다.",
+            "동업보다 단독 창업이 유리하고 서쪽 방향의 매장이 길합니다.",
+          ],
         },
         {
           title: "건강운과 주의해야 할 점은?",
-          preview:
-            "최근 몸이 자주 피곤하고 소화도 잘 안되는데, 사주상 건강에 특히 주의해야 할 시기가 있는지.",
-          tag: "건강운",
-          icon: "🌿",
           date: "2026.03.10",
           msgs: 9,
+          messages: [
+            "최근 몸이 자주 피곤하고 소화도 잘 안 됩니다.",
+            "사주상 건강에 특히 주의해야 할 시기가 있는지 궁금합니다.",
+            "토(土)의 기운이 약해 소화기 계통을 주의해야 합니다.",
+            "봄과 환절기에 특히 건강 관리가 필요하고 규칙적인 식사를 권장합니다.",
+          ],
         },
         {
           title: "올해 인간관계 운세가 궁금해요",
-          preview:
-            "직장에서 대인관계가 힘들고 친구 관계도 소원해지는 느낌입니다. 사주상 인간관계 운세가 어떤지.",
-          tag: "인간관계",
-          icon: "👥",
           date: "2026.03.05",
           msgs: 11,
+          messages: [
+            "직장에서 대인관계가 힘들고 친구 관계도 소원해지는 느낌입니다.",
+            "사주상 인간관계 운세가 어떤지 알려주세요.",
+            "비겁이 강해 경쟁 관계가 심해질 수 있습니다. 양보와 경청이 중요한 시기입니다.",
+            "상반기보다 하반기에 대인관계 운이 호전됩니다.",
+          ],
         },
       ];
+
       let searchKeyword = "";
-      let searchFilter = "전체";
+      let searchSortReverse = false;
+
+      // ── 최근 검색어 (localStorage 시뮬레이션) ──
+      let recentSearches = ["이직", "재물운", "결혼 시기", "투자", "건강"];
+      const MAX_RECENT = 10;
+
+      function renderRecentSearches() {
+        const container = document.getElementById("search-initial-recent");
+        if (!container) return;
+        if (recentSearches.length === 0) {
+          container.innerHTML = "";
+          return;
+        }
+        const chips = recentSearches
+          .map(
+            (kw, i) => `
+            <span class="search-recent-chip" onclick="applyRecent('${kw}')">
+              ${kw}
+              <button class="search-recent-del" onclick="removeRecent(event,${i})">✕</button>
+            </span>`,
+          )
+          .join("");
+        container.innerHTML = `
+          <div class="search-initial-recent-label">
+            <span>최근 검색어</span>
+            <button class="search-recent-clear-all" onclick="clearAllRecent()">전체삭제</button>
+          </div>
+          <div class="search-initial-chips">${chips}</div>`;
+      }
+
+      function applyRecent(kw) {
+        const inp = document.getElementById("search-input");
+        inp.value = kw;
+        handleSearch(kw);
+      }
+
+      function removeRecent(e, idx) {
+        e.stopPropagation();
+        recentSearches.splice(idx, 1);
+        renderRecentSearches();
+      }
+
+      function clearAllRecent() {
+        recentSearches = [];
+        renderRecentSearches();
+      }
+
+      function addRecentSearch(kw) {
+        if (!kw) return;
+        recentSearches = [kw, ...recentSearches.filter((k) => k !== kw)].slice(
+          0,
+          MAX_RECENT,
+        );
+        renderRecentSearches();
+      }
+
+      // ── Search core ──────────────────────────────────────────
+      // 상태: "initial" | "results" | "no-history"
+      function setSearchState(state) {
+        const initial = document.getElementById("search-initial");
+        const noHistory = document.getElementById("search-no-history");
+        const meta = document.querySelector(".search-meta");
+        const results = document.getElementById("search-results");
+
+        initial.classList.toggle("show", state === "initial");
+        noHistory.classList.toggle("show", state === "no-history");
+        if (meta) meta.style.display = state === "results" ? "" : "none";
+        if (results) results.style.display = state === "results" ? "" : "none";
+      }
 
       function initSearch() {
-        renderSearchResults();
+        searchKeyword = "";
+        const inp = document.getElementById("search-input");
+        if (inp) inp.value = "";
+        document.getElementById("search-clear").style.display = "none";
+
+        const hasData = SEARCH_DATA.length > 0;
+        setSearchState(hasData ? "initial" : "no-history");
+        renderRecentSearches();
+
+        if (inp && !inp._searchBound) {
+          inp._searchBound = true;
+          inp.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && searchKeyword)
+              addRecentSearch(searchKeyword);
+          });
+        }
       }
 
       function handleSearch(val) {
@@ -5411,79 +6325,82 @@
         document.getElementById("search-clear").style.display = val
           ? "block"
           : "none";
+
+        if (!searchKeyword) {
+          setSearchState(SEARCH_DATA.length > 0 ? "initial" : "no-history");
+          renderRecentSearches();
+          return;
+        }
+
+        setSearchState("results");
         renderSearchResults();
       }
+
       function clearSearch() {
         const inp = document.getElementById("search-input");
         inp.value = "";
         inp.focus();
         handleSearch("");
       }
-      function filterSearch(el, filter) {
-        searchFilter = filter;
-        document
-          .querySelectorAll(".search-filter-chip")
-          .forEach((c) => c.classList.remove("active"));
-        el.classList.add("active");
-        renderSearchResults();
-      }
+
       function setSort(el, mode) {
         document
           .querySelectorAll(".search-sort-btn")
           .forEach((b) => b.classList.remove("active"));
         el.classList.add("active");
-        renderSearchResults(mode === "오래된순");
+        searchSortReverse = mode === "오래된순";
+        renderSearchResults();
       }
 
-      function renderSearchResults(reverse = false) {
+      // 키워드가 포함된 메시지 스니펫 반환
+      function getMatchSnippet(messages, kw) {
+        if (!kw) return messages[0];
+        const msg = messages.find((m) =>
+          m.toLowerCase().includes(kw.toLowerCase()),
+        );
+        return msg || messages[0];
+      }
+
+      function highlight(text, kw) {
+        if (!kw) return text;
+        const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        return text.replace(
+          new RegExp(escaped, "gi"),
+          (m) => `<mark>${m}</mark>`,
+        );
+      }
+
+      function renderSearchResults() {
         const container = document.getElementById("search-results");
         const empty = document.getElementById("search-empty");
         let data = SEARCH_DATA.filter((d) => {
-          const matchFilter =
-            searchFilter === "전체" ||
-            d.tag.includes(
-              searchFilter.replace(/[💰💕💼🌿🚀📚✈️]/g, "").trim(),
-            );
-          const matchKey =
-            !searchKeyword ||
-            d.title.includes(searchKeyword) ||
-            d.preview.includes(searchKeyword);
-          return matchFilter && matchKey;
+          if (!searchKeyword) return true;
+          const kw = searchKeyword.toLowerCase();
+          return (
+            d.title.toLowerCase().includes(kw) ||
+            d.messages.some((m) => m.toLowerCase().includes(kw))
+          );
         });
-        if (reverse) data = [...data].reverse();
+        if (searchSortReverse) data = [...data].reverse();
 
-        // Remove old rendered items (keep empty state)
         container
           .querySelectorAll(".search-result-item")
           .forEach((el) => el.remove());
         empty.classList.toggle("show", data.length === 0);
-
         document.getElementById("search-count").innerHTML =
           `<strong>${data.length}</strong>개의 상담 내역`;
 
         data.forEach((d, i) => {
-          const title = searchKeyword
-            ? d.title.replace(
-                new RegExp(searchKeyword, "g"),
-                `<mark>${searchKeyword}</mark>`,
-              )
-            : d.title;
+          const snippet = getMatchSnippet(d.messages, searchKeyword);
+          const snippetHl = highlight(snippet, searchKeyword);
+
           const div = document.createElement("div");
           div.className = "search-result-item fade-in";
-          div.style.animationDelay = i * 0.05 + "s";
+          div.style.animationDelay = i * 0.04 + "s";
           div.onclick = () => showView("chat");
           div.innerHTML = `
-            <div class="search-result-icon">${d.icon}</div>
-            <div class="search-result-body">
-              <div class="search-result-title">${title}</div>
-              <div class="search-result-preview">${d.preview}</div>
-              <div class="search-result-meta">
-                <span>${d.date}</span>
-                <span class="search-result-tag">${d.icon} ${d.tag}</span>
-                <span>메시지 ${d.msgs}개</span>
-              </div>
-            </div>
-            <div class="search-result-chevron">›</div>`;
+            <div class="search-result-match">${snippetHl}</div>
+            <div class="search-result-date">${d.date}</div>`;
           container.insertBefore(div, empty);
         });
       }
@@ -5545,19 +6462,32 @@
       }
 
       const calToday = new Date(2026, 3, 13); // April 13, 2026
-      let calYear  = calToday.getFullYear();
+      let calYear = calToday.getFullYear();
       let calMonth = calToday.getMonth(); // 0-indexed
 
       function renderCalendar() {
-        const grid  = document.getElementById("fortune-cal-grid");
+        const grid = document.getElementById("fortune-cal-grid");
         const label = document.getElementById("cal-month-label");
         if (!grid || !label) return;
 
-        const monthNames = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+        const monthNames = [
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+          "11월",
+          "12월",
+        ];
         label.textContent = `${calYear}년 ${monthNames[calMonth]}`;
 
-        const dows = ["일","월","화","수","목","금","토"];
-        let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join("");
+        const dows = ["일", "월", "화", "수", "목", "금", "토"];
+        let html = dows.map((d) => `<div class="cal-dow">${d}</div>`).join("");
 
         const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
         const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
@@ -5568,28 +6498,31 @@
         }
 
         for (let d = 1; d <= daysInMonth; d++) {
-          const mm   = String(calMonth + 1).padStart(2, "0");
-          const dd   = String(d).padStart(2, "0");
-          const key  = `${calYear}-${mm}-${dd}`;
-          const dow  = (firstDay + d - 1) % 7; // 0=Sun, 6=Sat
+          const mm = String(calMonth + 1).padStart(2, "0");
+          const dd = String(d).padStart(2, "0");
+          const key = `${calYear}-${mm}-${dd}`;
+          const dow = (firstDay + d - 1) % 7; // 0=Sun, 6=Sat
           const score = FORTUNE_HISTORY[key];
-          const isToday = (
-            calYear  === calToday.getFullYear() &&
-            calMonth === calToday.getMonth()    &&
-            d        === calToday.getDate()
-          );
+          const isToday =
+            calYear === calToday.getFullYear() &&
+            calMonth === calToday.getMonth() &&
+            d === calToday.getDate();
           const isFuture = new Date(calYear, calMonth, d) > calToday;
 
           let cls = "cal-day";
           if (dow === 0) cls += " sun";
           if (dow === 6) cls += " sat";
-          if (isToday)  cls += " today";
+          if (isToday) cls += " today";
           if (isFuture) cls += " future";
           if (score !== undefined) cls += " has-fortune";
 
-          const emoji = score !== undefined ? `<span class="cal-day-emoji">${fortuneEmoji(score)}</span>` : "";
-          html += `<div class="${cls}" title="${score !== undefined ? `전체운 ${score}점` : ""}">`
-                + `<span class="cal-day-num">${d}</span>${emoji}</div>`;
+          const emoji =
+            score !== undefined
+              ? `<span class="cal-day-emoji">${fortuneEmoji(score)}</span>`
+              : "";
+          html +=
+            `<div class="${cls}" title="${score !== undefined ? `전체운 ${score}점` : ""}">` +
+            `<span class="cal-day-num">${d}</span>${emoji}</div>`;
         }
 
         grid.innerHTML = html;
@@ -5597,14 +6530,21 @@
 
       function calPrev() {
         calMonth--;
-        if (calMonth < 0) { calMonth = 11; calYear--; }
+        if (calMonth < 0) {
+          calMonth = 11;
+          calYear--;
+        }
         renderCalendar();
       }
       function calNext() {
         const now = new Date(calYear, calMonth + 1, 1);
-        if (now > new Date(calToday.getFullYear(), calToday.getMonth() + 1, 1)) return;
+        if (now > new Date(calToday.getFullYear(), calToday.getMonth() + 1, 1))
+          return;
         calMonth++;
-        if (calMonth > 11) { calMonth = 0; calYear++; }
+        if (calMonth > 11) {
+          calMonth = 0;
+          calYear++;
+        }
         renderCalendar();
       }
 
@@ -5632,11 +6572,12 @@
       // ── Scroll to bottom
       (function initScrollToBottom() {
         const msgs = document.getElementById("chat-msgs");
-        const btn  = document.getElementById("scroll-to-bottom-btn");
+        const btn = document.getElementById("scroll-to-bottom-btn");
         if (!msgs || !btn) return;
 
         function updateVisibility() {
-          const distanceFromBottom = msgs.scrollHeight - msgs.scrollTop - msgs.clientHeight;
+          const distanceFromBottom =
+            msgs.scrollHeight - msgs.scrollTop - msgs.clientHeight;
           if (distanceFromBottom > 80) {
             btn.classList.add("visible");
           } else {
@@ -5848,6 +6789,54 @@
         });
         label.textContent = score > 0 ? labels[score - 1] : "";
         label.style.color = score > 0 ? colors[score - 1] : "";
+      }
+
+      // ── Gunghap
+      function initGunghap() {
+        showGunghapInput();
+      }
+
+      function showGunghapInput() {
+        document.getElementById("gq-input-state").style.display = "block";
+        document.getElementById("gq-result-state").style.display = "none";
+      }
+
+      function showGunghapResult() {
+        // 이름 반영
+        const nameVal = document.getElementById("gq-partner-name").value.trim();
+        const displayName = nameVal ? nameVal + " · 정화(丁火)" : "정화(丁火)";
+        document.getElementById("gq-partner-display").textContent = displayName;
+
+        // 상태 전환
+        document.getElementById("gq-input-state").style.display = "none";
+        document.getElementById("gq-result-state").style.display = "block";
+
+        // 결과 화면 맨 위로 스크롤
+        document.querySelector(".gunghap-scroll").scrollTo({ top: 0, behavior: "smooth" });
+
+        // 점수 링 애니메이션 (78점 → circumference 427, offset = 427 * (1 - 0.78))
+        requestAnimationFrame(() => {
+          const ring = document.getElementById("gq-ring");
+          if (ring) {
+            const circumference = 2 * Math.PI * 68; // r=68
+            ring.style.strokeDasharray = circumference;
+            ring.style.strokeDashoffset = circumference; // reset
+            requestAnimationFrame(() => {
+              ring.style.transition = "stroke-dashoffset 1.4s cubic-bezier(.25,.46,.45,.94)";
+              ring.style.strokeDashoffset = circumference * (1 - 0.78);
+            });
+          }
+
+          // 카테고리 바 애니메이션
+          document.querySelectorAll("#gq-result-state .gq-cat-fill").forEach(bar => {
+            const w = bar.style.width;
+            bar.style.width = "0%";
+            requestAnimationFrame(() => {
+              bar.style.transition = "width 1.1s cubic-bezier(.25,.46,.45,.94)";
+              bar.style.width = w;
+            });
+          });
+        });
       }
 
       // ── Init

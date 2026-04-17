@@ -1,7 +1,10 @@
 .wrap {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 28px 32px 40px;
+
+  @media (max-width: 767px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 .pageHeader {
@@ -32,8 +35,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 .skeletonBox {

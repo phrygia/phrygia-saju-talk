@@ -8,7 +8,7 @@ async function fetchProfile(
 ): Promise<BirthInfo | null> {
   const { data } = await supabase
     .from("profiles")
-    .select("gender, calendar_type, birth_date, birth_time")
+    .select("gender, calendar_type, birth_date, birth_time, name")
     .eq("id", userId)
     .single();
 
@@ -19,6 +19,7 @@ async function fetchProfile(
     calendarType: data.calendar_type,
     birthDate: data.birth_date,
     birthTime: data.birth_time,
+    name: data?.name,
   };
 }
 

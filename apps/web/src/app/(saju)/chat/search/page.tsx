@@ -1,3 +1,5 @@
+import ChatSearch from "@/src/app/(saju)/_components/search/ChatSearch";
+
 export default function SearchPage() {
-  return <div>SearchPage</div>;
+  return <ChatSearch />;
 }

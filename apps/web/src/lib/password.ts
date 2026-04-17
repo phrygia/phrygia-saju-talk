@@ -23,3 +23,18 @@ export function getPasswordStrengthLabel(strength: number) {
       return "";
   }
 }
+
+export function getPasswordStrengthColor(strength: string) {
+  switch (strength) {
+    case "약함":
+      return "#f87171";
+    case "보통":
+      return "#fb923c";
+    case "강함":
+      return "#fbbf24";
+    case "매우 강함":
+      return "#34d399";
+    default:
+      return "#d1d5db";
+  }
+}

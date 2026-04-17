@@ -1,19 +1,7 @@
-.button {
-  padding: 11px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(124, 92, 252, 0.18);
-  background: rgba(124, 92, 252, 0.06);
-  color: var(--foreground-sub);
-  font-size: 13px;
-  transition: all 0.18s;
-  text-align: center;
+.radio {
+  display: none;
 
-  &:hover {
-    background: rgba(124, 92, 252, 0.12);
-    border-color: rgba(124, 92, 252, 0.3);
-  }
-
-  &.selected {
+  &:checked + .radioLabel {
     background: linear-gradient(
       135deg,
       rgba(99, 102, 241, 0.15),
@@ -26,8 +14,28 @@
   }
 }
 
+.radioLabel {
+  padding: 11px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(124, 92, 252, 0.18);
+  background: rgba(124, 92, 252, 0.06);
+  color: var(--foreground-sub);
+  font-size: 13px;
+  transition: all 0.18s;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(124, 92, 252, 0.12);
+    border-color: rgba(124, 92, 252, 0.3);
+  }
+}
+
 :global(html.light) {
-  & .button {
+  & .radioLabel {
     background: rgba(100, 65, 160, 0.05);
     border-color: rgba(100, 65, 160, 0.15);
 

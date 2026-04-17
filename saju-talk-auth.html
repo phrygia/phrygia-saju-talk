@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAJU TALK — 로그인 / 회원가입</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ──────────────── TOKENS ──────────────── */
+      :root {
+        --bg: #060618;
+        --bg2: #09092a;
+        --surface: #0d0c2e;
+        --card: #110f38;
+        --border: rgba(130, 90, 255, 0.15);
+        --border-h: rgba(130, 90, 255, 0.32);
+        --purple: #7c5cfc;
+        --indigo: #5b57f0;
+        --violet: #a78bfa;
+        --gold: #f0c060;
+        --text: #ede8ff;
+        --text2: rgba(220, 205, 255, 0.65);
+        --muted: rgba(180, 155, 255, 0.4);
+        --input-bg: rgba(255, 255, 255, 0.04);
+        --input-border: rgba(130, 90, 255, 0.22);
+        --input-focus: rgba(124, 92, 252, 0.55);
+        --error: #f87171;
+      }
+
+      body.light {
+        --bg: #f8f6ff;
+        --bg2: #f2eeff;
+        --surface: #ece8ff;
+        --card: #f5f2ff;
+        --border: rgba(100, 65, 160, 0.13);
+        --border-h: rgba(100, 65, 160, 0.28);
+        --purple: #6d4fc2;
+        --indigo: #4e4bc0;
+        --violet: #7c5cf0;
+        --gold: #b8860b;
+        --text: #1a1040;
+        --text2: rgba(30, 15, 70, 0.6);
+        --muted: rgba(80, 55, 130, 0.45);
+        --input-bg: rgba(255, 255, 255, 0.75);
+        --input-border: rgba(100, 65, 160, 0.22);
+        --input-focus: rgba(109, 79, 194, 0.5);
+        --error: #dc2626;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html, body {
+        height: 100%;
+        font-family: "Noto Sans KR", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition: background 0.3s, color 0.3s;
+      }
+
+      /* ──────────────── STARFIELD ──────────────── */
+      #c {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      body.light #c { opacity: 0.18; }
+
+      /* ──────────────── LAYOUT ──────────────── */
+      .page {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px 40px;
+      }
+
+      /* ──────────────── AMBIENT GLOW ──────────────── */
+      .glow-orb {
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .glow-orb-1 {
+        width: 600px; height: 600px;
+        top: -200px; left: 50%;
+        transform: translateX(-50%);
+        background: radial-gradient(circle, rgba(124, 92, 252, 0.12) 0%, transparent 70%);
+      }
+      .glow-orb-2 {
+        width: 400px; height: 400px;
+        bottom: -100px; right: -100px;
+        background: radial-gradient(circle, rgba(91, 87, 240, 0.08) 0%, transparent 70%);
+      }
+      body.light .glow-orb-1 {
+        background: radial-gradient(circle, rgba(109, 79, 194, 0.08) 0%, transparent 70%);
+      }
+      body.light .glow-orb-2 {
+        background: radial-gradient(circle, rgba(78, 75, 192, 0.06) 0%, transparent 70%);
+      }
+
+      /* ──────────────── LOGO ──────────────── */
+      .logo-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 36px;
+      }
+      .logo-gem {
+        width: 52px; height: 52px;
+        background: linear-gradient(135deg, #6366f1, #a78bfa);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 0 28px rgba(99, 102, 241, 0.5), 0 0 60px rgba(99, 102, 241, 0.15);
+        animation: gemPulse 3s ease-in-out infinite;
+      }
+      body.light .logo-gem {
+        box-shadow: 0 0 20px rgba(109, 79, 194, 0.35), 0 0 40px rgba(109, 79, 194, 0.1);
+      }
+      @keyframes gemPulse {
+        0%, 100% { box-shadow: 0 0 28px rgba(99, 102, 241, 0.5), 0 0 60px rgba(99, 102, 241, 0.15); }
+        50%       { box-shadow: 0 0 40px rgba(99, 102, 241, 0.75), 0 0 80px rgba(99, 102, 241, 0.25); }
+      }
+      .logo-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 26px;
+        letter-spacing: 0.18em;
+        background: linear-gradient(90deg, #e8e0ff 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      body.light .logo-title {
+        background: linear-gradient(90deg, #3b2a80 0%, #6d4fc2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .logo-sub {
+        font-size: 10px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: -4px;
+      }
+
+      /* ──────────────── AUTH CARD ──────────────── */
+      .auth-card {
+        width: 100%;
+        max-width: 420px;
+        background: linear-gradient(145deg, rgba(17,15,56,0.95) 0%, rgba(13,12,46,0.95) 100%);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 36px 32px 32px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow:
+          0 0 0 1px rgba(130, 90, 255, 0.06),
+          0 20px 60px rgba(0,0,0,0.4),
+          0 4px 16px rgba(124, 92, 252, 0.08);
+        position: relative;
+        overflow: hidden;
+      }
+      body.light .auth-card {
+        background: linear-gradient(145deg, rgba(248,245,255,0.97) 0%, rgba(238,232,255,0.97) 100%);
+        box-shadow:
+          0 0 0 1px rgba(100, 65, 160, 0.08),
+          0 20px 60px rgba(100, 65, 160, 0.12),
+          0 4px 16px rgba(100, 65, 160, 0.06);
+      }
+      .auth-card::before {
+        content: "";
+        position: absolute;
+        top: -80px; right: -80px;
+        width: 220px; height: 220px;
+        background: radial-gradient(circle, rgba(124,92,252,0.1) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .auth-card::after {
+        content: "";
+        position: absolute;
+        bottom: -60px; left: -60px;
+        width: 180px; height: 180px;
+        background: radial-gradient(circle, rgba(91,87,240,0.07) 0%, transparent 70%);
+        pointer-events: none;
+      }
+
+      /* ── Tab switcher ── */
+      .tab-bar {
+        display: flex;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 4px;
+        margin-bottom: 28px;
+        position: relative;
+        z-index: 1;
+      }
+      body.light .tab-bar {
+        background: rgba(100,65,160,0.06);
+      }
+      .tab-btn {
+        flex: 1;
+        padding: 9px 0;
+        border: none;
+        background: transparent;
+        color: var(--text2);
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.22s;
+        position: relative;
+        z-index: 1;
+      }
+      .tab-btn.active {
+        background: linear-gradient(135deg, var(--purple), var(--indigo));
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(124, 92, 252, 0.35);
+      }
+      body.light .tab-btn.active {
+        box-shadow: 0 4px 12px rgba(109, 79, 194, 0.25);
+      }
+
+      /* ── Form ── */
+      .form-panel { display: none; }
+      .form-panel.active { display: block; }
+
+      .form-title {
+        font-family: "Noto Serif KR", serif;
+        font-size: 19px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .form-desc {
+        font-size: 12.5px;
+        color: var(--text2);
+        margin-bottom: 24px;
+        line-height: 1.55;
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text2);
+        margin-bottom: 7px;
+        letter-spacing: 0.01em;
+      }
+      .field label .req {
+        color: #f472b6;
+        margin-left: 2px;
+      }
+      body.light .field label .req { color: #db2777; }
+
+      .field input {
+        width: 100%;
+        padding: 12px 14px;
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 12px;
+        color: var(--text);
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 13.5px;
+        outline: none;
+        transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+      .field input::placeholder { color: var(--muted); }
+      .field input:focus {
+        border-color: var(--input-focus);
+        box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.12);
+        background: rgba(255,255,255,0.07);
+      }
+      body.light .field input:focus {
+        box-shadow: 0 0 0 3px rgba(109, 79, 194, 0.1);
+        background: rgba(255,255,255,0.92);
+      }
+      .field input.error-input {
+        border-color: var(--error);
+        box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
+      }
+      .field-error {
+        font-size: 11.5px;
+        color: var(--error);
+        margin-top: 5px;
+        display: none;
+      }
+      .field-error.show { display: block; }
+
+      .field-hint {
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+
+      /* password wrapper */
+      .pw-wrap { position: relative; }
+      .pw-wrap input { padding-right: 42px; }
+      .pw-toggle {
+        position: absolute;
+        right: 12px; top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 4px;
+        font-size: 16px;
+        line-height: 1;
+        transition: color 0.15s;
+      }
+      .pw-toggle:hover { color: var(--violet); }
+
+      /* divider */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .divider::before, .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ── Buttons ── */
+      .btn-primary {
+        width: 100%;
+        padding: 13px;
+        background: linear-gradient(135deg, var(--purple) 0%, var(--indigo) 100%);
+        border: none;
+        border-radius: 13px;
+        color: #fff;
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: 0.04em;
+        transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+        box-shadow: 0 6px 20px rgba(124, 92, 252, 0.35);
+        margin-top: 4px;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-primary::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+      .btn-primary:hover::after { opacity: 1; }
+      .btn-primary:active { transform: translateY(0); }
+      body.light .btn-primary {
+        box-shadow: 0 6px 18px rgba(109, 79, 194, 0.28);
+      }
+
+      .btn-secondary {
+        width: 100%;
+        padding: 12px;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        color: var(--text2);
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 13.5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.18s;
+        margin-top: 10px;
+      }
+      .btn-secondary:hover {
+        border-color: var(--border-h);
+        color: var(--violet);
+        background: rgba(124, 92, 252, 0.06);
+      }
+
+      /* ── Terms checkbox ── */
+      .terms-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 18px;
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.5;
+      }
+      .terms-row input[type="checkbox"] {
+        width: 16px; height: 16px;
+        accent-color: var(--purple);
+        margin-top: 1px;
+        flex-shrink: 0;
+        cursor: pointer;
+      }
+      .terms-row a {
+        color: var(--violet);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        cursor: pointer;
+      }
+
+      /* ── Forgot password link ── */
+      .forgot-link {
+        display: block;
+        text-align: right;
+        font-size: 11.5px;
+        color: var(--violet);
+        margin-top: -8px;
+        margin-bottom: 18px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: opacity 0.15s;
+      }
+      .forgot-link:hover { opacity: 0.75; }
+
+      /* ── Password strength ── */
+      .pw-strength {
+        margin-top: 8px;
+        display: none;
+      }
+      .pw-strength.show { display: block; }
+      .pw-strength-bar {
+        height: 3px;
+        border-radius: 2px;
+        background: var(--border);
+        overflow: hidden;
+        margin-bottom: 5px;
+      }
+      .pw-strength-fill {
+        height: 100%;
+        border-radius: 2px;
+        width: 0%;
+        transition: width 0.3s, background 0.3s;
+      }
+      .pw-strength-label {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      /* ── Success state ── */
+      .success-panel {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 12px 0 8px;
+        gap: 14px;
+      }
+      .success-panel.show { display: flex; }
+      .success-icon {
+        width: 64px; height: 64px;
+        background: linear-gradient(135deg, rgba(52,211,153,0.15), rgba(52,211,153,0.05));
+        border: 1px solid rgba(52,211,153,0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        animation: successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes successPop {
+        from { transform: scale(0); opacity: 0; }
+        to   { transform: scale(1); opacity: 1; }
+      }
+      .success-title {
+        font-family: "Noto Serif KR", serif;
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .success-desc { font-size: 12.5px; color: var(--text2); line-height: 1.6; }
+
+      /* ── Footer ── */
+      .page-footer {
+        margin-top: 24px;
+        font-size: 11.5px;
+        color: var(--muted);
+        text-align: center;
+        letter-spacing: 0.02em;
+      }
+
+      /* ──────────────── THEME TOGGLE ──────────────── */
+      .theme-btn {
+        position: fixed;
+        top: 16px; right: 16px;
+        width: 40px; height: 40px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid var(--border);
+        color: var(--gold);
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        transition: all 0.2s;
+        backdrop-filter: blur(10px);
+      }
+      .theme-btn:hover {
+        background: rgba(124, 92, 252, 0.12);
+        border-color: var(--border-h);
+        transform: scale(1.05);
+      }
+      body.light .theme-btn {
+        background: rgba(109, 79, 194, 0.08);
+        color: #6d4fc2;
+      }
+
+      /* ──────────────── DECORATIVE STARS ──────────────── */
+      .deco-star {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        font-size: 14px;
+        opacity: 0.3;
+        animation: floatStar 6s ease-in-out infinite;
+      }
+      body.light .deco-star { opacity: 0.15; }
+      @keyframes floatStar {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50%       { transform: translateY(-12px) rotate(20deg); }
+      }
+
+      /* ──────────────── RESET PASSWORD ──────────────── */
+
+      /* 계정 정보 배지 */
+      .reset-account-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(124, 92, 252, 0.07);
+        border: 1px solid rgba(124, 92, 252, 0.16);
+        border-radius: 12px;
+        padding: 11px 14px;
+        margin-bottom: 22px;
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.5;
+      }
+      .reset-account-badge strong {
+        color: var(--violet);
+        font-weight: 600;
+      }
+      .reset-account-icon {
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      body.light .reset-account-badge {
+        background: rgba(100, 65, 160, 0.05);
+        border-color: rgba(100, 65, 160, 0.15);
+      }
+
+      /* 완료 아이콘 (보라 계열) */
+      .success-icon.reset-done {
+        background: linear-gradient(135deg, rgba(124,92,252,0.18), rgba(91,87,240,0.08));
+        border-color: rgba(124, 92, 252, 0.3);
+      }
+      body.light .success-icon.reset-done {
+        background: linear-gradient(135deg, rgba(109,79,194,0.12), rgba(78,75,192,0.06));
+        border-color: rgba(109, 79, 194, 0.25);
+      }
+
+      /* forgotSuccess에 링크 이동 버튼 */
+      .to-reset-link {
+        font-size: 12px;
+        color: var(--muted);
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        background: none;
+        border: none;
+        font-family: "Noto Sans KR", sans-serif;
+        transition: color 0.15s;
+        margin-top: -4px;
+      }
+      .to-reset-link:hover { color: var(--violet); }
+
+      /* ──────────────── RESPONSIVE ──────────────── */
+      @media (max-width: 480px) {
+        .auth-card { padding: 28px 22px 26px; border-radius: 20px; }
+        .logo-title { font-size: 22px; }
+        .logo-gem { width: 44px; height: 44px; font-size: 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Starfield -->
+    <canvas id="c"></canvas>
+
+    <!-- Ambient glows -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- Decorative floating stars -->
+    <div class="deco-star" style="top:12%;left:8%;animation-delay:0s;">✦</div>
+    <div class="deco-star" style="top:20%;right:10%;animation-delay:1.5s;font-size:10px;">✧</div>
+    <div class="deco-star" style="bottom:18%;left:12%;animation-delay:3s;font-size:11px;">✦</div>
+    <div class="deco-star" style="bottom:25%;right:8%;animation-delay:2s;">✧</div>
+    <div class="deco-star" style="top:55%;left:5%;animation-delay:4s;font-size:9px;">✦</div>
+
+    <!-- Theme toggle -->
+    <button class="theme-btn" id="themeBtn" title="테마 전환">🌙</button>
+
+    <!-- Page -->
+    <div class="page">
+
+      <!-- Logo -->
+      <div class="logo-wrap">
+        <div class="logo-gem">🔮</div>
+        <div>
+          <div class="logo-title">SAJU TALK</div>
+          <div class="logo-sub">AI 사주 상담 플랫폼</div>
+        </div>
+      </div>
+
+      <!-- Auth Card -->
+      <div class="auth-card">
+
+        <!-- Tab bar -->
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">로그인</button>
+          <button class="tab-btn" id="tabSignup" onclick="switchTab('signup')">회원가입</button>
+        </div>
+
+        <!-- ── LOGIN PANEL ── -->
+        <div class="form-panel active" id="panelLogin">
+          <div class="form-title">다시 돌아오셨군요 👋</div>
+          <div class="form-desc">계정에 로그인하여 AI 사주 상담을 시작하세요.</div>
+
+          <div class="field">
+            <label>이메일 <span class="req">*</span></label>
+            <input type="email" id="loginEmail" placeholder="example@email.com" />
+            <div class="field-error" id="loginEmailErr">올바른 이메일을 입력해주세요.</div>
+          </div>
+
+          <div class="field">
+            <label>비밀번호 <span class="req">*</span></label>
+            <div class="pw-wrap">
+              <input type="password" id="loginPw" placeholder="비밀번호를 입력하세요" />
+              <button class="pw-toggle" onclick="togglePw('loginPw', this)">👁</button>
+            </div>
+            <div class="field-error" id="loginPwErr">비밀번호를 입력해주세요.</div>
+          </div>
+
+          <a class="forgot-link" onclick="showForgot()">비밀번호를 잊으셨나요?</a>
+
+          <button class="btn-primary" onclick="doLogin()">로그인</button>
+          <button class="btn-secondary" onclick="switchTab('signup')">계정이 없으신가요? 회원가입</button>
+        </div>
+
+        <!-- ── SIGNUP PANEL ── -->
+        <div class="form-panel" id="panelSignup">
+          <div id="signupForm">
+            <div class="form-title">사주와 함께 시작해요 ✨</div>
+            <div class="form-desc">간단한 정보로 가입하고 맞춤 사주 상담을 받아보세요.</div>
+
+            <div class="field">
+              <label>이메일 <span class="req">*</span></label>
+              <input type="email" id="signupEmail" placeholder="example@email.com" />
+              <div class="field-error" id="signupEmailErr">올바른 이메일을 입력해주세요.</div>
+            </div>
+
+            <div class="field">
+              <label>비밀번호 <span class="req">*</span></label>
+              <div class="pw-wrap">
+                <input type="password" id="signupPw" placeholder="8자 이상 입력하세요" oninput="updateStrength(this.value)" />
+                <button class="pw-toggle" onclick="togglePw('signupPw', this)">👁</button>
+              </div>
+              <div class="pw-strength" id="pwStrength">
+                <div class="pw-strength-bar">
+                  <div class="pw-strength-fill" id="pwFill"></div>
+                </div>
+                <div class="pw-strength-label" id="pwLabel">강도: —</div>
+              </div>
+              <div class="field-error" id="signupPwErr">8자 이상 입력해주세요.</div>
+            </div>
+
+            <div class="field">
+              <label>비밀번호 확인 <span class="req">*</span></label>
+              <div class="pw-wrap">
+                <input type="password" id="signupPwConfirm" placeholder="비밀번호를 다시 입력하세요" />
+                <button class="pw-toggle" onclick="togglePw('signupPwConfirm', this)">👁</button>
+              </div>
+              <div class="field-error" id="signupPwConfirmErr">비밀번호가 일치하지 않습니다.</div>
+            </div>
+
+            <div class="terms-row">
+              <input type="checkbox" id="termsCheck" />
+              <label for="termsCheck">
+                <a>이용약관</a> 및 <a>개인정보 처리방침</a>에 동의합니다.
+              </label>
+            </div>
+            <div class="field-error" id="termsErr" style="margin-top:-10px;margin-bottom:14px;">약관에 동의해주세요.</div>
+
+            <button class="btn-primary" onclick="doSignup()">회원가입</button>
+            <button class="btn-secondary" onclick="switchTab('login')">이미 계정이 있으신가요? 로그인</button>
+          </div>
+
+          <!-- Success state -->
+          <div class="success-panel" id="signupSuccess">
+            <div class="success-icon">✓</div>
+            <div class="success-title">가입이 완료되었어요!</div>
+            <div class="success-desc">
+              이메일로 인증 메일을 발송했습니다.<br/>
+              인증 후 로그인하여 사주 상담을 시작해보세요.
+            </div>
+            <button class="btn-primary" style="margin-top:8px;width:auto;padding:12px 32px;" onclick="switchTab('login')">
+              로그인하기
+            </button>
+          </div>
+        </div>
+
+        <!-- ── FORGOT PASSWORD PANEL ── -->
+        <div class="form-panel" id="panelForgot">
+          <div id="forgotForm">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+              <button onclick="switchTab('login')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:0;line-height:1;transition:color 0.15s;" onmouseover="this.style.color='var(--violet)'" onmouseout="this.style.color='var(--muted)'">←</button>
+              <div class="form-title" style="margin:0;">비밀번호 재설정</div>
+            </div>
+            <div class="form-desc">가입 시 사용한 이메일을 입력하면<br/>재설정 링크를 보내드립니다.</div>
+
+            <div class="field">
+              <label>이메일 <span class="req">*</span></label>
+              <input type="email" id="forgotEmail" placeholder="example@email.com" />
+              <div class="field-error" id="forgotEmailErr">올바른 이메일을 입력해주세요.</div>
+            </div>
+
+            <button class="btn-primary" onclick="doForgot()">재설정 링크 보내기</button>
+          </div>
+
+          <div class="success-panel" id="forgotSuccess">
+            <div class="success-icon">📬</div>
+            <div class="success-title">메일을 확인해주세요</div>
+            <div class="success-desc">
+              입력하신 이메일로<br/>비밀번호 재설정 링크를 보내드렸습니다.
+            </div>
+            <button class="btn-secondary" style="width:auto;padding:10px 28px;margin-top:4px;" onclick="switchTab('login')">
+              로그인으로 돌아가기
+            </button>
+            <button class="to-reset-link" onclick="switchTab('reset')">
+              링크를 받으셨나요? 새 비밀번호 설정하기 →
+            </button>
+          </div>
+        </div>
+
+        <!-- ── RESET PASSWORD PANEL ── -->
+        <div class="form-panel" id="panelReset">
+
+          <!-- 폼 상태 -->
+          <div id="resetForm">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+              <button onclick="switchTab('forgot')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:0;line-height:1;transition:color 0.15s;flex-shrink:0;" onmouseover="this.style.color='var(--violet)'" onmouseout="this.style.color='var(--muted)'">←</button>
+              <div>
+                <div class="form-title" style="margin:0;">새 비밀번호 설정</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;">안전한 비밀번호로 변경해주세요</div>
+              </div>
+            </div>
+
+            <!-- 계정 정보 배지 -->
+            <div class="reset-account-badge">
+              <span class="reset-account-icon">🔒</span>
+              <div>
+                <strong>user@example.com</strong> 계정의<br/>
+                비밀번호를 재설정합니다.
+              </div>
+            </div>
+
+            <div class="field">
+              <label>새 비밀번호 <span class="req">*</span></label>
+              <div class="pw-wrap">
+                <input type="password" id="resetPw" placeholder="8자 이상 입력하세요" oninput="updateResetStrength(this.value)" />
+                <button class="pw-toggle" onclick="togglePw('resetPw', this)">👁</button>
+              </div>
+              <div class="pw-strength" id="resetPwStrength">
+                <div class="pw-strength-bar">
+                  <div class="pw-strength-fill" id="resetPwFill"></div>
+                </div>
+                <div class="pw-strength-label" id="resetPwLabel">강도: —</div>
+              </div>
+              <div class="field-error" id="resetPwErr">8자 이상 입력해주세요.</div>
+            </div>
+
+            <div class="field" style="margin-bottom:26px;">
+              <label>새 비밀번호 확인 <span class="req">*</span></label>
+              <div class="pw-wrap">
+                <input type="password" id="resetPwConfirm" placeholder="비밀번호를 다시 입력하세요" />
+                <button class="pw-toggle" onclick="togglePw('resetPwConfirm', this)">👁</button>
+              </div>
+              <div class="field-error" id="resetPwConfirmErr">비밀번호가 일치하지 않습니다.</div>
+            </div>
+
+            <button class="btn-primary" onclick="doResetPassword()">비밀번호 변경하기</button>
+          </div>
+
+          <!-- 완료 상태 -->
+          <div class="success-panel" id="resetSuccess">
+            <div class="success-icon reset-done">✦</div>
+            <div class="success-title">비밀번호가 변경됐어요!</div>
+            <div class="success-desc">
+              새 비밀번호로 로그인하여<br/>오늘의 사주를 확인해보세요.
+            </div>
+            <button class="btn-primary" style="width:auto;padding:12px 36px;margin-top:0;" onclick="switchTab('login')">
+              로그인하기
+            </button>
+          </div>
+
+        </div>
+
+      </div><!-- /.auth-card -->
+
+      <div class="page-footer">© 2025 SAJU TALK. All rights reserved.</div>
+    </div>
+
+    <!-- ──────────── SCRIPTS ──────────── -->
+    <script>
+      /* ── Starfield ── */
+      const canvas = document.getElementById('c');
+      const ctx = canvas.getContext('2d');
+      let W, H, stars = [];
+      function initStars() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        stars = Array.from({ length: 140 }, () => ({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.2 + 0.2,
+          a: Math.random(),
+          da: (Math.random() * 0.4 + 0.1) * (Math.random() < 0.5 ? 1 : -1) * 0.005,
+        }));
+      }
+      function drawStars() {
+        ctx.clearRect(0, 0, W, H);
+        const isLight = document.body.classList.contains('light');
+        stars.forEach(s => {
+          s.a = Math.max(0.05, Math.min(1, s.a + s.da));
+          if (s.a <= 0.05 || s.a >= 1) s.da *= -1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = isLight
+            ? `rgba(109,79,194,${s.a * 0.6})`
+            : `rgba(200,180,255,${s.a * 0.7})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(drawStars);
+      }
+      window.addEventListener('resize', initStars);
+      initStars();
+      drawStars();
+
+      /* ── Theme ── */
+      const themeBtn = document.getElementById('themeBtn');
+      let isLight = false;
+      themeBtn.addEventListener('click', () => {
+        isLight = !isLight;
+        document.body.classList.toggle('light', isLight);
+        themeBtn.textContent = isLight ? '🌙' : '🌙';
+        themeBtn.textContent = isLight ? '☀️' : '🌙';
+      });
+
+      /* ── Tab switcher ── */
+      function switchTab(tab) {
+        ['login','signup','forgot','reset'].forEach(t => {
+          document.getElementById('panel' + cap(t)).classList.remove('active');
+          const btn = document.getElementById('tab' + cap(t));
+          if (btn) btn.classList.remove('active');
+        });
+        document.getElementById('panel' + cap(tab)).classList.add('active');
+        const activeBtn = document.getElementById('tab' + cap(tab));
+        if (activeBtn) activeBtn.classList.add('active');
+
+        // forgot 패널 벗어날 때 초기화
+        if (tab !== 'forgot') {
+          document.getElementById('forgotSuccess').classList.remove('show');
+          document.getElementById('forgotForm').style.display = 'block';
+        }
+        // reset 패널 벗어날 때 초기화
+        if (tab !== 'reset') {
+          document.getElementById('resetSuccess').classList.remove('show');
+          document.getElementById('resetForm').style.display = 'block';
+        }
+      }
+      function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+      function showForgot() { switchTab('forgot'); }
+
+      /* ── Password visibility toggle ── */
+      function togglePw(id, btn) {
+        const inp = document.getElementById(id);
+        if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+        else                         { inp.type = 'password'; btn.textContent = '👁'; }
+      }
+
+      /* ── Password strength ── */
+      function updateStrength(val) {
+        const wrap = document.getElementById('pwStrength');
+        const fill  = document.getElementById('pwFill');
+        const label = document.getElementById('pwLabel');
+        if (!val) { wrap.classList.remove('show'); return; }
+        wrap.classList.add('show');
+        let score = 0;
+        if (val.length >= 8)  score++;
+        if (val.length >= 12) score++;
+        if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+        if (/\d/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+        const levels = [
+          { w:'20%', bg:'#f87171', txt:'매우 약함' },
+          { w:'40%', bg:'#fb923c', txt:'약함' },
+          { w:'60%', bg:'#fbbf24', txt:'보통' },
+          { w:'80%', bg:'#34d399', txt:'강함' },
+          { w:'100%', bg:'#10b981', txt:'매우 강함' },
+        ];
+        const lv = levels[Math.min(score, 4)];
+        fill.style.width = lv.w;
+        fill.style.background = lv.bg;
+        label.textContent = '강도: ' + lv.txt;
+        label.style.color = lv.bg;
+      }
+
+      /* ── Validation helpers ── */
+      function setErr(id, show) {
+        const el = document.getElementById(id);
+        el.classList.toggle('show', show);
+        const inp = el.previousElementSibling?.tagName === 'INPUT'
+          ? el.previousElementSibling
+          : el.previousElementSibling?.querySelector('input');
+        if (inp) inp.classList.toggle('error-input', show);
+        return !show;
+      }
+      function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+      /* ── Login ── */
+      function doLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const pw    = document.getElementById('loginPw').value;
+        let ok = true;
+
+        // clear errors
+        ['loginEmailErr','loginPwErr'].forEach(id => {
+          document.getElementById(id).classList.remove('show');
+          const inp = document.getElementById(id.replace('Err',''));
+          if (inp) inp.classList.remove('error-input');
+        });
+
+        if (!isEmail(email)) {
+          document.getElementById('loginEmailErr').classList.add('show');
+          document.getElementById('loginEmail').classList.add('error-input');
+          ok = false;
+        }
+        if (!pw) {
+          document.getElementById('loginPwErr').classList.add('show');
+          document.getElementById('loginPw').classList.add('error-input');
+          ok = false;
+        }
+        if (ok) {
+          // 실제 앱에서는 supabase auth 호출
+          alert('로그인 시도: ' + email);
+        }
+      }
+
+      /* ── Signup ── */
+      function doSignup() {
+        const email   = document.getElementById('signupEmail').value.trim();
+        const pw      = document.getElementById('signupPw').value;
+        const pwc     = document.getElementById('signupPwConfirm').value;
+        const terms   = document.getElementById('termsCheck').checked;
+        let ok = true;
+
+        ['signupEmailErr','signupPwErr','signupPwConfirmErr','termsErr'].forEach(id => {
+          document.getElementById(id).classList.remove('show');
+        });
+        ['signupEmail','signupPw','signupPwConfirm'].forEach(id => {
+          document.getElementById(id).classList.remove('error-input');
+        });
+
+        if (!isEmail(email)) {
+          document.getElementById('signupEmailErr').classList.add('show');
+          document.getElementById('signupEmail').classList.add('error-input');
+          ok = false;
+        }
+        if (pw.length < 8) {
+          document.getElementById('signupPwErr').classList.add('show');
+          document.getElementById('signupPw').classList.add('error-input');
+          ok = false;
+        }
+        if (pw !== pwc) {
+          document.getElementById('signupPwConfirmErr').classList.add('show');
+          document.getElementById('signupPwConfirm').classList.add('error-input');
+          ok = false;
+        }
+        if (!terms) {
+          document.getElementById('termsErr').classList.add('show');
+          ok = false;
+        }
+        if (ok) {
+          document.getElementById('signupForm').style.display = 'none';
+          document.getElementById('signupSuccess').classList.add('show');
+        }
+      }
+
+      /* ── Reset password strength ── */
+      function updateResetStrength(val) {
+        const wrap  = document.getElementById('resetPwStrength');
+        const fill  = document.getElementById('resetPwFill');
+        const label = document.getElementById('resetPwLabel');
+        if (!val) { wrap.classList.remove('show'); return; }
+        wrap.classList.add('show');
+        let score = 0;
+        if (val.length >= 8)  score++;
+        if (val.length >= 12) score++;
+        if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+        if (/\d/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+        const levels = [
+          { w:'20%', bg:'#f87171', txt:'매우 약함' },
+          { w:'40%', bg:'#fb923c', txt:'약함' },
+          { w:'60%', bg:'#fbbf24', txt:'보통' },
+          { w:'80%', bg:'#34d399', txt:'강함' },
+          { w:'100%', bg:'#10b981', txt:'매우 강함' },
+        ];
+        const lv = levels[Math.min(score, 4)];
+        fill.style.width = lv.w;
+        fill.style.background = lv.bg;
+        label.textContent = '강도: ' + lv.txt;
+        label.style.color = lv.bg;
+      }
+
+      /* ── Reset password submit ── */
+      function doResetPassword() {
+        const pw  = document.getElementById('resetPw').value;
+        const pw2 = document.getElementById('resetPwConfirm').value;
+        let ok = true;
+
+        ['resetPwErr','resetPwConfirmErr'].forEach(id => {
+          document.getElementById(id).classList.remove('show');
+        });
+        ['resetPw','resetPwConfirm'].forEach(id => {
+          document.getElementById(id).classList.remove('error-input');
+        });
+
+        if (pw.length < 8) {
+          document.getElementById('resetPwErr').classList.add('show');
+          document.getElementById('resetPw').classList.add('error-input');
+          ok = false;
+        }
+        if (pw !== pw2) {
+          document.getElementById('resetPwConfirmErr').classList.add('show');
+          document.getElementById('resetPwConfirm').classList.add('error-input');
+          ok = false;
+        }
+        if (ok) {
+          document.getElementById('resetForm').style.display = 'none';
+          document.getElementById('resetSuccess').classList.add('show');
+        }
+      }
+
+      /* ── Forgot password ── */
+      function doForgot() {
+        const email = document.getElementById('forgotEmail').value.trim();
+        document.getElementById('forgotEmailErr').classList.remove('show');
+        document.getElementById('forgotEmail').classList.remove('error-input');
+
+        if (!isEmail(email)) {
+          document.getElementById('forgotEmailErr').classList.add('show');
+          document.getElementById('forgotEmail').classList.add('error-input');
+          return;
+        }
+        document.getElementById('forgotForm').style.display = 'none';
+        document.getElementById('forgotSuccess').classList.add('show');
+      }
+    </script>
+  </body>
+</html>

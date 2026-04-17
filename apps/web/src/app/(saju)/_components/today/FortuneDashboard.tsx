@@ -32,18 +32,17 @@ function FortuneErrorFallback({
 }
 
 export default function FortuneDashboard({ date }: { date: string }) {
-  const birthInfo = useUserStore((s) => s.birthInfo);
-  const isLoading = useUserStore((s) => s.isLoading);
+  const { birthInfo, isLoading } = useUserStore();
 
   if (isLoading) return <FortuneDashboardSkeleton date={date} />;
 
-  if (!birthInfo)
+  if (!birthInfo?.birthDate)
     return (
       <>
         <ChatHeader />
         <div className="overflow-y-auto">
-          <div className="py-10 md:py-20 px-5">
-            <BirthInfoForm />
+          <div className="py-10 md:py-20 px-5 max-w-[480px] mx-auto">
+            <BirthInfoForm hideDeleteButton />
           </div>
         </div>
       </>

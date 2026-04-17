@@ -46,6 +46,6 @@ export const FORTUNE_CATEGORY_CONFIG = [
   { key: "love" as const, icon: "💕", label: "연애운" },
   { key: "health" as const, icon: "🌿", label: "건강운" },
   { key: "career" as const, icon: "💼", label: "직장운" },
-  { key: "study" as const, icon: "📘", label: "학업운" },
+  { key: "study" as const, icon: "📚", label: "학업운" },
   { key: "travel" as const, icon: "✈️", label: "여행운" },
 ];

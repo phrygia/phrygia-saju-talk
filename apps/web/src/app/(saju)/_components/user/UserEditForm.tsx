@@ -12,10 +12,8 @@ import { Button } from "@repo/ui/components/button";
 import { useUserStore } from "@/src/store/user.store";
 import { changeUserPassword, deleteUser } from "@/src/app/(saju)/_actions/user";
 import ConfirmModal from "@/src/components/ui/ConfirmModal";
-import {
-  checkPasswordStrength,
-  getPasswordStrengthLabel,
-} from "@/src/lib/password";
+import { checkPasswordStrength } from "@/src/lib/password";
+import PasswordStrengthIndicator from "@/src/components/ui/PasswordStrengthIndicator";
 
 const editSchema = z
   .object({
@@ -37,21 +35,10 @@ type EditFormValues = z.infer<typeof editSchema>;
 export default function UserEditForm() {
   const router = useRouter();
   const user = useUserStore((s) => s.user);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [strength, setStrength] = useState<number>(0);
-
-  const getLabel = getPasswordStrengthLabel(strength);
-  const labelColor =
-    getLabel === "약함"
-      ? "#f87171"
-      : getLabel === "보통"
-        ? "#fb923c"
-        : getLabel === "강함"
-          ? "#fbbf24"
-          : getLabel === "매우 강함"
-            ? "#34d399"
-            : "#d1d5db";
 
   const {
     register,
@@ -131,8 +118,8 @@ export default function UserEditForm() {
   return (
     <>
       <ChatHeader title="회원 정보" />
-      <div className="overflow-y-scroll">
-        <div className="max-w-[520px] w-full mx-auto px-4 py-8">
+      <div className="overflow-y-auto">
+        <div className="max-w-[480px] w-full mx-auto px-4 py-8">
           <div>
             <p className="text-violet text-[11px]">Account · 계정 설정</p>
             <h2 className="font-serif-kr font-medium text-[28px] mt-2.5 mb-2">
@@ -170,13 +157,6 @@ export default function UserEditForm() {
                 errorMessage={errors.currentPassword?.message}
                 placeholder="현재 비밀번호를 입력해주세요. (8자이상)"
                 {...register("currentPassword")}
-                onChange={(e) => {
-                  register("currentPassword").onChange(e);
-                  const passwordStrength = checkPasswordStrength(
-                    e.target.value,
-                  );
-                  setStrength(passwordStrength);
-                }}
               />
             </div>
             <div className="mb-5">
@@ -190,33 +170,19 @@ export default function UserEditForm() {
                 errorMessage={errors.newPassword?.message}
                 placeholder="새 비밀번호를 입력해주세요. (8자이상)"
                 {...register("newPassword")}
+                onChange={(e) => {
+                  register("newPassword").onChange(e);
+                  const passwordStrength = checkPasswordStrength(
+                    e.target.value,
+                  );
+                  setStrength(passwordStrength);
+                }}
               />
             </div>
-            <div className="-mt-2.5 mb-3 flex gap-[4px] items-center">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  className="h-[3px] flex-1 rounded-sm bg-[rgba(0,0,0,0.08)] dark:bg-[rgba(255,255,255,0.07)] overflow-hidden"
-                  key={i}
-                >
-                  <div
-                    className="h-full rounded-sm transition-all w-0"
-                    style={{
-                      width: strength >= i ? "100%" : "0%",
-                      transition: "0.2s",
-                      backgroundColor: labelColor,
-                    }}
-                  />
-                </div>
-              ))}
-              <div
-                className="text-[10px] text-foreground-muted text-right"
-                style={{
-                  color: labelColor,
-                }}
-              >
-                {getLabel}
-              </div>
-            </div>
+            <PasswordStrengthIndicator
+              strength={strength}
+              className="-mt-2.5 mb-3 "
+            />
             <div className="mb-5">
               <Input
                 type="password"
@@ -263,17 +229,17 @@ export default function UserEditForm() {
       </div>
       <ConfirmModal
         open={modalOpen}
-        icon="🗑"
-        title={<div className="confirm-icon-wrap danger">🗑</div>}
-        subtitle="이 작업은 되돌릴 수 없습니다."
         onClose={() => setModalOpen(false)}
         onConfirm={handleDeleteAccount}
         disabled={loading || isSubmitting}
-      >
-        <h2 className="mb-10 text-lg font-semibold">
-          정말로 계정을 삭제하시겠습니까? <br />이 작업은 되돌릴 수 없습니다.
-        </h2>
-      </ConfirmModal>
+        icon="🗑"
+        title="회원 탈퇴"
+        subtitle={
+          <>
+            정말로 계정을 삭제하시겠습니까? <br />이 작업은 되돌릴 수 없습니다.
+          </>
+        }
+      />
     </>
   );
 }

@@ -1,0 +1,107 @@
+.box {
+  background: linear-gradient(
+    135deg,
+    rgba(20, 16, 58, 0.9),
+    rgba(12, 10, 40, 0.9)
+  );
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  border-radius: 20px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //   text-align: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+
+  & .tag {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--violet);
+    background: rgba(124, 92, 252, 0.1);
+    border: 1px solid rgba(124, 92, 252, 0.22);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    color: var(--violet);
+
+    &.partner {
+      width: 100%;
+      color: var(--rose);
+      background: rgba(244, 114, 182, 0.1);
+      border-color: rgba(244, 114, 182, 0.22);
+    }
+  }
+}
+
+.vs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  min-height: 200px;
+  gap: 8px;
+
+  & .line {
+    flex: 1;
+    width: 1px;
+    min-height: 40px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(244, 114, 182, 0.3),
+      transparent
+    );
+  }
+
+  & .icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      rgba(167, 139, 250, 0.15),
+      rgba(244, 114, 182, 0.12)
+    );
+    border: 1px solid rgba(244, 114, 182, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(244, 114, 182, 0.18);
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: row;
+    min-height: unset;
+    padding: 12px 0;
+
+    & .line {
+      flex: 1;
+      width: unset;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(244, 114, 182, 0.3),
+        transparent
+      );
+      min-height: unset;
+    }
+  }
+}
+
+:global(html.light) {
+  .box {
+    background: linear-gradient(
+      135deg,
+      rgba(248, 245, 255, 0.97),
+      rgba(238, 232, 255, 0.97)
+    );
+  }
+}
