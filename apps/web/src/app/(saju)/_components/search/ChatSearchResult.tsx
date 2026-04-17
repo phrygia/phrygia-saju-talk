@@ -74,7 +74,7 @@ export default function ChatSearchResult({ keyword }: { keyword: string }) {
 
         let query = supabase
           .from(messagesTableName)
-          .select("*")
+          .select("id, conversation_id, content, created_at")
           .eq("user_id", userId)
           .ilike("content", `%${keyword}%`)
           .order("created_at", { ascending: sortOrder === "oldest" })

@@ -10,7 +10,7 @@ import GunghapDashboard from "./GunghapDashboard";
 import styles from "./GunghapInfo.module.scss";
 
 export default function GunghapInfo() {
-  const { birthInfo, isLoading } = useUserStore();
+  const { birthInfo } = useUserStore();
   const [step, setStep] = useState<"input" | "result">("input");
   const birthInfoRef = useRef<HTMLFormElement>(null);
 
@@ -39,7 +39,7 @@ export default function GunghapInfo() {
                   {birthInfo ? "나의 사주" : "나의 정보"}
                 </div>
                 {birthInfo ? (
-                  <div>dasdadadsad adsldjka ada</div>
+                  <div>나주 성종</div>
                 ) : (
                   <BirthInfoForm
                     initialInfo={null}

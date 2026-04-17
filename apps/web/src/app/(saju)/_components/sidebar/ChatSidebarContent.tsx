@@ -107,7 +107,7 @@ export default function ChatSidebarContent({
           </div>
         </Link>
       </div>
-      {/* <div className="pt-3 px-2.5 pb-2">
+      <div className="pt-3 px-2.5 pb-2">
         <Link
           href="/"
           className={cn(styles.button, pathname === "/" && styles.active)}
@@ -146,7 +146,7 @@ export default function ChatSidebarContent({
           <span>☯</span>
           사주 원국
         </Link>
-        <Link
+        {/* <Link
           className={cn(
             styles.button,
             pathname === "/gunghap" && styles.active,
@@ -155,8 +155,8 @@ export default function ChatSidebarContent({
         >
           <span>💑</span>
           궁합 분석
-        </Link>
-      </div> */}
+        </Link> */}
+      </div>
       <div className="bg-border mx-3 h-[1px]" />
       <div className="flex-1 overflow-y-auto px-2 py-2 min-w-60">
         <h1 className="mb-2 pt-1.5 px-3 pb-1 text-[10px] text-foreground-sub">

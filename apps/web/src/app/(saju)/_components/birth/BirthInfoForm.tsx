@@ -1,9 +1,8 @@
 "use client";
 
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useId } from "react";
 import toast from "react-hot-toast";
-import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -75,21 +74,14 @@ export default function BirthInfoForm({
   onSubmit: onSubmitProp = null,
   ref = null,
 }: BirthInfoFormProps) {
+  const radioGenderName = useId();
+  const radioCalendarTypeName = useId();
+
   const { birthInfo, setBirthInfo, clearBirthInfo } = useUserStore();
   const { closeBirthInfoModal } = useBirthInfoModalStore();
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
-  const [radioGenderName, setRadioGenderName] = useState<string | null>(
-    "gender",
-  );
-  const [radioCalendarTypeName, setRadioCalendarTypeName] = useState<
-    string | null
-  >("calendarType");
-
-  useEffect(() => {
-    setRadioGenderName(`radio-${uuidv4()}`);
-    setRadioCalendarTypeName(`radio-${uuidv4()}`);
-  }, []);
 
   const {
     register,
