@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@repo/ui/lib/utils";
 import { useSidebarToggleStore } from "@/src/store/sidebar.store";
@@ -9,7 +9,7 @@ import ChatSidebarContent from "./ChatSidebarContent";
 const sidebarClass =
   "dark:bg-[linear-gradient(180deg,#0a0928_0%,#070620_100%)] text-foreground bg-gradient-to-br from-[#ede8ff] to-[#e4dcff] border-r border-r-border";
 
-export function ChatSidebar() {
+function ChatSidebar() {
   const pathname = usePathname();
   const { isMobileSidebarOpen, closeMobileSidebar } = useSidebarToggleStore();
 
@@ -65,3 +65,5 @@ export function ChatSidebar() {
     </>
   );
 }
+
+export default memo(ChatSidebar);

@@ -6,30 +6,8 @@ import { useUserStore } from "@/src/store/user.store";
 import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import FortuneDashboardContent from "@/src/app/(saju)/_components/today/FortuneDashboardContent";
 import BirthInfoForm from "@/src/app/(saju)/_components/birth/BirthInfoForm";
-import FortuneDashboardSkeleton from "./FortuneDashboardSkeleton";
-
-function FortuneErrorFallback({
-  error,
-  resetErrorBoundary,
-}: {
-  error: unknown;
-  resetErrorBoundary: () => void;
-}) {
-  const message =
-    error instanceof Error ? error.message : "운세를 불러오는데 실패했습니다.";
-
-  return (
-    <div className="flex flex-col items-center justify-center py-16 gap-3">
-      <p className="text-sm text-red-400">{message}</p>
-      <button
-        onClick={resetErrorBoundary}
-        className="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-all"
-      >
-        다시 시도
-      </button>
-    </div>
-  );
-}
+import FortuneDashboardSkeleton from "@/src/app/(saju)/_components/today/FortuneDashboardSkeleton";
+import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
 
 export default function FortuneDashboard({ date }: { date: string }) {
   const { birthInfo, isLoading } = useUserStore();
@@ -50,7 +28,7 @@ export default function FortuneDashboard({ date }: { date: string }) {
 
   return (
     <ErrorBoundary
-      FallbackComponent={FortuneErrorFallback}
+      FallbackComponent={ErrorFallback}
       resetKeys={[
         birthInfo!.gender,
         birthInfo!.calendarType,

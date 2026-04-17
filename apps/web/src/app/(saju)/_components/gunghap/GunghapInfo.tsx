@@ -2,11 +2,13 @@
 
 import React, { Suspense, useRef, useState } from "react";
 import "dayjs/locale/ko";
+import { ErrorBoundary } from "react-error-boundary";
 import { useUserStore } from "@/src/store/user.store";
 import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import BirthInfoForm from "@/src/app/(saju)/_components/birth/BirthInfoForm";
 import { type BirthInfo } from "@/src/app/types/fortune";
 import GunghapDashboard from "./GunghapDashboard";
+import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
 import styles from "./GunghapInfo.module.scss";
 
 export default function GunghapInfo() {
@@ -80,24 +82,35 @@ export default function GunghapInfo() {
           </div>
         )}
         {step === "result" && (
-          <Suspense fallback={<p>loading...</p>}>
-            <GunghapDashboard
-              myInfo={{
-                gender: "female",
-                calendarType: "solar",
-                birthDate: "1989-08-17",
-                birthTime: "sul",
-                name: "이채연",
-              }}
-              partnerInfo={{
-                gender: "male",
-                calendarType: "solar",
-                birthDate: "1986-07-19",
-                birthTime: "sul",
-                name: "",
-              }}
-            />
-          </Suspense>
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            resetKeys={[
+              birthInfo!.gender,
+              birthInfo!.calendarType,
+              birthInfo!.birthDate,
+              birthInfo!.birthTime,
+              //
+            ]}
+          >
+            <Suspense fallback={<p>loading...</p>}>
+              <GunghapDashboard
+                myInfo={{
+                  gender: "female",
+                  calendarType: "solar",
+                  birthDate: "1989-08-17",
+                  birthTime: "sul",
+                  name: "이채연",
+                }}
+                partnerInfo={{
+                  gender: "male",
+                  calendarType: "solar",
+                  birthDate: "1986-07-19",
+                  birthTime: "sul",
+                  name: "",
+                }}
+              />
+            </Suspense>
+          </ErrorBoundary>
         )}
       </div>
     </>

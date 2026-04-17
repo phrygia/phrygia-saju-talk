@@ -7,32 +7,7 @@ import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import BirthInfoForm from "@/src/app/(saju)/_components/birth/BirthInfoForm";
 import ManseryeokDashboardContent from "@/src/app/(saju)/_components/manseryeok/ManseryeokDashboardContent";
 import ManseryeokSkeleton from "@/src/app/(saju)/_components/manseryeok/ManseryeokSkeleton";
-
-function ManseryeokErrorFallback({
-  error,
-  resetErrorBoundary,
-}: {
-  error: unknown;
-  resetErrorBoundary: () => void;
-}) {
-  const message =
-    error instanceof Error
-      ? error.message
-      : "만세력을 불러오는데 실패했습니다.";
-
-  return (
-    <div className="flex flex-col items-center justify-center py-16 gap-3">
-      <p className="text-sm text-red-400">{message}</p>
-      <button
-        type="button"
-        onClick={resetErrorBoundary}
-        className="rounded-lg border border-border px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-all"
-      >
-        다시 시도
-      </button>
-    </div>
-  );
-}
+import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
 
 export default function ManseryeokDashboard() {
   const { birthInfo, isLoading, user } = useUserStore();
@@ -59,14 +34,16 @@ export default function ManseryeokDashboard() {
     );
   }
 
-  const userName = birthInfo?.name ?? user?.email?.split("@")[0] ?? "사용자";
+  const userName = birthInfo?.name
+    ? birthInfo?.name
+    : (user?.email?.split("@")[0] ?? "사용자");
 
   return (
     <>
       <ChatHeader title="만세력" hideWonGukButton />
       <div className="flex-1 overflow-y-auto">
         <ErrorBoundary
-          FallbackComponent={ManseryeokErrorFallback}
+          FallbackComponent={ErrorFallback}
           resetKeys={[
             birthInfo.gender,
             birthInfo.calendarType,
