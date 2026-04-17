@@ -20,6 +20,7 @@ export const SAJU_EMOJI = {
   학업운: "📚",
   건강운: "🌿",
   종합사주운: "🔮",
+  여행운: "✈️",
 };
 
 export const SAJU_QUESTIONS: SajuQuestion[] = [

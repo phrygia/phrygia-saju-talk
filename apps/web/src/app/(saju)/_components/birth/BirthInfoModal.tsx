@@ -15,7 +15,10 @@ export default function BirthInfoModal() {
       onClose={closeBirthInfoModal}
       contentClassName="max-w-md dark:border dark:border-muted-foreground/20"
     >
-      <BirthInfoForm initialInfo={birthInfo} />
+      <BirthInfoForm
+        initialInfo={birthInfo}
+        hideDeleteButton={!!birthInfo?.birthDate ? false : true}
+      />
     </Modal>
   );
 }

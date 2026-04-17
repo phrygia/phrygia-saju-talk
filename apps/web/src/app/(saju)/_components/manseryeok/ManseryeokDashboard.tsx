@@ -35,18 +35,23 @@ function ManseryeokErrorFallback({
 }
 
 export default function ManseryeokDashboard() {
-  const birthInfo = useUserStore((s) => s.birthInfo);
-  const isLoading = useUserStore((s) => s.isLoading);
-  const user = useUserStore((s) => s.user);
+  const { birthInfo, isLoading, user } = useUserStore();
 
-  if (isLoading) return <ManseryeokSkeleton />;
-
-  if (!birthInfo) {
+  if (isLoading) {
     return (
       <>
         <ChatHeader title="만세력" />
-        <div className="overflow-y-auto">
-          <div className="py-10 md:py-20 px-5">
+        <ManseryeokSkeleton />{" "}
+      </>
+    );
+  }
+
+  if (!birthInfo?.birthDate) {
+    return (
+      <>
+        <ChatHeader title="만세력" />
+        <div className="overflow-y-auto mx">
+          <div className="py-10 md:py-20 px-5 max-w-[500px] mx-auto">
             <BirthInfoForm />
           </div>
         </div>
@@ -54,11 +59,11 @@ export default function ManseryeokDashboard() {
     );
   }
 
-  const userName = user?.email?.split("@")[0] ?? "사용자";
+  const userName = birthInfo?.name ?? user?.email?.split("@")[0] ?? "사용자";
 
   return (
     <>
-      <ChatHeader title="만세력" />
+      <ChatHeader title="만세력" hideWonGukButton />
       <div className="flex-1 overflow-y-auto">
         <ErrorBoundary
           FallbackComponent={ManseryeokErrorFallback}

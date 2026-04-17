@@ -19,20 +19,25 @@
   font-size: 11px;
 }
 
-
 .input {
   display: flex;
   height: auto;
   width: 100%;
   padding: 11px 14px;
-  background: linear-gradient(135deg, rgba(18, 14, 55, 0.8), rgba(12, 10, 38, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(18, 14, 55, 0.8),
+    rgba(12, 10, 38, 0.8)
+  );
   border: 1px solid rgba(124, 92, 252, 0.18);
   border-radius: 12px;
-  color: var(--foreground);
+  color: #0a0928;
   font-size: 13px;
   font-family: "Noto Sans KR", sans-serif;
   outline: none;
-  transition: border-color 0.18s, box-shadow 0.18s;
+  transition:
+    border-color 0.18s,
+    box-shadow 0.18s;
 
   &::placeholder {
     color: var(--foreground-muted);
@@ -44,7 +49,11 @@
   }
 
   :global(.light) & {
-    background: linear-gradient(135deg, rgba(248, 245, 255, 0.95), rgba(238, 232, 255, 0.95));
+    background: linear-gradient(
+      135deg,
+      rgba(248, 245, 255, 0.95),
+      rgba(238, 232, 255, 0.95)
+    );
     border-color: rgba(100, 65, 160, 0.15);
 
     &:-webkit-autofill {
@@ -52,7 +61,6 @@
     }
   }
 }
-
 
 .default {
   &:focus {
@@ -89,7 +97,6 @@
   cursor: not-allowed;
 }
 
-
 .inputWrap {
   position: relative;
 
@@ -109,7 +116,6 @@
   display: flex;
   align-items: center;
 }
-
 
 .text {
   font-size: 11px;

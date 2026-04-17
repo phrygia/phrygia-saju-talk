@@ -26,6 +26,7 @@ export async function updataProfile(
     calendar_type: info.calendarType,
     birth_date: info.birthDate,
     birth_time: info.birthTime,
+    name: info?.name,
     updated_at: dayjs().toISOString(),
   });
 

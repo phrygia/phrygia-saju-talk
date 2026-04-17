@@ -29,6 +29,12 @@ export default function FortuneShareCard({
   ref?: React.Ref<HTMLDivElement>;
 }) {
   const luckyColorValue = getLuckyColorValue(data?.luckyColor);
+  const luckyData = [
+    data?.luckyColor || "-",
+    data?.luckyNumber ?? "-",
+    data?.luckyItem || "-",
+    data?.luckyTime || "-",
+  ];
 
   return (
     <div
@@ -83,7 +89,7 @@ export default function FortuneShareCard({
       bg-[linear-gradient(90deg,transparent,rgba(160,120,255,0.3),transparent)]"
       />
       <div className="flex flex-col items-center mb-6 relative z-10">
-        <div className="text-[11px] text-secondary tracking-[0.15em] mb-2.5">
+        <div className="text-[11px] text-[#ede8ff] tracking-[0.15em] mb-2.5">
           오늘의 전체운
         </div>
         <div className="relative w-[100px] h-[100px]">
@@ -182,7 +188,7 @@ export default function FortuneShareCard({
             className="bg-white/5 border border-white/10 rounded-xl p-[11px_14px]"
           >
             <div className="flex justify-between mb-2">
-              <span className="text-[10px] text-secondary whitespace-nowrap">
+              <span className="text-[10px] text-white whitespace-nowrap">
                 {item.name}
               </span>
               <span
@@ -202,49 +208,42 @@ export default function FortuneShareCard({
         ))}
       </div>
       <div className="grid grid-cols-2 gap-[10px] mb-5 relative z-10">
-        <div className="bg-white/5 border border-white/10 rounded-xl p-[12px_14px]">
-          <div className="text-[10px] text-secondary tracking-[0.1em] mb-1">
-            럭키 컬러
-          </div>
-          <div className="flex items-center gap-[7px] text-xs text-white">
-            {luckyColorValue && (
-              <span
-                className="w-[14px] h-[14px] rounded-full shadow-[0_0_8px_currentColor]"
-                style={{
-                  color: luckyColorValue,
-                  background: luckyColorValue,
-                }}
-              />
-            )}
-            <span style={{ color: luckyColorValue ?? "#ffffff" }}>
-              {data?.luckyColor || "-"}
-            </span>
-          </div>
-        </div>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-[12px_14px]">
-          <div className="text-[10px] text-secondary racking-[0.1em] mb-1">
-            럭키 넘버
-          </div>
-          <div className="text-white text-xs">{data?.luckyNumber ?? "-"}</div>
-        </div>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-[12px_14px]">
-          <div className="text-[10px] text-secondary tracking-[0.1em] mb-1">
-            럭키 아이템
-          </div>
-          <div className="text-white text-xs">{data?.luckyItem || "-"}</div>
-        </div>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-[12px_14px]">
-          <div className="text-[10px] text-secondary tracking-[0.1em] mb-1">
-            럭키 타임
-          </div>
-          <div className="text-white text-xs">{data?.luckyTime || "-"}</div>
-        </div>
+        {["럭키 컬러", "럭키 넘버", "럭키 아이템", "럭키 타임"].map(
+          (label, index) => (
+            <div
+              key={label}
+              className="bg-white/5 border border-white/10 rounded-xl p-[12px_14px]"
+            >
+              <div className="text-[10px] text-[#d2beffcc] racking-[0.1em] mb-1">
+                {label}
+              </div>
+              {label === "럭키 컬러" ? (
+                <div className="flex items-center gap-[7px] text-xs text-white">
+                  {luckyColorValue && (
+                    <span
+                      className="w-[14px] h-[14px] rounded-full shadow-[0_0_8px_currentColor]"
+                      style={{
+                        color: luckyColorValue,
+                        background: luckyColorValue,
+                      }}
+                    />
+                  )}
+                  <span style={{ color: luckyColorValue ?? "#ffffff" }}>
+                    {data?.luckyColor || "-"}
+                  </span>
+                </div>
+              ) : (
+                <div className="text-white text-xs">{luckyData[index]}</div>
+              )}
+            </div>
+          ),
+        )}
       </div>
       <div
         className="bg-[linear-gradient(135deg,rgba(110,60,200,0.15),rgba(50,80,200,0.1))]
       border border-[rgba(140,100,255,0.2)] rounded-xl p-[14px_16px] mb-5 relative z-10"
       >
-        <div className="text-base mb-1.5 text-secondary">✦</div>
+        <div className="text-base mb-1.5 text-[#ede8ff]">✦</div>
         <div className="text-xs text-[rgba(210,190,255,0.8)] leading-[1.7]">
           {data?.advice || "오늘의 조언을 준비 중입니다."}
         </div>

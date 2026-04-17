@@ -6,7 +6,17 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
 function Providers({ children }: React.PropsWithChildren) {
-  const [client] = useState(() => new QueryClient());
+  const [client] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: 1,
+          },
+        },
+      }),
+  );
 
   return (
     <ThemeProvider

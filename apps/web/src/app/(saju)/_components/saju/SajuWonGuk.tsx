@@ -12,7 +12,7 @@ export default function SajuWonGukView({
   const pillars = [wonGuk.hour, wonGuk.day, wonGuk.month, wonGuk.year];
 
   return (
-    <div className="mx-auto rounded-2xl border border-[var(--default-border-color)] bg-surface p-5 w-full md:w-[70%]">
+    <div className="mx-auto rounded-2xl border border-border bg-background-sub p-5 w-full md:w-[70%]">
       <h3 className="mb-4 text-sm font-medium text-muted-foreground dark:text-white">
         사주 원국
       </h3>

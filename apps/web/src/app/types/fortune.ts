@@ -29,6 +29,7 @@ export interface BirthInfo {
   calendarType: "solar" | "lunar";
   birthDate: string;
   birthTime: string;
+  name?: string;
 }
 
 export interface FortuneCategory {

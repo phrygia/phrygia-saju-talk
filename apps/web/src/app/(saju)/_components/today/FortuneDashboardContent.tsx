@@ -20,6 +20,7 @@ import FortuneShareCard from "@/src/app/(saju)/_components/today/FortuneShareCar
 import { Modal } from "@repo/ui/components/modal";
 import { Button } from "@repo/ui/components/button";
 import { getLuckyColorValue } from "@/src/lib/fortune";
+import { StarBurstButton } from "@repo/ui/components/star-burst-button";
 import styles from "./FortuneDashboardContent.module.scss";
 
 const DEFAULT_CATEGORY: FortuneCategory = {
@@ -155,13 +156,14 @@ export default function FortuneDashboardContent({
               </p>
             )}
           </div>
-          <button
-            type="button"
-            className={styles.card}
+          <StarBurstButton
+            variant="default"
+            size="sm"
+            style={{ borderRadius: 20 }}
             onClick={() => setModalOpen(true)}
           >
-            ⬇ 운세 카드 저장
-          </button>
+            ⬇ 운세 카드 보기
+          </StarBurstButton>
         </div>
         <div className={styles.totalSaju}>
           <div className="relative flex justify-center">
@@ -308,13 +310,11 @@ export default function FortuneDashboardContent({
           </div>
         }
       >
-        <div className="h-[80vh] overflow-y-auto">
-          <FortuneShareCard
-            ref={captureRef}
-            data={fortune}
-            birthInfo={birthInfo}
-          />
-        </div>
+        <FortuneShareCard
+          ref={captureRef}
+          data={fortune}
+          birthInfo={birthInfo}
+        />
       </Modal>
     </>
   );

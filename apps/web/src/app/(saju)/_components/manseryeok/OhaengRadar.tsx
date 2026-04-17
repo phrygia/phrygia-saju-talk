@@ -73,7 +73,7 @@ export default function OhaengRadar({ ohaeng, sipshin }: Props) {
       </div>
       <div
         style={{
-          background: "var(--surface)",
+          background: "var(--background)",
           border: "1px solid var(--border)",
           borderRadius: 12,
           padding: "16px 8px",
@@ -109,29 +109,29 @@ export default function OhaengRadar({ ohaeng, sipshin }: Props) {
             data={data}
             margin={{ top: 10, right: 30, bottom: 10, left: 30 }}
           >
-            <PolarGrid stroke="var(--border)" strokeOpacity={0.7} />
+            <PolarGrid stroke="rgba(167,139,250,0.3)" strokeWidth={1} />
             <PolarAngleAxis
               dataKey="axis"
               tick={{
                 fontSize: 11,
-                fill: "var(--foreground-sub)",
+                fill: "var(--foreground)",
                 fontFamily: "Noto Sans KR",
               }}
             />
             <PolarRadiusAxis
               angle={90}
               domain={[0, 60]}
-              tick={{ fontSize: 9, fill: "var(--foreground-muted)" }}
+              tick={{ fontSize: 9, fill: "var(--foreground-sub)" }}
               tickCount={4}
               axisLine={false}
             />
             <Radar
               dataKey="value"
               stroke="#f472b6"
-              strokeWidth={1.5}
+              strokeWidth={2}
               fill="#f472b6"
-              fillOpacity={0.2}
-              dot={{ r: 3, fill: "#f472b6", strokeWidth: 0 }}
+              fillOpacity={0.35}
+              dot={{ r: 4, fill: "#f472b6", strokeWidth: 0 }}
             />
             <Tooltip
               contentStyle={{

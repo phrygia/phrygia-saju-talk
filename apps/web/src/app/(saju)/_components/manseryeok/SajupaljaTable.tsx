@@ -269,7 +269,6 @@ export default function SajupaljaTable({ data }: Props) {
           </tbody>
         </table>
       </div>
-
       {sipshinModal && (
         <SipshinTooltipModal
           sipshin={sipshinModal.sipshin}

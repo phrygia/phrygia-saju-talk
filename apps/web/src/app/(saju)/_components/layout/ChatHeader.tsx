@@ -9,17 +9,23 @@ import { Button } from "@repo/ui/components/button";
 import { StarBurstButton } from "@repo/ui/components/star-burst-button";
 import { useRouter } from "next/navigation";
 
+interface ChatHeaderProps {
+  children?: React.ReactNode;
+  title?: string;
+  hideWonGukButton?: boolean;
+  hideNewConversationButton?: boolean;
+  hideBorder?: boolean;
+  rightButton?: React.ReactNode | null;
+}
+
 export default function ChatHeader({
   children,
   title = "",
-  hideRightButton = false,
+  hideWonGukButton = false,
+  hideNewConversationButton = false,
   hideBorder = false,
-}: {
-  children?: React.ReactNode;
-  title?: string;
-  hideRightButton?: boolean;
-  hideBorder?: boolean;
-}) {
+  rightButton = null,
+}: ChatHeaderProps) {
   const router = useRouter();
   const { openMobileSidebar } = useSidebarToggleStore();
 
@@ -53,27 +59,28 @@ export default function ChatHeader({
             <Menu strokeWidth={1.8} size={20} />
           </button>
           <ThemeToggle />
-          {!hideRightButton && (
-            <>
-              <Button
-                type="button"
-                size="sm"
-                variant="secondary"
-                className="px-2.5 min-h-[30px] !hidden md:!block"
-                onClick={() => router.push("/saju")}
-              >
-                사주 원국 보기
-              </Button>
-              <StarBurstButton
-                variant="default"
-                size="sm"
-                className="min-h-[30px]"
-                onClick={() => router.push("/")}
-              >
-                ✦ 새 상담
-              </StarBurstButton>
-            </>
+          {!hideWonGukButton && (
+            <Button
+              type="button"
+              size="sm"
+              variant="secondary"
+              className="px-2.5 min-h-[30px] !hidden md:!block"
+              onClick={() => router.push("/saju")}
+            >
+              사주 원국 보기
+            </Button>
           )}
+          {!hideNewConversationButton && (
+            <StarBurstButton
+              variant="default"
+              size="sm"
+              className="min-h-[30px]"
+              onClick={() => router.push("/")}
+            >
+              ✦ 새 상담
+            </StarBurstButton>
+          )}
+          {rightButton && rightButton}
         </div>
       </div>
     </header>

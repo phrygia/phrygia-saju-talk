@@ -12,18 +12,13 @@ const nextConfig = {
   // gzip 압축 (Vercel은 자동, 셀프 호스팅 시 필요)
   compress: true,
 
-  // 모던 브라우저만 타겟 → 레거시 폴리필 제거
-  experimental: {
-    browsersListForSwc: true,
-  },
-
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ["@svgr/webpack"],
-    });
-
-    return config;
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
   },
 };
 
