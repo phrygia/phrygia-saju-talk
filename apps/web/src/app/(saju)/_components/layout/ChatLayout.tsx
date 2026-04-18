@@ -1,12 +1,10 @@
 "use client";
 
-import React, { Suspense, memo, useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/src/store/user.store";
-import { ChatSidebar } from "@/src/app/(saju)/_components/sidebar/ChatSidebar";
-
-const MemoizedChatSidebar = memo(ChatSidebar);
+import ChatSidebar from "@/src/app/(saju)/_components/sidebar/ChatSidebar";
 
 export default function ChatLayout({
   initialUser,
@@ -50,7 +48,7 @@ export default function ChatLayout({
           <aside className="hidden w-65 shrink-0 border-r border-r-sidebar-border bg-tertiary md:flex" />
         }
       >
-        <MemoizedChatSidebar />
+        <ChatSidebar />
       </Suspense>
       <div className="flex flex-1 flex-col min-w-0">
         <main className="flex-1 flex flex-col min-h-0 overflow-hidden">

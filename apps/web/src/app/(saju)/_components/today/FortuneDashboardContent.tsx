@@ -104,8 +104,8 @@ export default function FortuneDashboardContent({
       const bodyBackground = window.getComputedStyle(
         document.body,
       ).backgroundColor;
-      const { toPng } = await import("html-to-image");
-      const imgData = await toPng(target, {
+      const { toJpeg } = await import("html-to-image");
+      const imgData = await toJpeg(target, {
         quality: 0.95,
         cacheBust: true,
         pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
@@ -120,7 +120,7 @@ export default function FortuneDashboardContent({
       });
       const link = document.createElement("a");
       link.href = imgData;
-      link.download = `SAJU TALK - ${dayjs().format("YYYY-MM-DD")} 오늘의 운세.png`;
+      link.download = `SAJU TALK - ${dayjs().format("YYYY-MM-DD")} 오늘의 운세.jpg`;
       link.click();
     } catch (error) {
       toast.error("스크린샷을 저장하는 데 실패했습니다. 다시 시도해주세요.");

@@ -32,6 +32,7 @@ export default function SignupForm({
 }) {
   const supabase = useMemo(() => createClient(), []);
   const [done, setDone] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [strength, setStrength] = useState<number>(0);
 
   const {
@@ -45,6 +46,8 @@ export default function SignupForm({
   });
 
   const onSubmit = async (formData: { email: string; password: string }) => {
+    setLoading(true);
+
     const { email, password } = formData;
 
     const { error } = await supabase.auth.signUp({
@@ -55,9 +58,8 @@ export default function SignupForm({
       },
     });
 
-    console.log(error);
-
     if (error) {
+      setLoading(false);
       toast.error("회원가입에 실패했어요. 잠시 후 다시 시도해주세요.");
     } else {
       toast.success("회원가입 성공!");
@@ -153,7 +155,7 @@ export default function SignupForm({
               size="lg"
               fullWidth
               className="mt-6 font-semibold !h-[48px]"
-              disabled={isSubmitting}
+              disabled={isSubmitting || loading}
               style={{ borderRadius: 12 }}
             >
               {isSubmitting ? "가입 중..." : "회원가입"}
