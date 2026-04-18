@@ -41,6 +41,7 @@ export default function ChatInput({
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
+    if (disabled || loading) return;
 
     if (!user?.id) {
       return toast.error("로그인이 필요합니다.");
@@ -72,8 +73,6 @@ export default function ChatInput({
     }
 
     if (onSubmit) await onSubmit(convId);
-
-    setLoading(false);
   };
 
   const handleInput = () => {

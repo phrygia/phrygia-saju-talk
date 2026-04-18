@@ -1,10 +1,12 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useSearchHistory } from "@/src/app/(saju)/_hooks/useSearchHistory";
 import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import ChatSearchResult from "@/src/app/(saju)/_components/search/ChatSearchResult";
 import { Skeleton } from "@repo/ui/components/skeleton";
+import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
 import styles from "./ChatSearch.module.scss";
 
 function SearchResultsFallback() {
@@ -95,9 +97,14 @@ export default function ChatSearch() {
           </div>
         </form>
         {submittedKeyword ? (
-          <Suspense fallback={<SearchResultsFallback />}>
-            <ChatSearchResult keyword={submittedKeyword} />
-          </Suspense>
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            resetKeys={[submittedKeyword]}
+          >
+            <Suspense fallback={<SearchResultsFallback />}>
+              <ChatSearchResult keyword={submittedKeyword} />
+            </Suspense>
+          </ErrorBoundary>
         ) : (
           <>
             {history.length > 0 && (
