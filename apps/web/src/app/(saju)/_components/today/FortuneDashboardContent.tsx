@@ -36,6 +36,8 @@ function getSafeCategory(
     "overall" | "wealth" | "love" | "health" | "career" | "study" | "travel"
   >,
 ): FortuneCategory {
+  if (!key) return DEFAULT_CATEGORY;
+
   const category = fortune[key];
   if (
     category &&
