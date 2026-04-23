@@ -251,15 +251,15 @@ export async function POST(
       .eq("fortune_date", requestedDate.format("YYYY-MM-DD"))
       .maybeSingle();
 
-    if (error || !storedFortune?.fortune_data) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "해당 날짜의 저장된 운세 데이터가 없습니다.",
-        },
-        { status: 404 },
-      );
-    }
+    // if (error || !storedFortune?.fortune_data) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       message: "해당 날짜의 저장된 운세 데이터가 없습니다.",
+    //     },
+    //     { status: 404 },
+    //   );
+    // }
 
     return NextResponse.json(
       { success: true, data: storedFortune.fortune_data as DailyFortune },

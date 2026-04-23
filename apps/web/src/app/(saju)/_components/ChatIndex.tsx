@@ -67,9 +67,7 @@ export default function ChatIndex({
       const result = (await response.json()) as ApiResponse<DailyFortune>;
 
       if (!result.success) {
-        throw new Error(
-          result.message || "오늘의 운세를 불러오는데 실패했습니다.",
-        );
+        return null;
       }
 
       return result.data;
