@@ -130,7 +130,6 @@ export default function ChatSidebarContent({
           상담 검색
         </Link>
         <Link
-          prefetch={false}
           className={cn(styles.button, params?.date && styles.active)}
           href={`/today/${dayjs().format("YYYYMMDD")}`}
           onClick={closeMobileSidebar}

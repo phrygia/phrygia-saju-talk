@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import dayjs from "dayjs";
+import { z } from "zod";
 import { generateText } from "ai";
 import { createClient } from "@/src/lib/supabase/server";
 import { createGoogleAi } from "@/src/lib/ai";
@@ -8,55 +9,37 @@ import { calcSajuWonGukPrompt } from "@/src/lib/sajuCalc";
 import {
   BirthCalendarLabels,
   BirthGenderLabels,
+  birthInfoSchema,
   type BirthInfo,
   type DailyFortune,
-  type FortuneCategory,
 } from "@/src/app/types/fortune";
 import { BirthTimeLabels } from "@/src/app/types/fortune";
 
-function isBirthInfo(value: unknown): value is BirthInfo {
-  if (!value || typeof value !== "object") {
-    return false;
-  }
+const fortuneCategorySchema = z.object({
+  score: z.number().int().min(1).max(100),
+  summary: z.string(),
+  description: z.string(),
+});
 
-  const info = value as Partial<BirthInfo>;
-  return (
-    (info.gender === "male" || info.gender === "female") &&
-    (info.calendarType === "solar" || info.calendarType === "lunar") &&
-    typeof info.birthDate === "string" &&
-    typeof info.birthTime === "string"
-  );
-}
+const dailyFortuneSchema = z.object({
+  overall: fortuneCategorySchema,
+  wealth: fortuneCategorySchema,
+  love: fortuneCategorySchema,
+  health: fortuneCategorySchema,
+  career: fortuneCategorySchema,
+  study: fortuneCategorySchema,
+  travel: fortuneCategorySchema,
+  luckyColor: z.string(),
+  luckyNumber: z.number().int().min(1).max(99),
+  luckyItem: z.string(),
+  luckyTime: z.string(),
+  advice: z.string(),
+});
 
-function isFortuneCategory(value: unknown): value is FortuneCategory {
-  if (!value || typeof value !== "object") return false;
-  const c = value as Partial<FortuneCategory>;
-  return (
-    typeof c.score === "number" &&
-    typeof c.summary === "string" &&
-    typeof c.description === "string"
-  );
-}
-
-function isDailyFortune(value: unknown): value is DailyFortune {
-  if (!value || typeof value !== "object") return false;
-  const d = value as Partial<DailyFortune>;
-
-  return (
-    isFortuneCategory(d.overall) &&
-    isFortuneCategory(d.wealth) &&
-    isFortuneCategory(d.love) &&
-    isFortuneCategory(d.health) &&
-    isFortuneCategory(d.career) &&
-    isFortuneCategory(d.study) &&
-    isFortuneCategory(d.travel) &&
-    typeof d.luckyColor === "string" &&
-    typeof d.luckyNumber === "number" &&
-    typeof d.luckyItem === "string" &&
-    typeof d.luckyTime === "string" &&
-    typeof d.advice === "string"
-  );
-}
+const requestSchema = z.object({
+  date: z.string().min(1),
+  birthInfo: birthInfoSchema,
+});
 
 function buildPrompt(birthInfo: BirthInfo, today: string) {
   const genderLabel = BirthGenderLabels[birthInfo.gender];
@@ -102,9 +85,8 @@ function buildPrompt(birthInfo: BirthInfo, today: string) {
   톤: 따뜻하고 희망적이면서 현실적. 지나치게 부정적이지 않게. 모든 값은 한국어로 작성.`;
 }
 
-async function getTodayFortune(
+async function getTodayDataFromDB(
   date: string,
-  birthInfo: BirthInfo,
   userId: string,
 ): Promise<ApiResponse<DailyFortune>> {
   const supabase = await createClient();
@@ -116,9 +98,26 @@ async function getTodayFortune(
     .eq("user_id", userId)
     .eq("fortune_date", todayDate)
     .single();
-  if (todayData?.fortune_data && isDailyFortune(todayData.fortune_data)) {
-    return { success: true, data: todayData.fortune_data };
+
+  const cached = dailyFortuneSchema.safeParse(todayData?.fortune_data);
+
+  if (cached.success) {
+    return { success: true, data: cached.data };
+  } else {
+    return { success: false, message: "해당 날짜의 운세 데이터가 없습니다." };
   }
+}
+
+async function getTodayFortune(
+  date: string,
+  birthInfo: BirthInfo,
+  userId: string,
+): Promise<ApiResponse<DailyFortune>> {
+  const supabase = await createClient();
+  const todayDate = dayjs(date).format("YYYY-MM-DD");
+
+  const dbResult = await getTodayDataFromDB(todayDate, userId);
+  if (dbResult.success) return dbResult;
 
   const todayLabel = dayjs().locale("ko").format("YYYY년 M월 D일 dddd");
   const { text } = await generateText({
@@ -129,32 +128,73 @@ async function getTodayFortune(
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error("No JSON found in response");
 
-  const parsed = JSON.parse(jsonMatch[0]) as unknown;
-  if (!isDailyFortune(parsed)) {
+  const parsed = dailyFortuneSchema.safeParse(JSON.parse(jsonMatch[0]));
+  if (!parsed.success) {
     return {
       success: false,
       message: "운세 데이터를 불러오는 데 실패했습니다. 다시 시도해주세요.",
     };
   }
+  after(async () => {
+    await supabase.from("daily_fortunes").upsert(
+      {
+        user_id: userId,
+        fortune_date: todayDate,
+        birth_date: birthInfo.birthDate,
+        fortune_data: parsed.data,
+      },
+      { onConflict: "user_id,fortune_date" },
+    );
+  });
 
-  const { error } = await supabase.from("daily_fortunes").upsert(
-    {
-      user_id: userId,
-      fortune_date: todayDate,
-      birth_date: birthInfo.birthDate,
-      fortune_data: parsed,
-    },
-    { onConflict: "user_id,fortune_date" },
-  );
+  return { success: true, data: parsed.data };
+}
 
-  if (error) {
-    return {
-      success: false,
-      message: "운세 데이터를 저장하는 데 실패했습니다. 다시 시도해주세요.",
-    };
+export async function GET(
+  request: Request,
+): Promise<NextResponse<ApiResponse<DailyFortune>>> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return NextResponse.json(
+      { success: false, message: "회원정보가 없습니다." },
+      { status: 401 },
+    );
   }
 
-  return { success: true, data: parsed };
+  const { searchParams } = new URL(request.url);
+  const date = searchParams.get("date");
+  if (!date || !dayjs(date).isValid()) {
+    return NextResponse.json(
+      { success: false, message: "잘못된 날짜 형식입니다." },
+      { status: 400 },
+    );
+  }
+  const todayDate = dayjs(date).format("YYYY-MM-DD");
+  const dbResult = await getTodayDataFromDB(todayDate, user.id);
+
+  if (dbResult.success) {
+    return NextResponse.json(
+      {
+        success: true,
+        data: dbResult.data,
+      },
+      { status: 200 },
+    );
+  } else {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "해당 날짜의 운세 데이터가 없습니다.",
+      },
+      { status: 404 },
+    );
+  }
 }
 
 export async function POST(
@@ -174,51 +214,36 @@ export async function POST(
     );
   }
 
-  const body = (await request.json()) as {
-    date?: string;
-    birthInfo?: BirthInfo;
-  };
+  const body = requestSchema.safeParse(await request.json().catch(() => null));
 
-  if (!body.date || !dayjs(body.date).isValid()) {
+  if (!body.success) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: body.error.issues[0]?.message || "잘못된 요청입니다.",
+      },
+      { status: 400 },
+    );
+  }
+
+  const { date, birthInfo } = body.data;
+  const requestedDate = dayjs(date);
+
+  if (!requestedDate.isValid()) {
     return NextResponse.json(
       { success: false, message: "잘못된 날짜입니다." },
       { status: 400 },
     );
   }
 
-  if (!isBirthInfo(body.birthInfo)) {
+  if (requestedDate.isAfter(dayjs(), "day")) {
     return NextResponse.json(
-      { success: false, message: "잘못된 생년월일 정보입니다." },
-      { status: 400 },
-    );
-  }
-  const requestedDate = dayjs(body.date);
-  const currentDate = dayjs();
-
-  if (requestedDate.isAfter(currentDate, "day")) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: "미래 날짜의 운세는 확인할 수 없습니다.",
-      },
+      { success: false, message: "미래 날짜의 운세는 확인할 수 없습니다." },
       { status: 400 },
     );
   }
 
-  if (requestedDate.isBefore(currentDate, "day")) {
-    const supabase = await createClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      return NextResponse.json(
-        { success: false, message: "로그인이 필요합니다." },
-        { status: 401 },
-      );
-    }
-
+  if (requestedDate.isBefore(dayjs(), "day")) {
     const { data: storedFortune, error } = await supabase
       .from("daily_fortunes")
       .select("fortune_data")
@@ -237,10 +262,7 @@ export async function POST(
     }
 
     return NextResponse.json(
-      {
-        success: true,
-        data: storedFortune.fortune_data as DailyFortune,
-      },
+      { success: true, data: storedFortune.fortune_data as DailyFortune },
       { status: 200 },
     );
   }
@@ -248,13 +270,11 @@ export async function POST(
   try {
     const result = await getTodayFortune(
       requestedDate.format("YYYY-MM-DD"),
-      body.birthInfo,
+      birthInfo,
       user.id,
     );
 
-    return NextResponse.json(result, {
-      status: 200,
-    });
+    return NextResponse.json(result, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {

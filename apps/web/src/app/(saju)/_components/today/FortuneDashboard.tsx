@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, use } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useUserStore } from "@/src/store/user.store";
 import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
@@ -9,7 +9,12 @@ import BirthInfoForm from "@/src/app/(saju)/_components/birth/BirthInfoForm";
 import FortuneDashboardSkeleton from "@/src/app/(saju)/_components/today/FortuneDashboardSkeleton";
 import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
 
-export default function FortuneDashboard({ date }: { date: string }) {
+export default function FortuneDashboard({
+  params,
+}: {
+  params: Promise<{ date: string }>;
+}) {
+  const { date } = use(params);
   const { birthInfo, isLoading } = useUserStore();
 
   if (isLoading) return <FortuneDashboardSkeleton date={date} />;

@@ -25,7 +25,7 @@ const buttonVariants = cva(styles.button, {
       false: "",
     },
     fullWidth: {
-      true: "w-full min-w-40",
+      true: "w-full md:min-w-40",
       false: "",
     },
   },

@@ -576,13 +576,13 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">1/14 prop type error</a><a class="filter-pill info" data-k="infos" href="#filter-infos">14/14 infos</a><span class="filter-pill ok" aria-disabled="true">57 stories ok</span></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">1/15 prop type error</a><a class="filter-pill info" data-k="infos" href="#filter-infos">15/15 infos</a><span class="filter-pill ok" aria-disabled="true">75 stories ok</span></div>
   </div>
 </header>
 <main>
   <div class="wrap">
     <div class="note info" style="margin-bottom: 16px;">
-            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.3s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
+            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>1.0s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
             <pre><code>typescript: {
   reactDocgen: 'react-docgen-typescript',
 }</code></pre>
@@ -867,7 +867,7 @@ src?: string</code></pre>
       <div class="badges">
         <label for="c-2-components-button-props" class="badge ok as-toggle">1 prop type</label>
         <label for="c-2-components-button-info" class="badge info as-toggle">1 info</label>
-        <label for="c-2-components-button-stories" class="badge ok as-toggle">6 stories</label>
+        <label for="c-2-components-button-stories" class="badge ok as-toggle">7 stories</label>
         
       </div>
     </div>
@@ -957,6 +957,15 @@ src?: string</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
+                <span class="ex-name">Danger</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Danger = () =&gt; &lt;Button variant=&quot;danger&quot; size=&quot;default&quot; fullWidth={false}&gt;삭제하기&lt;/Button&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
                 <span class="ex-name">Disabled</span>
                 <span class="badge ok">story ok</span>
               </div>
@@ -989,9 +998,9 @@ src?: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> Input</h2>
       <div class="badges">
-        <label for="c-3-components-input-props" class="badge ok as-toggle">6 prop types</label>
+        <label for="c-3-components-input-props" class="badge ok as-toggle">7 prop types</label>
         <label for="c-3-components-input-info" class="badge info as-toggle">1 info</label>
-        <label for="c-3-components-input-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-3-components-input-stories" class="badge ok as-toggle">7 stories</label>
         
       </div>
     </div>
@@ -1023,11 +1032,13 @@ src?: string</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">6 prop types</span>
+              <span class="badge ok">7 prop types</span>
             </div>
             <pre><code>Component: src/components/input.tsx::Input</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>errorMessage?: string
+
+icon?: React.ReactNode
 
 label?: string
 
@@ -1060,13 +1071,7 @@ warningMessage?: string</code></pre>
               </div>
               
               
-              <pre><code>const Default = () =&gt; &lt;Input
-    variant=&quot;default&quot;
-    value=&quot;&quot;
-    placeholder=&quot;이메일을 입력하세요&quot;
-    disabled={false}
-    errorMessage=&quot;올바른 값을 입력해주세요.&quot;
-    warningMessage=&quot;입력값을 다시 확인해주세요.&quot; /&gt;;</code></pre>
+              <pre><code>const Default = () =&gt; &lt;Input variant=&quot;default&quot; placeholder=&quot;이메일을 입력하세요&quot; /&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -1081,8 +1086,92 @@ warningMessage?: string</code></pre>
     type=&quot;email&quot;
     label=&quot;이메일&quot;
     labelRequired
+    placeholder=&quot;hello@example.com&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">아이콘 포함</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithIcon = () =&gt; &lt;Input variant=&quot;default&quot; label=&quot;검색&quot; placeholder=&quot;상담 내역을 검색하세요&quot; icon=&quot;🔍&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">오류</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Error = () =&gt; &lt;Input
+    variant=&quot;error&quot;
+    label=&quot;이메일&quot;
+    labelRequired
+    id=&quot;email-error&quot;
+    type=&quot;email&quot;
     placeholder=&quot;hello@example.com&quot;
-    value=&quot;&quot; /&gt;;</code></pre>
+    defaultValue=&quot;invalid-email&quot;
+    errorMessage=&quot;올바른 이메일 형식을 입력해주세요.&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">경고</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Warning = () =&gt; &lt;Input
+    variant=&quot;warning&quot;
+    label=&quot;닉네임&quot;
+    id=&quot;nickname-warning&quot;
+    placeholder=&quot;닉네임을 입력하세요&quot;
+    defaultValue=&quot;사용자123&quot;
+    warningMessage=&quot;이미 사용 중인 닉네임입니다.&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">비활성화</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; &lt;Input
+    variant=&quot;default&quot;
+    label=&quot;이메일&quot;
+    placeholder=&quot;이메일을 입력하세요&quot;
+    defaultValue=&quot;user@example.com&quot;
+    disabled /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">전체 상태</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const AllVariants = () =&gt; (
+  &lt;div
+    style={{ display: &quot;flex&quot;, flexDirection: &quot;column&quot;, gap: 20, width: 320 }}
+  &gt;
+    &lt;Input label=&quot;기본&quot; labelRequired placeholder=&quot;내용을 입력하세요&quot; /&gt;
+    &lt;Input label=&quot;아이콘&quot; placeholder=&quot;검색어를 입력하세요&quot; icon=&quot;🔍&quot; /&gt;
+    &lt;Input
+      label=&quot;오류&quot;
+      labelRequired
+      variant=&quot;error&quot;
+      defaultValue=&quot;잘못된 값&quot;
+      errorMessage=&quot;올바른 값을 입력해주세요.&quot;
+    /&gt;
+    &lt;Input
+      label=&quot;경고&quot;
+      variant=&quot;warning&quot;
+      defaultValue=&quot;확인 필요&quot;
+      warningMessage=&quot;입력값을 다시 확인해주세요.&quot;
+    /&gt;
+    &lt;Input label=&quot;비활성화&quot; defaultValue=&quot;수정 불가&quot; disabled /&gt;
+  &lt;/div&gt;
+);</code></pre>
             </div>
         </div>
     
@@ -1273,21 +1362,27 @@ warningMessage?: string</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">With Right Icons</span>
+                <span class="ex-name">With Separator And Danger</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const WithRightIcons = () =&gt; (
-  &lt;Menu.Dropdown header={&lt;Menu.Header&gt;편집&lt;/Menu.Header&gt;}&gt;
-    &lt;Menu.DropdownItem right={&lt;Menu.DropdownIcon name=&quot;icon-setting-mono&quot; /&gt;}&gt;
-      첫 번째 메뉴
+              <pre><code>const WithSeparatorAndDanger = () =&gt; (
+  &lt;Menu.Dropdown&gt;
+    &lt;Menu.DropdownItem left=&quot;👤&quot;&gt;회원 정보&lt;/Menu.DropdownItem&gt;
+    &lt;Menu.DropdownItem left=&quot;☯&quot;&gt;사주 정보 수정&lt;/Menu.DropdownItem&gt;
+    &lt;Menu.DropdownItem
+      left=&quot;⚙️&quot;
+      right={&lt;Menu.DropdownIcon name=&quot;icon-setting-mono&quot; /&gt;}
+    &gt;
+      설정
     &lt;/Menu.DropdownItem&gt;
-    &lt;Menu.DropdownItem right={&lt;Menu.DropdownIcon name=&quot;icon-setting-mono&quot; /&gt;}&gt;
-      두 번째 메뉴
+    &lt;Menu.Separator /&gt;
+    &lt;Menu.DropdownItem danger left=&quot;🗑&quot;&gt;
+      채팅 기록 삭제
     &lt;/Menu.DropdownItem&gt;
-    &lt;Menu.DropdownItem right={&lt;Menu.DropdownIcon name=&quot;icon-setting-mono&quot; /&gt;}&gt;
-      세 번째 메뉴
+    &lt;Menu.DropdownItem danger left=&quot;↪&quot;&gt;
+      로그아웃
     &lt;/Menu.DropdownItem&gt;
   &lt;/Menu.Dropdown&gt;
 );</code></pre>
@@ -1301,9 +1396,8 @@ warningMessage?: string</code></pre>
               
               <pre><code>const TriggerWithCheckItems = () =&gt; {
   const TriggerDemo = () =&gt; {
-    const [open, setOpen] = useState&lt;boolean&gt;(false);
-    const [selected, setSelected] = useState&lt;number&gt;(1);
-
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState(1);
     return (
       &lt;div
         style={{
@@ -1322,46 +1416,39 @@ warningMessage?: string</code></pre>
             &lt;Menu.Dropdown
               header={&lt;Menu.Header&gt;항목을 선택하세요&lt;/Menu.Header&gt;}
             &gt;
-              &lt;Menu.DropdownCheckItem
-                checked={selected === 1}
-                onCheckedChange={(checked) =&gt; checked &amp;&amp; setSelected(1)}
-              &gt;
-                첫 번째 메뉴
-              &lt;/Menu.DropdownCheckItem&gt;
-              &lt;Menu.DropdownCheckItem
-                checked={selected === 2}
-                onCheckedChange={(checked) =&gt; checked &amp;&amp; setSelected(2)}
-              &gt;
-                두 번째 메뉴
-              &lt;/Menu.DropdownCheckItem&gt;
-              &lt;Menu.DropdownCheckItem
-                checked={selected === 3}
-                onCheckedChange={(checked) =&gt; checked &amp;&amp; setSelected(3)}
-              &gt;
-                세 번째 메뉴
-              &lt;/Menu.DropdownCheckItem&gt;
+              {[1, 2, 3].map((n) =&gt; (
+                &lt;Menu.DropdownCheckItem
+                  key={n}
+                  checked={selected === n}
+                  onCheckedChange={(checked) =&gt; checked &amp;&amp; setSelected(n)}
+                &gt;
+                  {n}번째 메뉴
+                &lt;/Menu.DropdownCheckItem&gt;
+              ))}
             &lt;/Menu.Dropdown&gt;
           }
         &gt;
           &lt;button
             type=&quot;button&quot;
             style={{
-              border: &quot;1px solid #d9d9d9&quot;,
+              border: &quot;1px solid rgba(124,92,252,0.25)&quot;,
               borderRadius: 10,
-              fontSize: 14,
-              padding: &quot;10px 14px&quot;,
+              fontSize: 13,
+              padding: &quot;9px 16px&quot;,
               display: &quot;inline-flex&quot;,
               alignItems: &quot;center&quot;,
               gap: 8,
+              background: &quot;rgba(124,92,252,0.08)&quot;,
+              color: &quot;var(--violet, #a78bfa)&quot;,
+              cursor: &quot;pointer&quot;,
             }}
           &gt;
-            클릭해보세요
+            {selected}번 선택됨 ▾
           &lt;/button&gt;
         &lt;/Menu.Trigger&gt;
       &lt;/div&gt;
     );
   };
-
   return &lt;TriggerDemo /&gt;;
 };</code></pre>
             </div>
@@ -1383,7 +1470,7 @@ warningMessage?: string</code></pre>
       <div class="badges">
         <label for="c-6-components-modal-err" class="badge err as-toggle">prop type error</label>
         <label for="c-6-components-modal-info" class="badge info as-toggle">1 info</label>
-        <label for="c-6-components-modal-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-6-components-modal-stories" class="badge ok as-toggle">3 stories</label>
         
       </div>
     </div>
@@ -1417,11 +1504,14 @@ import { useEffect, useState } from &quot;react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
 import { X } from &quot;lucide-react&quot;;
 import { cn } from &quot;../lib/utils&quot;;
+import styles from &quot;./modal.module.scss&quot;;
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () =&gt; void;
   title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  icon?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
   closeOnOverlayClick?: boolean;
@@ -1436,6 +1526,8 @@ function Modal({
   isOpen,
   onClose,
   title,
+  subtitle,
+  icon,
   children,
   footer,
   closeOnOverlayClick = true,
@@ -1453,22 +1545,17 @@ function Modal({
 
   useEffect(() =&gt; {
     if (!isOpen || !closeOnEsc) return;
-
     const handleKeyDown = (event: KeyboardEvent) =&gt; {
       if (event.key === &quot;Escape&quot;) onClose();
     };
-
     window.addEventListener(&quot;keydown&quot;, handleKeyDown);
-
     return () =&gt; window.removeEventListener(&quot;keydown&quot;, handleKeyDown);
   }, [isOpen, closeOnEsc, onClose]);
 
   useEffect(() =&gt; {
     if (!isOpen || !lockScroll) return;
-
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = &quot;hidden&quot;;
-
     return () =&gt; {
       document.body.style.overflow = previousOverflow;
     };
@@ -1478,10 +1565,13 @@ function Modal({
     return null;
   }
 
+  const hasHeader = icon || title || subtitle;
+
   return createPortal(
     &lt;div
       className={cn(
-        &quot;fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4&quot;,
+        &quot;fixed inset-0 z-50 flex items-center justify-center p-4&quot;,
+        styles.overlay,
         className,
       )}
       role=&quot;presentation&quot;
@@ -1495,37 +1585,29 @@ function Modal({
         role=&quot;dialog&quot;
         aria-modal=&quot;true&quot;
         aria-label={typeof title === &quot;string&quot; ? title : &quot;Modal&quot;}
-        className={cn(
-          &quot;w-full max-w-lg rounded-xl bg-surface p-5 text-foreground shadow-xl&quot;,
-          contentClassName,
-        )}
+        className={cn(styles.box, &quot;relative&quot;, contentClassName)}
         onClick={(event) =&gt; event.stopPropagation()}
       &gt;
-        &lt;div
-          className={cn(
-            &quot;flex relative items-center pr-7&quot;,
-            !hideTopCloseButton &amp;&amp; &quot;min-h-6&quot;,
-          )}
-        &gt;
-          {title &amp;&amp; (
-            &lt;h2 className=&quot;text-base font-semibold leading-6&quot;&gt;{title}&lt;/h2&gt;
-          )}
-          {!hideTopCloseButton &amp;&amp; (
-            &lt;button
-              type=&quot;button&quot;
-              onClick={onClose}
-              className=&quot;absolute right-0&quot;
-            &gt;
-              &lt;X strokeWidth={1.8} size={22} /&gt;
-            &lt;/button&gt;
-          )}
-        &lt;/div&gt;
-        &lt;div className={cn(hideTopCloseButton &amp;&amp; !title ? &quot;&quot; : &quot;mt-4&quot;)}&gt;
-          {children}
-        &lt;/div&gt;
-        {footer ? (
-          &lt;div className=&quot;mt-5 flex justify-end gap-2&quot;&gt;{footer}&lt;/div&gt;
-        ) : null}
+        {!hideTopCloseButton &amp;&amp; (
+          &lt;button
+            type=&quot;button&quot;
+            onClick={onClose}
+            className={styles.closeBtn}
+            aria-label=&quot;닫기&quot;
+          &gt;
+            &lt;X strokeWidth={1.8} size={16} /&gt;
+          &lt;/button&gt;
+        )}
+
+        {hasHeader &amp;&amp; (
+          &lt;div className={styles.header}&gt;
+            {icon &amp;&amp; &lt;div className={styles.iconBadge}&gt;{icon}&lt;/div&gt;}
+            {title &amp;&amp; &lt;h2 className={styles.title}&gt;{title}&lt;/h2&gt;}
+            {subtitle &amp;&amp; &lt;p className={styles.subtitle}&gt;{subtitle}&lt;/p&gt;}
+          &lt;/div&gt;
+        )}
+        {children &amp;&amp; &lt;div&gt;{children}&lt;/div&gt;}
+        {footer &amp;&amp; &lt;div className={styles.footer}&gt;{footer}&lt;/div&gt;}
       &lt;/div&gt;
     &lt;/div&gt;,
     document.body,
@@ -1533,6 +1615,7 @@ function Modal({
 }
 
 export { Modal };
+export { styles as modalStyles };
 </code></pre></div>
     </div>
         </div>
@@ -1567,10 +1650,32 @@ export { Modal };
               
               <pre><code>const Default = () =&gt; &lt;DemoModal
     title=&quot;기본 모달&quot;
+    subtitle=&quot;서브타이틀을 여기에 입력하세요&quot;
+    icon=&quot;✦&quot;
     closeOnOverlayClick
     closeOnEsc
     lockScroll
-    hideTopCloseButton={false} /&gt;;</code></pre>
+    hideTopCloseButton={false}
+    footer={
+      &lt;&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnGhost}&gt;
+          취소
+        &lt;/button&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnPrimary}&gt;
+          확인
+        &lt;/button&gt;
+      &lt;/&gt;
+    }&gt;
+    &lt;p
+        style={{
+          fontSize: 14,
+          lineHeight: 1.7,
+          color: &quot;var(--foreground-sub)&quot;,
+          fontFamily: &quot;&#39;Noto Sans KR&#39;, sans-serif&quot;,
+        }}&gt;전역 포털 방식으로 렌더링되는 기본 모달입니다. Esc, 오버레이 클릭으로
+                닫을 수 있습니다.
+              &lt;/p&gt;
+&lt;/DemoModal&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -1581,10 +1686,41 @@ export { Modal };
               
               <pre><code>const Persistent = () =&gt; &lt;DemoModal
     title=&quot;필수 확인 모달&quot;
+    subtitle=&quot;이 작업은 되돌릴 수 없습니다&quot;
+    icon=&quot;⚠️&quot;
     closeOnOverlayClick={false}
     closeOnEsc={false}
     lockScroll
-    hideTopCloseButton={false} /&gt;;</code></pre>
+    hideTopCloseButton={false}
+    footer={
+      &lt;&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnGhost}&gt;
+          취소
+        &lt;/button&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnDanger}&gt;
+          확인
+        &lt;/button&gt;
+      &lt;/&gt;
+    }&gt;
+    &lt;p
+        style={{
+          fontSize: 14,
+          lineHeight: 1.7,
+          color: &quot;var(--foreground-sub)&quot;,
+          fontFamily: &quot;&#39;Noto Sans KR&#39;, sans-serif&quot;,
+        }}&gt;오버레이 클릭과 Esc 키로 닫히지 않는 모달입니다. 버튼을 통해서만 닫을 수
+                있습니다.
+              &lt;/p&gt;
+&lt;/DemoModal&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">사주정보 입력</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SajuInfo = () =&gt; &lt;SajuInfoModal /&gt;;</code></pre>
             </div>
         </div>
     
@@ -1778,7 +1914,7 @@ value?: string</code></pre>
       <div class="badges">
         <label for="c-8-components-select-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-8-components-select-info" class="badge info as-toggle">1 info</label>
-        <label for="c-8-components-select-stories" class="badge ok as-toggle">4 stories</label>
+        <label for="c-8-components-select-stories" class="badge ok as-toggle">5 stories</label>
         
       </div>
     </div>
@@ -1852,13 +1988,29 @@ ref?: React.Ref&lt;HTMLSelectElement&gt;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
+                <span class="ex-name">With Label</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithLabel = () =&gt; (
+  &lt;Select id=&quot;job&quot; label=&quot;직업&quot; labelRequired&gt;
+    &lt;option value=&quot;&quot;&gt;직업을 선택하세요&lt;/option&gt;
+    &lt;option value=&quot;developer&quot;&gt;개발자&lt;/option&gt;
+    &lt;option value=&quot;designer&quot;&gt;디자이너&lt;/option&gt;
+    &lt;option value=&quot;planner&quot;&gt;기획자&lt;/option&gt;
+  &lt;/Select&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
                 <span class="ex-name">Disabled</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
               <pre><code>const Disabled = () =&gt; (
-  &lt;Select disabled&gt;
+  &lt;Select disabled label=&quot;비활성화&quot;&gt;
     &lt;option&gt;비활성화됨&lt;/option&gt;
   &lt;/Select&gt;
 );</code></pre>
@@ -1871,7 +2023,7 @@ ref?: React.Ref&lt;HTMLSelectElement&gt;</code></pre>
               
               
               <pre><code>const WithGroups = () =&gt; (
-  &lt;Select&gt;
+  &lt;Select label=&quot;카테고리&quot;&gt;
     &lt;option value=&quot;&quot;&gt;카테고리 선택&lt;/option&gt;
     &lt;optgroup label=&quot;프론트엔드&quot;&gt;
       &lt;option value=&quot;react&quot;&gt;React&lt;/option&gt;
@@ -1886,17 +2038,12 @@ ref?: React.Ref&lt;HTMLSelectElement&gt;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
-                <span class="ex-name">With Label</span>
+                <span class="ex-name">생년월일</span>
                 <span class="badge ok">story ok</span>
               </div>
               
               
-              <pre><code>const WithLabel = () =&gt; &lt;Select disabled={false} labelRequired id=&quot;job&quot; label=&quot;직업&quot;&gt;
-    &lt;option value=&quot;&quot;&gt;직업을 선택하세요&lt;/option&gt;
-    &lt;option value=&quot;developer&quot;&gt;개발자&lt;/option&gt;
-    &lt;option value=&quot;designer&quot;&gt;디자이너&lt;/option&gt;
-    &lt;option value=&quot;planner&quot;&gt;기획자&lt;/option&gt;
-&lt;/Select&gt;;</code></pre>
+              <pre><code>const BirthDate = () =&gt; &lt;BirthDateDemo /&gt;;</code></pre>
             </div>
         </div>
     
@@ -2294,14 +2441,254 @@ ref?: React.Ref&lt;HTMLSelectElement&gt;</code></pre>
   no-story-error
   no-doc-error"
   role="listitem"
+  aria-label="StarBurstButton">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> StarBurstButton</h2>
+      <div class="badges">
+        <label for="c-12-components-starburstbutton-props" class="badge ok as-toggle">3 prop types</label>
+        <label for="c-12-components-starburstbutton-info" class="badge info as-toggle">1 info</label>
+        <label for="c-12-components-starburstbutton-stories" class="badge ok as-toggle">10 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/star-burst-button.stories.tsx">components-starburstbutton · ./src/components/star-burst-button.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  <input id="c-12-components-starburstbutton-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-12-components-starburstbutton-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-12-components-starburstbutton-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">3 prop types</span>
+            </div>
+            <pre><code>Component: src/components/star-burst-button.tsx::StarBurstButton</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>particleCount?: number = 8
+
+size?: any = &quot;default&quot;
+
+variant?: any = &quot;default&quot;</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { StarBurstButton } from "@repo/ui";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;StarBurstButton variant=&quot;default&quot; size=&quot;default&quot; particleCount={8}&gt;✦ 운세 보기&lt;/StarBurstButton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Small</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Small = () =&gt; &lt;StarBurstButton variant=&quot;default&quot; size=&quot;sm&quot; particleCount={6}&gt;✦ 새 상담&lt;/StarBurstButton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Large</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Large = () =&gt; &lt;StarBurstButton variant=&quot;default&quot; size=&quot;lg&quot; particleCount={10}&gt;✦ 사주 상담 시작하기&lt;/StarBurstButton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Secondary</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Secondary = () =&gt; &lt;StarBurstButton variant=&quot;secondary&quot; size=&quot;default&quot; particleCount={8}&gt;사주 원국 보기&lt;/StarBurstButton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Gold</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Gold = () =&gt; &lt;StarBurstButton variant=&quot;gold&quot; size=&quot;default&quot; particleCount={8}&gt;✦ 오늘의 운세&lt;/StarBurstButton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Ghost</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Ghost = () =&gt; &lt;StarBurstButton variant=&quot;ghost&quot; size=&quot;default&quot; particleCount={8}&gt;더 보기&lt;/StarBurstButton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; &lt;StarBurstButton variant=&quot;default&quot; size=&quot;default&quot; disabled&gt;사주 정보 없음&lt;/StarBurstButton&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">All Variants</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const AllVariants = () =&gt; (
+  &lt;div
+    style={{
+      display: &quot;flex&quot;,
+      flexDirection: &quot;column&quot;,
+      gap: 24,
+      alignItems: &quot;center&quot;,
+    }}
+  &gt;
+    &lt;p
+      style={{
+        fontSize: 11,
+        letterSpacing: &quot;0.18em&quot;,
+        textTransform: &quot;uppercase&quot;,
+        color: &quot;var(--muted, rgba(180,155,255,0.5))&quot;,
+        margin: 0,
+      }}
+    &gt;
+      클릭해보세요 ✦
+    &lt;/p&gt;
+    &lt;div
+      style={{
+        display: &quot;flex&quot;,
+        gap: 12,
+        flexWrap: &quot;wrap&quot;,
+        justifyContent: &quot;center&quot;,
+      }}
+    &gt;
+      &lt;StarBurstButton variant=&quot;default&quot;&gt;✦ Default&lt;/StarBurstButton&gt;
+      &lt;StarBurstButton variant=&quot;secondary&quot;&gt;Secondary&lt;/StarBurstButton&gt;
+      &lt;StarBurstButton variant=&quot;gold&quot;&gt;✦ Gold&lt;/StarBurstButton&gt;
+      &lt;StarBurstButton variant=&quot;ghost&quot;&gt;Ghost&lt;/StarBurstButton&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">All Sizes</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const AllSizes = () =&gt; (
+  &lt;div
+    style={{
+      display: &quot;flex&quot;,
+      gap: 12,
+      alignItems: &quot;center&quot;,
+      flexWrap: &quot;wrap&quot;,
+      justifyContent: &quot;center&quot;,
+    }}
+  &gt;
+    &lt;StarBurstButton size=&quot;sm&quot;&gt;✦ Small&lt;/StarBurstButton&gt;
+    &lt;StarBurstButton size=&quot;default&quot;&gt;✦ Default&lt;/StarBurstButton&gt;
+    &lt;StarBurstButton size=&quot;lg&quot;&gt;✦ Large&lt;/StarBurstButton&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Use Cases</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const UseCases = () =&gt; (
+  &lt;div
+    style={{
+      display: &quot;flex&quot;,
+      flexDirection: &quot;column&quot;,
+      gap: 20,
+      alignItems: &quot;center&quot;,
+      minWidth: 320,
+    }}
+  &gt;
+    &lt;StarBurstButton variant=&quot;default&quot; size=&quot;lg&quot; style={{ width: 240 }}&gt;
+      ✦ 오늘의 운세 보기
+    &lt;/StarBurstButton&gt;
+    &lt;div style={{ display: &quot;flex&quot;, gap: 10 }}&gt;
+      &lt;StarBurstButton variant=&quot;secondary&quot; size=&quot;default&quot;&gt;
+        사주 원국 보기
+      &lt;/StarBurstButton&gt;
+      &lt;StarBurstButton variant=&quot;default&quot; size=&quot;default&quot;&gt;
+        ✦ 새 상담
+      &lt;/StarBurstButton&gt;
+    &lt;/div&gt;
+    &lt;StarBurstButton variant=&quot;gold&quot; size=&quot;default&quot;&gt;
+      ✦ 운세 카드 저장
+    &lt;/StarBurstButton&gt;
+    &lt;StarBurstButton variant=&quot;ghost&quot; size=&quot;sm&quot; particleCount={6}&gt;
+      더 보기
+    &lt;/StarBurstButton&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
   aria-label="Switch">
   <div class="head">
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> Switch</h2>
       <div class="badges">
-        <label for="c-12-components-switch-props" class="badge ok as-toggle">4 prop types</label>
-        <label for="c-12-components-switch-info" class="badge info as-toggle">1 info</label>
-        <label for="c-12-components-switch-stories" class="badge ok as-toggle">4 stories</label>
+        <label for="c-13-components-switch-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-13-components-switch-info" class="badge info as-toggle">1 info</label>
+        <label for="c-13-components-switch-stories" class="badge ok as-toggle">4 stories</label>
         
       </div>
     </div>
@@ -2313,10 +2700,10 @@ ref?: React.Ref&lt;HTMLSelectElement&gt;</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-12-components-switch-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-12-components-switch-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-13-components-switch-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-13-components-switch-stories" class="tg tg-stories" type="checkbox" hidden />
   
-  <input id="c-12-components-switch-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-13-components-switch-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2412,8 +2799,8 @@ unCheckedChildren?: React.ReactNode</code></pre>
       <h2><span class="status-dot dot-ok"></span> Textarea</h2>
       <div class="badges">
         
-        <label for="c-13-components-textarea-info" class="badge info as-toggle">1 info</label>
-        <label for="c-13-components-textarea-stories" class="badge ok as-toggle">4 stories</label>
+        <label for="c-14-components-textarea-info" class="badge info as-toggle">1 info</label>
+        <label for="c-14-components-textarea-stories" class="badge ok as-toggle">4 stories</label>
         
       </div>
     </div>
@@ -2425,8 +2812,8 @@ unCheckedChildren?: React.ReactNode</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-13-components-textarea-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-13-components-textarea-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-14-components-textarea-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-14-components-textarea-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
 
@@ -2518,7 +2905,7 @@ unCheckedChildren?: React.ReactNode</code></pre>
       <div class="badges">
         <label for="c-error-0-components-modal-err" class="badge err as-toggle">prop type error</label>
         <label for="c-error-0-components-modal-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-0-components-modal-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-error-0-components-modal-stories" class="badge ok as-toggle">3 stories</label>
         
       </div>
     </div>
@@ -2552,11 +2939,14 @@ import { useEffect, useState } from &quot;react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
 import { X } from &quot;lucide-react&quot;;
 import { cn } from &quot;../lib/utils&quot;;
+import styles from &quot;./modal.module.scss&quot;;
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () =&gt; void;
   title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  icon?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
   closeOnOverlayClick?: boolean;
@@ -2571,6 +2961,8 @@ function Modal({
   isOpen,
   onClose,
   title,
+  subtitle,
+  icon,
   children,
   footer,
   closeOnOverlayClick = true,
@@ -2588,22 +2980,17 @@ function Modal({
 
   useEffect(() =&gt; {
     if (!isOpen || !closeOnEsc) return;
-
     const handleKeyDown = (event: KeyboardEvent) =&gt; {
       if (event.key === &quot;Escape&quot;) onClose();
     };
-
     window.addEventListener(&quot;keydown&quot;, handleKeyDown);
-
     return () =&gt; window.removeEventListener(&quot;keydown&quot;, handleKeyDown);
   }, [isOpen, closeOnEsc, onClose]);
 
   useEffect(() =&gt; {
     if (!isOpen || !lockScroll) return;
-
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = &quot;hidden&quot;;
-
     return () =&gt; {
       document.body.style.overflow = previousOverflow;
     };
@@ -2613,10 +3000,13 @@ function Modal({
     return null;
   }
 
+  const hasHeader = icon || title || subtitle;
+
   return createPortal(
     &lt;div
       className={cn(
-        &quot;fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4&quot;,
+        &quot;fixed inset-0 z-50 flex items-center justify-center p-4&quot;,
+        styles.overlay,
         className,
       )}
       role=&quot;presentation&quot;
@@ -2630,37 +3020,29 @@ function Modal({
         role=&quot;dialog&quot;
         aria-modal=&quot;true&quot;
         aria-label={typeof title === &quot;string&quot; ? title : &quot;Modal&quot;}
-        className={cn(
-          &quot;w-full max-w-lg rounded-xl bg-surface p-5 text-foreground shadow-xl&quot;,
-          contentClassName,
-        )}
+        className={cn(styles.box, &quot;relative&quot;, contentClassName)}
         onClick={(event) =&gt; event.stopPropagation()}
       &gt;
-        &lt;div
-          className={cn(
-            &quot;flex relative items-center pr-7&quot;,
-            !hideTopCloseButton &amp;&amp; &quot;min-h-6&quot;,
-          )}
-        &gt;
-          {title &amp;&amp; (
-            &lt;h2 className=&quot;text-base font-semibold leading-6&quot;&gt;{title}&lt;/h2&gt;
-          )}
-          {!hideTopCloseButton &amp;&amp; (
-            &lt;button
-              type=&quot;button&quot;
-              onClick={onClose}
-              className=&quot;absolute right-0&quot;
-            &gt;
-              &lt;X strokeWidth={1.8} size={22} /&gt;
-            &lt;/button&gt;
-          )}
-        &lt;/div&gt;
-        &lt;div className={cn(hideTopCloseButton &amp;&amp; !title ? &quot;&quot; : &quot;mt-4&quot;)}&gt;
-          {children}
-        &lt;/div&gt;
-        {footer ? (
-          &lt;div className=&quot;mt-5 flex justify-end gap-2&quot;&gt;{footer}&lt;/div&gt;
-        ) : null}
+        {!hideTopCloseButton &amp;&amp; (
+          &lt;button
+            type=&quot;button&quot;
+            onClick={onClose}
+            className={styles.closeBtn}
+            aria-label=&quot;닫기&quot;
+          &gt;
+            &lt;X strokeWidth={1.8} size={16} /&gt;
+          &lt;/button&gt;
+        )}
+
+        {hasHeader &amp;&amp; (
+          &lt;div className={styles.header}&gt;
+            {icon &amp;&amp; &lt;div className={styles.iconBadge}&gt;{icon}&lt;/div&gt;}
+            {title &amp;&amp; &lt;h2 className={styles.title}&gt;{title}&lt;/h2&gt;}
+            {subtitle &amp;&amp; &lt;p className={styles.subtitle}&gt;{subtitle}&lt;/p&gt;}
+          &lt;/div&gt;
+        )}
+        {children &amp;&amp; &lt;div&gt;{children}&lt;/div&gt;}
+        {footer &amp;&amp; &lt;div className={styles.footer}&gt;{footer}&lt;/div&gt;}
       &lt;/div&gt;
     &lt;/div&gt;,
     document.body,
@@ -2668,6 +3050,7 @@ function Modal({
 }
 
 export { Modal };
+export { styles as modalStyles };
 </code></pre></div>
     </div>
         </div>
@@ -2702,10 +3085,32 @@ export { Modal };
               
               <pre><code>const Default = () =&gt; &lt;DemoModal
     title=&quot;기본 모달&quot;
+    subtitle=&quot;서브타이틀을 여기에 입력하세요&quot;
+    icon=&quot;✦&quot;
     closeOnOverlayClick
     closeOnEsc
     lockScroll
-    hideTopCloseButton={false} /&gt;;</code></pre>
+    hideTopCloseButton={false}
+    footer={
+      &lt;&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnGhost}&gt;
+          취소
+        &lt;/button&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnPrimary}&gt;
+          확인
+        &lt;/button&gt;
+      &lt;/&gt;
+    }&gt;
+    &lt;p
+        style={{
+          fontSize: 14,
+          lineHeight: 1.7,
+          color: &quot;var(--foreground-sub)&quot;,
+          fontFamily: &quot;&#39;Noto Sans KR&#39;, sans-serif&quot;,
+        }}&gt;전역 포털 방식으로 렌더링되는 기본 모달입니다. Esc, 오버레이 클릭으로
+                닫을 수 있습니다.
+              &lt;/p&gt;
+&lt;/DemoModal&gt;;</code></pre>
             </div>
             <div class="note ok">
               <div class="row">
@@ -2716,10 +3121,41 @@ export { Modal };
               
               <pre><code>const Persistent = () =&gt; &lt;DemoModal
     title=&quot;필수 확인 모달&quot;
+    subtitle=&quot;이 작업은 되돌릴 수 없습니다&quot;
+    icon=&quot;⚠️&quot;
     closeOnOverlayClick={false}
     closeOnEsc={false}
     lockScroll
-    hideTopCloseButton={false} /&gt;;</code></pre>
+    hideTopCloseButton={false}
+    footer={
+      &lt;&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnGhost}&gt;
+          취소
+        &lt;/button&gt;
+        &lt;button type=&quot;button&quot; className={modalStyles.btnDanger}&gt;
+          확인
+        &lt;/button&gt;
+      &lt;/&gt;
+    }&gt;
+    &lt;p
+        style={{
+          fontSize: 14,
+          lineHeight: 1.7,
+          color: &quot;var(--foreground-sub)&quot;,
+          fontFamily: &quot;&#39;Noto Sans KR&#39;, sans-serif&quot;,
+        }}&gt;오버레이 클릭과 Esc 키로 닫히지 않는 모달입니다. 버튼을 통해서만 닫을 수
+                있습니다.
+              &lt;/p&gt;
+&lt;/DemoModal&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">사주정보 입력</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SajuInfo = () =&gt; &lt;SajuInfoModal /&gt;;</code></pre>
             </div>
         </div>
     

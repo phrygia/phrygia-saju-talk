@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import { NextResponse } from "next/server";
+import { z } from "zod";
+import { after, NextResponse } from "next/server";
 import type { ManseryeokData } from "@/src/app/types/manseryeok";
 import type { ApiResponse } from "@/src/app/types/api";
 import { generateText } from "ai";
@@ -9,8 +10,13 @@ import {
   BirthCalendarLabels,
   BirthGenderLabels,
   BirthTimeLabels,
+  birthInfoSchema,
   type BirthInfo,
 } from "@/src/app/types/fortune";
+
+const requestSchema = z.object({
+  birthInfo: birthInfoSchema,
+});
 
 function buildPrompt(birthInfo: BirthInfo, today: string): string {
   const genderLabel = BirthGenderLabels[birthInfo.gender];
@@ -146,47 +152,41 @@ async function getManseryeok(
     };
   }
 
-  await supabase.from("saju_analyses").upsert(
-    {
-      user_id: user.id,
-      birth_date: birthInfo.birthDate,
-      analysis_month: analysisMonth,
-      data: parsed,
-    },
-    { onConflict: "user_id,analysis_month" },
-  );
+  after(async () => {
+    await supabase
+      .from("saju_analyses")
+      .upsert(
+        {
+          user_id: user.id,
+          birth_date: birthInfo.birthDate,
+          analysis_month: analysisMonth,
+          data: parsed,
+        },
+        { onConflict: "user_id,analysis_month" },
+      );
+  });
 
   return { success: true, data: parsed };
-}
-
-function isBirthInfo(v: unknown): v is BirthInfo {
-  if (!v || typeof v !== "object") return false;
-
-  const b = v as Partial<BirthInfo>;
-  return (
-    (b.gender === "male" || b.gender === "female") &&
-    (b.calendarType === "solar" || b.calendarType === "lunar") &&
-    typeof b.birthDate === "string" &&
-    typeof b.birthTime === "string"
-  );
 }
 
 export async function POST(
   request: Request,
 ): Promise<NextResponse<ApiResponse<ManseryeokData>>> {
   try {
-    const body = (await request.json()) as {
-      birthInfo?: unknown;
-    };
+    const body = await request.json().catch(() => null);
+    const parsed = requestSchema.safeParse(body);
 
-    if (!isBirthInfo(body.birthInfo)) {
+    if (!parsed.success) {
       return NextResponse.json(
-        { success: false, message: "생년월일 정보가 올바르지 않습니다." },
+        {
+          success: false,
+          message: parsed.error.issues[0]?.message || "잘못된 요청입니다.",
+        },
         { status: 400 },
       );
     }
 
-    const result = await getManseryeok(body.birthInfo);
+    const result = await getManseryeok(parsed.data.birthInfo);
 
     return NextResponse.json(result, { status: result.success ? 200 : 500 });
   } catch (error) {
