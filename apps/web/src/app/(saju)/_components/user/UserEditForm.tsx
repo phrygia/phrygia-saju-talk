@@ -211,7 +211,7 @@ export default function UserEditForm() {
                 계정 탈퇴
               </h3>
               <p className="text-[11px] text-foreground-muted">
-                탈퇴 시 모든 상담 내역이 삭제되며 복구할 수 없습니다.
+                모든 상담 내역이 삭제되며 복구할 수 없습니다.
               </p>
             </div>
             <Button

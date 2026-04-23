@@ -3,6 +3,7 @@
 > AI 기반 사주 상담 챗봇 서비스
 
 [웹사이트: https://phrygia-saju-talk-web.vercel.app/](https://phrygia-saju-talk-web.vercel.app/)
+[스토리북: https://phrygia-saju-talk-storybook-git-main-phrygia-projects.vercel.app/](https://phrygia-saju-talk-storybook-git-main-phrygia-projects.vercel.app/)
 ![image](./apps/web/public/web-screenshot.png)
 
 사주팔자(四柱八字)와 AI를 결합한 개인 맞춤형 운세 상담 플랫폼입니다.  

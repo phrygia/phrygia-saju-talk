@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const BirthCalendarLabels = {
   solar: "양력",
   lunar: "음력",
@@ -24,13 +26,13 @@ export const BirthTimeLabels = {
   hae: "해시",
 };
 
-export interface BirthInfo {
-  gender: "male" | "female";
-  calendarType: "solar" | "lunar";
-  birthDate: string;
-  birthTime: string;
-  name?: string;
-}
+// export interface BirthInfo {
+//   gender: "male" | "female";
+//   calendarType: "solar" | "lunar";
+//   birthDate: string;
+//   birthTime: string;
+//   name?: string;
+// }
 
 export interface FortuneCategory {
   score: number;
@@ -68,3 +70,14 @@ export const BIRTH_TIMES = [
   { value: "sul", label: "戌(술) 19:30 ~ 21:29", summary: "술시" },
   { value: "hae", label: "亥(해) 21:30 ~ 23:29", summary: "해시" },
 ] as const;
+
+export const birthInfoSchema = z.object({
+  gender: z.enum(["male", "female"]),
+  calendarType: z.enum(["solar", "lunar"]),
+  birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  birthTime: z.string().min(1),
+  name: z.string().optional(),
+});
+
+// z.infer를 통해 스키마로부터 타입 추출
+export type BirthInfo = z.infer<typeof birthInfoSchema>;

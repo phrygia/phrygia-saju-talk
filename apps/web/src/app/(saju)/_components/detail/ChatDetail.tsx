@@ -71,8 +71,6 @@ export default function ChatDetail({
   const didAutoReload = useRef<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // initialMessages?.[0]?.profile ?? null;
-
   const { messages, input, setInput, handleSubmit, status, reload } = useChat({
     api: "/api/chat",
     initialMessages: initialMessages as any,
@@ -287,7 +285,7 @@ export default function ChatDetail({
           <SimpleBirthInfo initialBirthInfo={initialMessages?.[0]?.profile} />
         )}
       </ChatHeader>
-      <div className="grid grid-rows-[1fr_auto] flex-1 min-h-0">
+      <div className="grid grid-rows-[1fr_auto] flex-1 min-h-0 pb-5 md:pb-0">
         <div
           ref={scrollContainerRef}
           className="min-h-0 overflow-y-auto relative"
@@ -344,7 +342,7 @@ export default function ChatDetail({
                     >
                       <div
                         className={cn(
-                          "rounded-2xl text-[13px] leading-relaxed relative",
+                          "rounded-2xl text-sm leading-relaxed relative",
                           message.role === "user"
                             ? "max-w-[78%] transition-all rounded-[18px_18px_4px_18px] bg-[linear-gradient(135deg,#5b57f0,#7c5cfc)] px-5 py-2 text-white font-medium"
                             : "px-0 md:px-5 py-0 md:py-2",

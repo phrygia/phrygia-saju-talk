@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { generateText } from "ai";
 import { createClient } from "@/src/lib/supabase/server";
 import { calcSajuWonGuk, type SajuWonGuk } from "@/src/lib/sajuCalc";
@@ -6,7 +6,7 @@ import { createGoogleAi } from "@/src/lib/ai";
 import { BirthInfo } from "@/src/app/types/fortune";
 import { ApiResponse } from "@/src/app/types/api";
 import {
-  type GunghapCategory,
+  // type GunghapCategory,
   type GunghapResult,
 } from "@/src/app/types/gunghap";
 
@@ -195,24 +195,22 @@ export async function POST(
 
     const parsed = JSON.parse(jsonMatch[0]) as unknown;
 
-    const { data, error } = await supabase.from("gunghap_results").insert({
-      user_id: user!.id,
-      my_birth_date: myInfo.birthDate,
-      my_birth_time: myInfo.birthTime,
-      my_gender: myInfo.gender,
-      my_calendar_type: myInfo.calendarType,
-      partner_birth_date: partnerInfo.birthDate,
-      partner_birth_time: partnerInfo.birthTime,
-      partner_gender: partnerInfo.gender,
-      partner_calendar_type: partnerInfo.calendarType,
-      partner_name: partnerInfo.name ?? null,
-      result: parsed,
-      analyzed_date: today,
+    after(async () => {
+      await supabase.from("gunghap_results").insert({
+        user_id: user!.id,
+        my_birth_date: myInfo.birthDate,
+        my_birth_time: myInfo.birthTime,
+        my_gender: myInfo.gender,
+        my_calendar_type: myInfo.calendarType,
+        partner_birth_date: partnerInfo.birthDate,
+        partner_birth_time: partnerInfo.birthTime,
+        partner_gender: partnerInfo.gender,
+        partner_calendar_type: partnerInfo.calendarType,
+        partner_name: partnerInfo.name ?? null,
+        result: parsed,
+        analyzed_date: today,
+      });
     });
-
-    if (error) {
-      throw error;
-    }
 
     return NextResponse.json(
       { success: true, data: parsed as GunghapResult },

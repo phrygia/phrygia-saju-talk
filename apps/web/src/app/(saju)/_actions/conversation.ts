@@ -1,5 +1,6 @@
 "use server";
 
+import { after } from "next/server";
 import { createClient } from "@/src/lib/supabase/server";
 import { conversationTableName } from "@/src/app/types/conversation";
 import { ApiResponse } from "@/src/app/types/api";
@@ -54,7 +55,8 @@ export async function deleteConversationMessages(
   const { error } = await supabase
     .from(conversationTableName)
     .delete()
-    .eq("id", conversationId);
+    .eq("id", conversationId)
+    .eq("user_id", user.id);
 
   if (error) {
     return { success: false, message: error.message };
