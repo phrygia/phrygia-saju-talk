@@ -2,7 +2,7 @@
 
 > AI 기반 사주 상담 챗봇 서비스
 
-[웹사이트: https://phrygia-saju-talk-web.vercel.app/](https://phrygia-saju-talk-web.vercel.app/)
+[웹사이트: https://phrygia-saju-talk-web.vercel.app/landing](https://phrygia-saju-talk-web.vercel.app/landing)
 [스토리북: https://phrygia-saju-talk-web-z888.vercel.app/](https://phrygia-saju-talk-web-z888.vercel.app/)
 ![image](./apps/web/public/web-screenshot.png)
 
@@ -102,7 +102,7 @@ saju-talk/
 
 ## AI 코딩 어시스턴트 활용
 
-> `/saju` 만세력 페이지, 전체 서비스 디자인, 일부 Storybook UI 컴포넌트는 **Claude Code(Anthropic)**의 도움을 받아 개발했습니다.
+> `/saju` 만세력 페이지, 전체 서비스 디자인, 랜딩페이지, 일부 Storybook UI 컴포넌트는 **Claude Code(Anthropic)**의 도움을 받아 개발했습니다.
 
 기능 설계 의도와 요구사항은 직접 정의하였으며, 아래 구현 영역에서 AI의 코드 제안을 검토·수정하며 반영했습니다.
 
