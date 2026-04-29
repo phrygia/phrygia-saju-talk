@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import DOMPurify from "dompurify";
 import { useChat } from "@ai-sdk/react";
 import {
   type InfiniteData,
@@ -356,9 +357,11 @@ export default function ChatDetail({
                         <p
                           className="whitespace-pre-wrap"
                           dangerouslySetInnerHTML={{
-                            __html: message.content.replace(
-                              /\*\*(.*?)\*\*/g,
-                              "<strong class='font-bold'>$1</strong>",
+                            __html: DOMPurify.sanitize(
+                              message.content.replace(
+                                /\*\*(.*?)\*\*/g,
+                                "<strong class='font-bold'>$1</strong>",
+                              ),
                             ),
                           }}
                         />
