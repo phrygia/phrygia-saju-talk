@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import { useChat } from "@ai-sdk/react";
 import {
   type InfiniteData,
@@ -34,9 +34,8 @@ import ConfirmModal from "@/src/components/ui/ConfirmModal";
 import { type SajuQuestion } from "@/src/app/(saju)/_constants/saju";
 import { BirthInfo } from "@/src/app/types/fortune";
 import RecommendSajuQuestions from "@/src/app/(saju)/_components/saju/RecommendSajuQuestions";
-import styles from "./ChatDetail.module.scss";
 import { Button } from "@repo/ui/components/button";
-import { set } from "zod";
+import styles from "./ChatDetail.module.scss";
 
 interface ChatDetailProps {
   initialMessages: Messages[];
@@ -358,7 +357,7 @@ export default function ChatDetail({
                           className="whitespace-pre-wrap"
                           dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(
-                              message.content.replace(
+                              (message.content ?? "").replace(
                                 /\*\*(.*?)\*\*/g,
                                 "<strong class='font-bold'>$1</strong>",
                               ),

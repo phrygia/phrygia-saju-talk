@@ -177,6 +177,27 @@ export default function BirthInfoForm({
     setDeleting(false);
   };
 
+  useEffect(() => {
+    if (initialInfo?.gender) {
+      setValue("gender", initialInfo.gender);
+    }
+    if (initialInfo?.calendarType) {
+      setValue("calendarType", initialInfo.calendarType);
+    }
+    if (typeof initialInfo?.birthDate === "string") {
+      const [year, month, day] = initialInfo.birthDate.split("-");
+      setValue("year", String(year));
+      setValue("month", String(Number(month)));
+      setValue("day", String(Number(day)));
+    }
+    if (initialInfo?.birthTime) {
+      setValue("birthTime", initialInfo.birthTime);
+    }
+    if (initialInfo?.name) {
+      setValue("name", initialInfo.name);
+    }
+  }, [initialInfo]);
+
   const loading = isSubmitting || deleting;
 
   return (
@@ -210,7 +231,7 @@ export default function BirthInfoForm({
                     id={`${radioGenderName}-${g}`}
                     value={g}
                     {...register("gender")}
-                    name={radioGenderName!}
+                    name={`${radioGenderName}-gender`}
                     className={styles.radio}
                     onChange={(e) => {
                       setValue("gender", g, { shouldValidate: true });
@@ -242,7 +263,7 @@ export default function BirthInfoForm({
                     id={`${radioCalendarTypeName}-${type}`}
                     value={type}
                     {...register("calendarType")}
-                    name={radioCalendarTypeName!}
+                    name={`${radioCalendarTypeName!}-calendarType`}
                     className={styles.radio}
                     onChange={(e) => {
                       setValue("calendarType", type, {
