@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
 import { z } from "zod";
 import { after, NextResponse } from "next/server";
-import type { ManseryeokData } from "@/src/app/types/manseryeok";
+import {
+  manseryeokTableName,
+  type ManseryeokData,
+} from "@/src/app/types/manseryeok";
 import type { ApiResponse } from "@/src/app/types/api";
 import { generateText } from "ai";
 import { createClient } from "@/src/lib/supabase/server";
@@ -123,7 +126,7 @@ async function getManseryeok(
   const analysisMonth = dayjs().format("YYYY-MM");
 
   const { data: cached } = await supabase
-    .from("saju_analyses")
+    .from(manseryeokTableName)
     .select("data")
     .eq("user_id", user.id)
     .eq("analysis_month", analysisMonth)
@@ -153,17 +156,15 @@ async function getManseryeok(
   }
 
   after(async () => {
-    await supabase
-      .from("saju_analyses")
-      .upsert(
-        {
-          user_id: user.id,
-          birth_date: birthInfo.birthDate,
-          analysis_month: analysisMonth,
-          data: parsed,
-        },
-        { onConflict: "user_id,analysis_month" },
-      );
+    await supabase.from(manseryeokTableName).upsert(
+      {
+        user_id: user.id,
+        birth_date: birthInfo.birthDate,
+        analysis_month: analysisMonth,
+        data: parsed,
+      },
+      { onConflict: "user_id,analysis_month" },
+    );
   });
 
   return { success: true, data: parsed };

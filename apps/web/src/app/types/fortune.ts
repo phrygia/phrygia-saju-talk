@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const fortunesTableName = "daily_fortunes";
+
 export const BirthCalendarLabels = {
   solar: "양력",
   lunar: "음력",
@@ -25,14 +27,6 @@ export const BirthTimeLabels = {
   sul: "술시",
   hae: "해시",
 };
-
-// export interface BirthInfo {
-//   gender: "male" | "female";
-//   calendarType: "solar" | "lunar";
-//   birthDate: string;
-//   birthTime: string;
-//   name?: string;
-// }
 
 export interface FortuneCategory {
   score: number;
@@ -79,5 +73,4 @@ export const birthInfoSchema = z.object({
   name: z.string().optional(),
 });
 
-// z.infer를 통해 스키마로부터 타입 추출
 export type BirthInfo = z.infer<typeof birthInfoSchema>;

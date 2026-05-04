@@ -26,7 +26,11 @@ export default function CategoryCard({
   onToggle,
 }: CategoryCardProps) {
   return (
-    <div className={cn(styles.card, "fade-in")} onClick={onToggle}>
+    <div
+      className={cn(styles.card, "fade-in")}
+      role="button"
+      onClick={onToggle}
+    >
       <div className={styles.cardHeader}>
         <div className={styles.icon}>{GunghapCategoryEmojis[category]}</div>
         <div className={styles.score}>

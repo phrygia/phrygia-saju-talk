@@ -45,26 +45,28 @@ export default function ChatHeader({
             </h2>
           )}
         </div>
-        <div className="absolute left-1/2 top-1/2 -translate-1/2 text-foreground-sub opacity-80 -ml-5 hidden md:block text-xs">
+        <div className="absolute left-1/2 top-1/2 -translate-1/2 text-foreground-sub opacity-80 -ml-5 text-xs">
           {children && children}
         </div>
-        <div className="flex items-center space-x-1.5">
+        <div className="flex items-center">
           <button
             type="button"
-            className="w-[36px] h-[36px] rounded-[6px] border border-[rgba(124,92,252,0.2)] bg-[rgba(124,92,252,0.1)] text-violet text-[18px] flex md:hidden items-center justify-center cursor-pointer transition-all duration-200 shrink-0 hover:bg-[rgba(124,92,252,0.2)] dark:bg-[rgba(124,92,252,0.1)] dark:border-[rgba(124,92,252,0.2)] light:bg-[rgba(100,65,160,0.08)] light:border-[rgba(100,65,160,0.18)]"
+            className="ml-1.5 w-[36px] h-[36px] rounded-[6px] border border-[rgba(124,92,252,0.2)] bg-[rgba(124,92,252,0.1)] text-violet text-[18px] flex md:hidden items-center justify-center cursor-pointer transition-all duration-200 shrink-0 hover:bg-[rgba(124,92,252,0.2)] dark:bg-[rgba(124,92,252,0.1)] dark:border-[rgba(124,92,252,0.2)] light:bg-[rgba(100,65,160,0.08)] light:border-[rgba(100,65,160,0.18)]"
             onClick={openMobileSidebar}
             title="사이드바 열기"
             aria-label="사이드바 열기"
           >
             <Menu strokeWidth={1.8} size={20} />
           </button>
-          <ThemeToggle />
+          <div className="ml-1.5">
+            <ThemeToggle />
+          </div>
           {!hideWonGukButton && (
             <Button
               type="button"
               size="sm"
               variant="secondary"
-              className="px-2.5 min-h-[30px] !hidden md:!block"
+              className="ml-1.5 px-2.5 min-h-[30px] !hidden md:!block"
               onClick={() => router.push("/saju")}
             >
               사주 원국 보기
@@ -74,13 +76,13 @@ export default function ChatHeader({
             <StarBurstButton
               variant="default"
               size="sm"
-              className="min-h-[30px]"
+              className="ml-1.5 min-h-[30px] !hidden md:!block"
               onClick={() => router.push("/")}
             >
               ✦ 새 상담
             </StarBurstButton>
           )}
-          {rightButton && rightButton}
+          {rightButton && <div className="ml-1.5">{rightButton}</div>}
         </div>
       </div>
     </header>
