@@ -11,6 +11,7 @@ import {
   BirthGenderLabels,
   birthInfoSchema,
   BirthTimeLabels,
+  fortunesTableName,
   type BirthInfo,
   type DailyFortune,
 } from "@/src/app/types/fortune";
@@ -93,7 +94,7 @@ async function getTodayDataFromDB(
 
   const todayDate = dayjs(date).format("YYYY-MM-DD");
   const { data: todayData } = await supabase
-    .from("daily_fortunes")
+    .from(fortunesTableName)
     .select("fortune_data")
     .eq("user_id", userId)
     .eq("fortune_date", todayDate)
@@ -136,7 +137,7 @@ async function getTodayFortune(
     };
   }
   after(async () => {
-    await supabase.from("daily_fortunes").upsert(
+    await supabase.from(fortunesTableName).upsert(
       {
         user_id: userId,
         fortune_date: todayDate,
@@ -245,7 +246,7 @@ export async function POST(
 
   if (requestedDate.isBefore(dayjs(), "day")) {
     const { data: storedFortune, error } = await supabase
-      .from("daily_fortunes")
+      .from(fortunesTableName)
       .select("fortune_data")
       .eq("user_id", user.id)
       .eq("fortune_date", requestedDate.format("YYYY-MM-DD"))

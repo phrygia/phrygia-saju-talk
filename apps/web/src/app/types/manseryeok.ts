@@ -1,5 +1,7 @@
 export type Ohaeng = "목" | "화" | "토" | "금" | "수";
 
+export const manseryeokTableName = "saju_analyses";
+
 export interface JuCheongan {
   hanja: string;
   hangul: string;

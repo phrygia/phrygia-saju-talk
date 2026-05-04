@@ -211,7 +211,7 @@ export default function FortuneDashboardContent({
           <div>
             <div className={styles.tag}>✦ 오늘의 기운</div>
             <p className="text-foreground-sub text-sm leading-[1.7]">
-              {fortune.overall.description}
+              {overallFortune.description}
             </p>
           </div>
         </div>
@@ -289,7 +289,7 @@ export default function FortuneDashboardContent({
         <div className={styles.advice}>
           <h3 className={styles.tag}>✦ 오늘의 조언</h3>
           <p className="text-foreground-sub text-sm leading-[1.7]">
-            {fortune.advice}
+            {fortune?.advice ?? "조언을 불러오는 중입니다."}
           </p>
         </div>
       </div>

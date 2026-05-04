@@ -11,6 +11,7 @@ import { calcSajuWonGuk, calcSajuWonGukPrompt } from "@/src/lib/sajuCalc";
 import {
   type GunghapResult,
   type GunghapPersonInfo,
+  gunghapTableName,
 } from "@/src/app/types/gunghap";
 import { ApiResponse } from "@/src/app/types/api";
 
@@ -218,7 +219,7 @@ export async function POST(
     const partnerCtx = buildPersonContext(partnerInfo);
 
     let cacheQuery = supabase
-      .from("gunghap_results")
+      .from(gunghapTableName)
       .select("result")
       .eq("my_birth_date", myInfo.birthDate)
       .eq("my_birth_time", myInfo.birthTime)
@@ -272,7 +273,7 @@ export async function POST(
 
     after(async () => {
       try {
-        await supabase.from("gunghap_results").insert({
+        await supabase.from(gunghapTableName).insert({
           user_id: userId,
           my_birth_date: myInfo.birthDate,
           my_birth_time: myInfo.birthTime,

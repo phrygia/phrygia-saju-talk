@@ -3,7 +3,11 @@ import { getUser } from "@/src/lib/getUser";
 import ChatLayout from "@/src/app/(saju)/_components/layout/ChatLayout";
 import BirthInfoModal from "@/src/app/(saju)/_components/birth/BirthInfoModal";
 
-async function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
+async function AuthenticatedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { user, profile } = await getUser();
 
   return (
