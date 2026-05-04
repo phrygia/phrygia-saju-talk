@@ -1,3 +1,5 @@
+export const gunghapTableName = "gunghap_results";
+
 export interface GunghapCategory {
   score: number;
   label: string;

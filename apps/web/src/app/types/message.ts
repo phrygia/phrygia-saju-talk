@@ -6,6 +6,7 @@ export interface Messages {
   content: string;
   conversation_id: string;
   created_at: string;
+  createdAt?: string;
   id: string;
   role: string;
   user_id: string;

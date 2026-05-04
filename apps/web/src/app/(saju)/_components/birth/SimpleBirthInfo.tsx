@@ -9,6 +9,7 @@ import {
 } from "@/src/app/types/fortune";
 import { getBirthTimeLabel } from "@/src/lib/fortune";
 import { useBirthInfoModalStore } from "@/src/store/modal.store";
+import dayjs from "dayjs";
 
 export default function SimpleBirthInfo({
   initialBirthInfo,
@@ -22,7 +23,7 @@ export default function SimpleBirthInfo({
   return (
     <div className="flex justify-center items-center text-xs">
       {initialBirthInfo?.birthDate &&
-        initialBirthInfo.birthDate.replaceAll("-", "/")}
+        dayjs(initialBirthInfo.birthDate).format("YY/MM/DD")}
       {initialBirthInfo?.calendarType &&
         ` ${BirthCalendarLabels[initialBirthInfo.calendarType]}`}
       {initialBirthInfo?.birthTime &&

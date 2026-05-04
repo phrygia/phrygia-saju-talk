@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import { useChat } from "@ai-sdk/react";
+import dayjs from "dayjs";
 import {
   type InfiniteData,
   useInfiniteQuery,
@@ -36,7 +37,8 @@ import { BirthInfo } from "@/src/app/types/fortune";
 import RecommendSajuQuestions from "@/src/app/(saju)/_components/saju/RecommendSajuQuestions";
 import { Button } from "@repo/ui/components/button";
 import styles from "./ChatDetail.module.scss";
-
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 interface ChatDetailProps {
   initialMessages: Messages[];
   initialProfile: BirthInfo | null;
@@ -264,6 +266,14 @@ export default function ChatDetail({
     (item) => item.role === "assistant",
   )?.id;
 
+  const getMsgDate = (msg: any): string | undefined =>
+    msg?.created_at ?? msg?.createdAt;
+
+  const getDateKey = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  };
+
   return (
     <>
       <ChatHeader
@@ -285,6 +295,7 @@ export default function ChatDetail({
           <SimpleBirthInfo initialBirthInfo={initialMessages?.[0]?.profile} />
         )}
       </ChatHeader>
+
       <div className="grid grid-rows-[1fr_auto] flex-1 min-h-0 pb-5 md:pb-0">
         <div
           ref={scrollContainerRef}
@@ -326,9 +337,22 @@ export default function ChatDetail({
                   이전 메시지 불러오는 중...
                 </p>
               )}
-              {allMessages.map((message: Messages) => {
+              {allMessages.map((message: Messages, index: number) => {
+                const msgDate = getMsgDate(message);
+                const prevDate = getMsgDate(allMessages[index - 1]);
+                const showDateLabel =
+                  !!msgDate &&
+                  (!prevDate || getDateKey(msgDate) !== getDateKey(prevDate));
+
                 return (
                   <React.Fragment key={message.id}>
+                    {showDateLabel && (
+                      <div className={styles.dateLabel}>
+                        <div>
+                          {dayjs(msgDate).format("YYYY년 M월 D일 ddd요일")}
+                        </div>
+                      </div>
+                    )}
                     {firstAssistantId === message.id && initialProfile && (
                       <SajuWonGukView birthInfo={initialProfile} />
                     )}
@@ -384,6 +408,7 @@ export default function ChatDetail({
             </div>
           )}
         </div>
+
         <div>
           <ChatInput
             value={input}
@@ -398,6 +423,7 @@ export default function ChatDetail({
           />
         </div>
       </div>
+
       <ConfirmModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
