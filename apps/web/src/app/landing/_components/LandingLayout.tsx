@@ -175,6 +175,21 @@ const ORBIT_LABELS: { label: string; style: React.CSSProperties }[] = [
   { label: "Zustand", style: { bottom: "28%", left: "0%" } },
 ];
 
+const GUNGHAP_CATS = [
+  { emoji: "💕", label: "연애", score: 91, color: "var(--fortune-love)" },
+  { emoji: "💍", label: "결혼", score: 85, color: "var(--violet)" },
+  { emoji: "🧬", label: "성격", score: 79, color: "var(--teal)" },
+  { emoji: "💰", label: "재물", score: 82, color: "var(--fortune-wealth)" },
+  { emoji: "💬", label: "소통", score: 88, color: "var(--blue)" },
+  { emoji: "⚡", label: "갈등", score: 42, color: "var(--rose)" },
+];
+
+const GUNGHAP_WELL_MATCHED = [
+  "수생목(水生木) — 임수의 차분함이 정화의 열정에 좋은 자양분",
+  "음양 균형 — 양간(壬)과 음간(丁)의 안정적 조화",
+  "오행 보완 — 수·화의 상반된 기운이 서로를 채워줌",
+];
+
 const QUESTIONS = [
   {
     title: "💰 재물 · 직장운",
@@ -264,9 +279,9 @@ export default function LandingLayout() {
           </Link>
         </div>
         <ul className={styles.navList}>
-          {["기능", "사용방법", "미리보기", "기술"].map((label, i) => (
+          {["기능", "사용방법", "미리보기", "궁합", "기술"].map((label, i) => (
             <li key={label}>
-              <a href={["#features", "#how", "#demo", "#tech"][i]}>{label}</a>
+              <a href={["#features", "#how", "#demo", "#gunghap-preview", "#tech"][i]}>{label}</a>
             </li>
           ))}
         </ul>
@@ -561,6 +576,136 @@ export default function LandingLayout() {
                 사주에 대해 무엇이든 물어보세요...
               </span>
               <div className={styles.sendMock}>→</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gunghap-preview" className={styles.gunghapSection}>
+        <div className={styles.gunghapInner}>
+          <div className={`${styles.gunghapText} ${styles.reveal}`}>
+            <div className={styles.sectionEyebrow}>Couple Compatibility</div>
+            <h2 className={styles.sectionTitle}>
+              커플 궁합
+              <br />
+              AI 분석
+            </h2>
+            <p className={styles.sectionBody} style={{ marginTop: "1rem" }}>
+              두 사람의 사주를 입력하면 AI가 일간(日干) 합충과 오행 상생·상극
+              관계를 분석해 6가지 궁합 점수와 맞춤 조언을 제공합니다.
+            </p>
+            <ul className={styles.gunghapFeats}>
+              {GUNGHAP_WELL_MATCHED.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+              <li>오래가기 위한 구체적 실천 조언 제공</li>
+            </ul>
+          </div>
+
+          <div className={`${styles.gunghapCard} ${styles.reveal}`}>
+            <div className={styles.demoCardLabel}>커플 궁합 · Compatibility</div>
+
+            {/* 두 사람 */}
+            <div className={styles.ghPersonsRow}>
+              <div className={styles.ghPerson}>
+                <div
+                  className={styles.ghIlganBadge}
+                  style={{
+                    background: "rgba(96,165,250,0.12)",
+                    borderColor: "rgba(96,165,250,0.3)",
+                    color: "var(--blue)",
+                  }}
+                >
+                  壬
+                </div>
+                <div className={styles.ghName}>임수 (壬水)</div>
+                <div className={styles.ghElement}>수(水) 강</div>
+              </div>
+
+              <div className={styles.ghVs}>💕</div>
+
+              <div className={styles.ghPerson}>
+                <div
+                  className={styles.ghIlganBadge}
+                  style={{
+                    background: "rgba(244,114,182,0.12)",
+                    borderColor: "rgba(244,114,182,0.3)",
+                    color: "var(--rose)",
+                  }}
+                >
+                  丁
+                </div>
+                <div className={styles.ghName}>정화 (丁火)</div>
+                <div className={styles.ghElement}>화(火) 강</div>
+              </div>
+            </div>
+
+            {/* 점수 링 */}
+            <div className={styles.ghScoreWrap}>
+              <svg width="118" height="118" viewBox="0 0 100 100">
+                <defs>
+                  <linearGradient id="ghGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#f472b6" />
+                    <stop offset="100%" stopColor="#7c5cfc" />
+                  </linearGradient>
+                </defs>
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.06)"
+                  strokeWidth="7"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke="url(#ghGrad)"
+                  strokeWidth="7"
+                  strokeDasharray="251.3"
+                  strokeDashoffset="30"
+                  strokeLinecap="round"
+                  transform="rotate(-90 50 50)"
+                />
+              </svg>
+              <div className={styles.ghScoreInner}>
+                <div className={styles.ghScoreNum}>88</div>
+                <div className={styles.ghGrade}>천운지합</div>
+              </div>
+            </div>
+
+            {/* 카테고리 점수 */}
+            <div className={styles.ghCats}>
+              {GUNGHAP_CATS.map((cat) => (
+                <div key={cat.label} className={styles.fScoreRow}>
+                  <span className={styles.fScoreEmoji}>{cat.emoji}</span>
+                  <span className={styles.fScoreLabel}>{cat.label}</span>
+                  <div className={styles.fBarWrap}>
+                    <div
+                      className={styles.fBar}
+                      data-w={cat.score}
+                      style={{
+                        background: cat.color,
+                        boxShadow: `0 0 6px ${cat.color}`,
+                      }}
+                    />
+                  </div>
+                  <span className={styles.fScoreNum} style={{ color: cat.color }}>
+                    {cat.score}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* 한줄 조언 */}
+            <div className={styles.aiBox} style={{ marginTop: "1.2rem" }}>
+              <span className={styles.aiLabel}>✦ AI 종합 조언</span>
+              <p className={styles.aiText}>
+                임수(壬水)와 정화(丁火)는 천간합(天干合)을 이루는 최고의
+                인연입니다. 서로의 다름을 인정하며 함께 성장해 나가세요.
+              </p>
             </div>
           </div>
         </div>

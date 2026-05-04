@@ -5,7 +5,7 @@ import React, { useEffect, useState, useId } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, z } from "zod";
+import { z } from "zod";
 import { cn } from "@repo/ui/lib/utils";
 import { Select } from "@repo/ui/components/select";
 import { Button } from "@repo/ui/components/button";
@@ -194,7 +194,7 @@ export default function BirthInfoForm({
       setValue("birthTime", initialInfo.birthTime);
     }
     if (initialInfo?.name) {
-      setValue("birthTime", initialInfo.name);
+      setValue("name", initialInfo.name);
     }
   }, [initialInfo]);
 
