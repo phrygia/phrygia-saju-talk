@@ -3,7 +3,9 @@
 > AI 기반 사주 상담 챗봇 서비스
 
 [웹사이트: https://phrygia-saju-talk-web.vercel.app/landing](https://phrygia-saju-talk-web.vercel.app/landing)
+
 [스토리북: https://phrygia-saju-talk-web-z888.vercel.app/](https://phrygia-saju-talk-web-z888.vercel.app/)
+
 ![image](./apps/web/public/web-screenshot.png)
 
 사주팔자(四柱八字)와 AI를 결합한 개인 맞춤형 운세 상담 플랫폼입니다.  
@@ -61,29 +63,102 @@
 ```
 saju-talk/
 ├── apps/
-│   └── web/                    # Next.js 메인 앱
+│   └── web/                        # Next.js 메인 앱
+│       ├── public/                 # 정적 파일
 │       └── src/
-│           ├── app/            # App Router 페이지
-│           │   ├── (saju)/     # 채팅 레이아웃 그룹
-│           │   │   ├── page.tsx           # 홈 (새 채팅)
-│           │   │   ├── chat/[id]/         # 대화 상세
-│           │   │   ├── today/[date]        # 오늘의 운세
-│           │   │   ├── chat/search/       # 상담 검색
-│           │   │   └── saju/              # 만세력 페이지
-│           │   ├── api/
-│           │   │   ├── chat/              # AI 스트리밍 엔드포인트
-│           │   │   ├── fortune/           # 운세 생성 엔드포인트
-│           │   │   ├── gunghap/           # 궁합 생성 엔드포인트
-│           │   │   └── manseryeok/        # 만세력 생성 엔드포인트
-│           │   ├── login/
-│               │   └── reset-password/    # 비밀번호 재설정
-│           ├── components/     # 공유 컴포넌트
-│           ├── store/          # Zustand 스토어
-│           ├── lib/            # 유틸리티 (사주 계산, Supabase 클라이언트 등)
-│           └── constants/      # 천간·지지·오행 등 상수
+│           ├── app/                # App Router
+│           │   ├── (saju)/         # 메인 서비스 레이아웃 그룹
+│           │   │   ├── layout.tsx
+│           │   │   ├── page.tsx                    # 홈 (새 채팅)
+│           │   │   ├── not-found.tsx
+│           │   │   ├── chat/[id]/page.tsx           # 대화 상세
+│           │   │   ├── chat/search/page.tsx         # 상담 검색
+│           │   │   ├── today/[date]/page.tsx        # 오늘의 운세
+│           │   │   ├── gunghap/page.tsx             # 커플 궁합
+│           │   │   ├── saju/page.tsx                # 만세력
+│           │   │   ├── user/edit/page.tsx           # 회원 정보 수정
+│           │   │   ├── _actions/                   # Server Actions
+│           │   │   │   ├── conversation.ts
+│           │   │   │   └── user.ts
+│           │   │   ├── _components/                # 기능별 컴포넌트
+│           │   │   │   ├── birth/                  # 사주 정보 입력 폼·모달
+│           │   │   │   ├── detail/                 # 채팅 상세 (메시지·입력창)
+│           │   │   │   ├── gunghap/                # 궁합 대시보드·폼·카드
+│           │   │   │   ├── layout/                 # 채팅 헤더·레이아웃
+│           │   │   │   ├── manseryeok/             # 만세력 테이블·차트·모달
+│           │   │   │   ├── saju/                   # 사주 원국·추천 질문
+│           │   │   │   ├── search/                 # 채팅 검색
+│           │   │   │   ├── sidebar/                # 사이드바·채팅 목록
+│           │   │   │   ├── today/                  # 운세 대시보드·공유 카드
+│           │   │   │   └── user/                   # 회원 정보 수정 폼
+│           │   │   ├── _constants/                 # 기능별 상수
+│           │   │   │   ├── gunghap.ts
+│           │   │   │   ├── manseryeok.ts
+│           │   │   │   └── saju.ts
+│           │   │   ├── _hooks/
+│           │   │   │   └── useSearchHistory.ts
+│           │   │   └── _lib/                       # 기능별 유틸·서비스
+│           │   │       ├── manseryeok.ts
+│           │   │       ├── saju.ts
+│           │   │       └── services/message.ts
+│           │   ├── api/                            # Route Handlers
+│           │   │   ├── chat/route.ts               # AI 스트리밍 채팅
+│           │   │   ├── fortune/today/route.ts      # 오늘의 운세 생성
+│           │   │   ├── gunghap/route.ts            # 궁합 분석 생성
+│           │   │   ├── manseryeok/route.ts         # 만세력 생성
+│           │   │   └── user/route.ts               # 회원 정보
+│           │   ├── auth/callback/route.ts          # Supabase OAuth 콜백
+│           │   ├── landing/                        # 랜딩 페이지
+│           │   │   └── _components/LandingLayout.tsx
+│           │   ├── login/                          # 로그인·회원가입·비밀번호
+│           │   │   ├── _components/               # LoginForm·SignupForm·ForgotPasswordForm·ResetPasswordForm
+│           │   │   ├── page.tsx
+│           │   │   └── reset-password/page.tsx
+│           │   ├── types/                          # 도메인 타입 정의
+│           │   │   ├── api.ts
+│           │   │   ├── conversation.ts
+│           │   │   ├── fortune.ts
+│           │   │   ├── gunghap.ts
+│           │   │   ├── manseryeok.ts
+│           │   │   ├── message.ts
+│           │   │   └── user.ts
+│           │   ├── globals.css
+│           │   ├── layout.tsx                      # 루트 레이아웃
+│           │   └── not-found.tsx
+│           ├── components/                         # 전역 공유 컴포넌트
+│           │   ├── common/                         # Logo·NotFound·StarCanvas
+│           │   ├── providers/ToastClient.tsx
+│           │   ├── ui/                             # ConfirmModal·PasswordStrengthIndicator
+│           │   └── ThemeToggle.tsx
+│           ├── constants/                          # 전역 상수
+│           │   ├── fortune.ts
+│           │   ├── pagination.ts
+│           │   └── saju.ts
+│           ├── hooks/
+│           │   └── useDropdown.ts
+│           ├── lib/                                # 전역 유틸리티
+│           │   ├── ai.ts                           # Gemini 클라이언트
+│           │   ├── fortune.ts
+│           │   ├── getUser.ts
+│           │   ├── password.ts
+│           │   ├── sajuCalc.ts                     # 사주 원국 계산 엔진
+│           │   └── supabase/                       # client·server
+│           ├── middleware.ts                       # 인증 미들웨어
+│           ├── store/                              # Zustand 스토어
+│           │   ├── chat.store.ts
+│           │   ├── modal.store.ts
+│           │   ├── sidebar.store.ts
+│           │   └── user.store.ts
+│           └── utils/
+│               └── provider.tsx                   # TanStack Query Provider
 │
 └── packages/
-    └── ui/                     # 공용 UI 컴포넌트 라이브러리 (Storybook)
+    ├── ui/                         # 공용 UI 컴포넌트 라이브러리
+    │   ├── .storybook/             # Storybook 설정
+    │   └── src/
+    │       └── components/         # Button·Input·Label·Menu·Modal·Select·Skeleton·Spinner·StarBurstButton
+    ├── eslint-config/              # 공용 ESLint 설정
+    └── typescript-config/          # 공용 TypeScript 설정
 ```
 
 ---
@@ -96,7 +171,13 @@ saju-talk/
 - **만세력 월별 캐시**: AI가 생성한 만세력 데이터를 Supabase에 월 단위로 저장. 동일 월 재접속 시 DB에서 즉시 반환해 API 비용 절감
 - **운세 이미지 저장**: `html-to-image` 라이브러리로 운세 카드를 JPG로 내보내기
 - **모노레포**: Turborepo로 앱과 UI 라이브러리를 단일 레포에서 관리
-- **불필요한 리렌더링 최적화**: Zustand 셀렉터 + `React.memo`로 레이아웃 전체 리렌더링 방지
+- **서버/클라이언트 레이어 분리**
+  | 레이어 | 위치 | 역할 |
+  |---|---|---|
+  | Server Action | `_actions/` | DB 쓰기 (대화 저장·삭제) |
+  | Route Handler | `api/*/route.ts` | AI 호출·Supabase 캐시 조회 |
+  | Zustand | `store/` | 클라이언트 UI 상태만 |
+  | TanStack Query | `utils/provider.tsx` | 서버 데이터 캐시 |
 
 ---
 
