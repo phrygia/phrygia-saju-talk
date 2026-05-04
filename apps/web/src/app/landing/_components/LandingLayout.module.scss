@@ -304,7 +304,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+  font-family: var(--font-serif-kr), var(--font-sans), serif;
   font-size: 1.1rem;
   font-weight: 600;
   opacity: 0;
@@ -690,7 +690,7 @@
   margin-bottom: 1.1rem;
 }
 .featName {
-  font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+  font-family: var(--font-serif-kr), var(--font-sans), serif;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--foreground);
@@ -787,7 +787,7 @@
   margin-bottom: 1rem;
 }
 .stepName {
-  font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+  font-family: var(--font-serif-kr), var(--font-sans), serif;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--foreground);
@@ -959,7 +959,7 @@
   }
 }
 .hanja {
-  font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+  font-family: var(--font-serif-kr), var(--font-sans), serif;
   font-size: 1.4rem !important;
   font-weight: 600 !important;
 }
@@ -1025,7 +1025,7 @@
   margin-bottom: 0.5rem;
 }
 .aiText {
-  font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+  font-family: var(--font-serif-kr), var(--font-sans), serif;
   font-size: 0.75rem;
   color: var(--foreground-sub);
   line-height: 1.8;
@@ -1062,7 +1062,7 @@
     color: rgba(225, 210, 255, 0.88);
     border: 1px solid rgba(124, 92, 252, 0.18);
     border-radius: 16px 16px 16px 4px;
-    font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+    font-family: var(--font-serif-kr), var(--font-sans), serif;
     font-weight: 300;
     position: relative;
     &::before {
@@ -1221,7 +1221,7 @@
   text-align: center;
 }
 .ringHanja {
-  font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+  font-family: var(--font-serif-kr), var(--font-sans), serif;
   font-size: 2.2rem;
   font-weight: 600;
   background: linear-gradient(135deg, #e8e0ff, #a78bfa 50%, #f0c060);
@@ -1356,7 +1356,7 @@
 
 .ctaBgHanja {
   position: absolute;
-  font-family: var(--font-serif-kr), "Noto Serif KR", serif;
+  font-family: var(--font-serif-kr), var(--font-sans), serif;
   font-size: 18rem;
   font-weight: 700;
   color: transparent;

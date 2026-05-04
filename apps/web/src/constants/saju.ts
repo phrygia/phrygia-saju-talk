@@ -57,18 +57,20 @@ export const JIJI_HANJA = [
 export const OHAENG: Record<
   string,
   {
+    hanja: string;
+    hangul: string;
     name: string;
     color: string;
   }
 > = {
-  갑: { name: "목(木)", color: "#22c55e" },
-  을: { name: "목(木)", color: "#22c55e" },
-  병: { name: "화(火)", color: "#ef4444" },
-  정: { name: "화(火)", color: "#ef4444" },
-  무: { name: "토(土)", color: "#eab308" },
-  기: { name: "토(土)", color: "#eab308" },
-  경: { name: "금(金)", color: "#94a3b8" },
-  신: { name: "금(金)", color: "#94a3b8" },
-  임: { name: "수(水)", color: "#3b82f6" },
-  계: { name: "수(水)", color: "#3b82f6" },
+  갑: { hanja: "甲", hangul: "갑", name: "목(木)", color: "#22c55e" },
+  을: { hanja: "乙", hangul: "을", name: "목(木)", color: "#22c55e" },
+  병: { hanja: "丙", hangul: "병", name: "화(火)", color: "#ef4444" },
+  정: { hanja: "丁", hangul: "정", name: "화(火)", color: "#ef4444" },
+  무: { hanja: "戊", hangul: "무", name: "토(土)", color: "#eab308" },
+  기: { hanja: "己", hangul: "기", name: "토(土)", color: "#eab308" },
+  경: { hanja: "庚", hangul: "경", name: "금(金)", color: "#94a3b8" },
+  신: { hanja: "辛", hangul: "신", name: "금(金)", color: "#94a3b8" },
+  임: { hanja: "壬", hangul: "임", name: "수(水)", color: "#3b82f6" },
+  계: { hanja: "癸", hangul: "계", name: "수(水)", color: "#3b82f6" },
 };

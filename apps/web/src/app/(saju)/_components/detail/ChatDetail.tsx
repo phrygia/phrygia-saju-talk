@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import { useChat } from "@ai-sdk/react";
 import {
   type InfiniteData,

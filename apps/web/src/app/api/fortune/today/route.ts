@@ -10,10 +10,10 @@ import {
   BirthCalendarLabels,
   BirthGenderLabels,
   birthInfoSchema,
+  BirthTimeLabels,
   type BirthInfo,
   type DailyFortune,
 } from "@/src/app/types/fortune";
-import { BirthTimeLabels } from "@/src/app/types/fortune";
 
 const fortuneCategorySchema = z.object({
   score: z.number().int().min(1).max(100),
