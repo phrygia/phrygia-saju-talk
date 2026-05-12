@@ -52,7 +52,7 @@ export default function ChatIndex({
 
   const { data: todayFortuneData } = useQuery({
     queryKey: [
-      "todayFortune",
+      "todayFortunePreview",
       today,
       birthInfo?.gender,
       birthInfo?.calendarType,

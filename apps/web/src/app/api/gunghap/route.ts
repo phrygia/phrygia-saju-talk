@@ -272,25 +272,21 @@ export async function POST(
     const userId = user.id;
 
     after(async () => {
-      try {
-        await supabase.from(gunghapTableName).insert({
-          user_id: userId,
-          my_birth_date: myInfo.birthDate,
-          my_birth_time: myInfo.birthTime,
-          my_gender: myInfo.gender,
-          my_calendar_type: myInfo.calendarType,
-          my_name: myInfo.name ?? null,
-          partner_birth_date: partnerInfo.birthDate,
-          partner_birth_time: partnerInfo.birthTime,
-          partner_gender: partnerInfo.gender,
-          partner_calendar_type: partnerInfo.calendarType,
-          partner_name: partnerInfo.name ?? null,
-          result,
-          analyzed_date: today,
-        });
-      } catch (err) {
-        console.error("[gunghap] DB 저장 실패:", err);
-      }
+      await supabase.from(gunghapTableName).insert({
+        user_id: userId,
+        my_birth_date: myInfo.birthDate,
+        my_birth_time: myInfo.birthTime,
+        my_gender: myInfo.gender,
+        my_calendar_type: myInfo.calendarType,
+        my_name: myInfo.name ?? null,
+        partner_birth_date: partnerInfo.birthDate,
+        partner_birth_time: partnerInfo.birthTime,
+        partner_gender: partnerInfo.gender,
+        partner_calendar_type: partnerInfo.calendarType,
+        partner_name: partnerInfo.name ?? null,
+        result,
+        analyzed_date: today,
+      });
     });
 
     return NextResponse.json({ success: true, data: result }, { status: 200 });

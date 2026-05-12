@@ -115,9 +115,8 @@ async function getTodayFortune(
   userId: string,
 ): Promise<ApiResponse<DailyFortune>> {
   const supabase = await createClient();
-  const todayDate = dayjs(date).format("YYYY-MM-DD");
 
-  const dbResult = await getTodayDataFromDB(todayDate, userId);
+  const dbResult = await getTodayDataFromDB(date, userId);
   if (dbResult.success) return dbResult;
 
   const todayLabel = dayjs().locale("ko").format("YYYY년 M월 D일 dddd");
@@ -140,7 +139,7 @@ async function getTodayFortune(
     await supabase.from(fortunesTableName).upsert(
       {
         user_id: userId,
-        fortune_date: todayDate,
+        fortune_date: date,
         birth_date: birthInfo.birthDate,
         fortune_data: parsed.data,
       },

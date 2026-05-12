@@ -1,13 +1,17 @@
 "use client";
 
-import { Suspense, use } from "react";
+import { Suspense, use, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useUserStore } from "@/src/store/user.store";
 import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
-import FortuneDashboardContent from "@/src/app/(saju)/_components/today/FortuneDashboardContent";
 import BirthInfoForm from "@/src/app/(saju)/_components/birth/BirthInfoForm";
 import FortuneDashboardSkeleton from "@/src/app/(saju)/_components/today/FortuneDashboardSkeleton";
 import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
+import dayjs from "dayjs";
+
+const FortuneDashboardContent = lazy(
+  () => import("@/src/app/(saju)/_components/today/FortuneDashboardContent"),
+);
 
 export default function FortuneDashboard({
   params,
@@ -35,10 +39,11 @@ export default function FortuneDashboard({
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       resetKeys={[
-        birthInfo!.gender,
-        birthInfo!.calendarType,
-        birthInfo!.birthDate,
-        birthInfo!.birthTime,
+        dayjs(date).format("YYYY-M-D"),
+        birthInfo.gender,
+        birthInfo.calendarType,
+        birthInfo.birthDate,
+        birthInfo.birthTime,
       ]}
     >
       <Suspense fallback={<FortuneDashboardSkeleton date={date} />}>
