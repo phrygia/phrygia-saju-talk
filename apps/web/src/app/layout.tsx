@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   DM_Serif_Display,
   Noto_Sans_KR,
@@ -7,6 +7,13 @@ import {
 import ToastClient from "@/src/components/providers/ToastClient";
 import Providers from "@/src/utils/provider";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
