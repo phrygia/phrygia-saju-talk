@@ -58,111 +58,6 @@
 
 ---
 
-## 프로젝트 구조
-
-```
-saju-talk/
-├── apps/
-│   └── web/                        # Next.js 메인 앱
-│       ├── public/                 # 정적 파일
-│       └── src/
-│           ├── app/                # App Router
-│           │   ├── (saju)/         # 메인 서비스 레이아웃 그룹
-│           │   │   ├── layout.tsx
-│           │   │   ├── page.tsx                    # 홈 (새 채팅)
-│           │   │   ├── not-found.tsx
-│           │   │   ├── chat/[id]/page.tsx           # 대화 상세
-│           │   │   ├── chat/search/page.tsx         # 상담 검색
-│           │   │   ├── today/[date]/page.tsx        # 오늘의 운세
-│           │   │   ├── gunghap/page.tsx             # 커플 궁합
-│           │   │   ├── saju/page.tsx                # 만세력
-│           │   │   ├── user/edit/page.tsx           # 회원 정보 수정
-│           │   │   ├── _actions/                   # Server Actions
-│           │   │   │   ├── conversation.ts
-│           │   │   │   └── user.ts
-│           │   │   ├── _components/                # 기능별 컴포넌트
-│           │   │   │   ├── birth/                  # 사주 정보 입력 폼·모달
-│           │   │   │   ├── detail/                 # 채팅 상세 (메시지·입력창)
-│           │   │   │   ├── gunghap/                # 궁합 대시보드·폼·카드
-│           │   │   │   ├── layout/                 # 채팅 헤더·레이아웃
-│           │   │   │   ├── manseryeok/             # 만세력 테이블·차트·모달
-│           │   │   │   ├── saju/                   # 사주 원국·추천 질문
-│           │   │   │   ├── search/                 # 채팅 검색
-│           │   │   │   ├── sidebar/                # 사이드바·채팅 목록
-│           │   │   │   ├── today/                  # 운세 대시보드·공유 카드
-│           │   │   │   └── user/                   # 회원 정보 수정 폼
-│           │   │   ├── _constants/                 # 기능별 상수
-│           │   │   │   ├── gunghap.ts
-│           │   │   │   ├── manseryeok.ts
-│           │   │   │   └── saju.ts
-│           │   │   ├── _hooks/
-│           │   │   │   └── useSearchHistory.ts
-│           │   │   └── _lib/                       # 기능별 유틸·서비스
-│           │   │       ├── manseryeok.ts
-│           │   │       ├── saju.ts
-│           │   │       └── services/message.ts
-│           │   ├── api/                            # Route Handlers
-│           │   │   ├── chat/route.ts               # AI 스트리밍 채팅
-│           │   │   ├── fortune/today/route.ts      # 오늘의 운세 생성
-│           │   │   ├── gunghap/route.ts            # 궁합 분석 생성
-│           │   │   ├── manseryeok/route.ts         # 만세력 생성
-│           │   │   └── user/route.ts               # 회원 정보
-│           │   ├── auth/callback/route.ts          # Supabase OAuth 콜백
-│           │   ├── landing/                        # 랜딩 페이지
-│           │   │   └── _components/LandingLayout.tsx
-│           │   ├── login/                          # 로그인·회원가입·비밀번호
-│           │   │   ├── _components/               # LoginForm·SignupForm·ForgotPasswordForm·ResetPasswordForm
-│           │   │   ├── page.tsx
-│           │   │   └── reset-password/page.tsx
-│           │   ├── types/                          # 도메인 타입 정의
-│           │   │   ├── api.ts
-│           │   │   ├── conversation.ts
-│           │   │   ├── fortune.ts
-│           │   │   ├── gunghap.ts
-│           │   │   ├── manseryeok.ts
-│           │   │   ├── message.ts
-│           │   │   └── user.ts
-│           │   ├── globals.css
-│           │   ├── layout.tsx                      # 루트 레이아웃
-│           │   └── not-found.tsx
-│           ├── components/                         # 전역 공유 컴포넌트
-│           │   ├── common/                         # Logo·NotFound·StarCanvas
-│           │   ├── providers/ToastClient.tsx
-│           │   ├── ui/                             # ConfirmModal·PasswordStrengthIndicator
-│           │   └── ThemeToggle.tsx
-│           ├── constants/                          # 전역 상수
-│           │   ├── fortune.ts
-│           │   ├── pagination.ts
-│           │   └── saju.ts
-│           ├── hooks/
-│           │   └── useDropdown.ts
-│           ├── lib/                                # 전역 유틸리티
-│           │   ├── ai.ts                           # Gemini 클라이언트
-│           │   ├── fortune.ts
-│           │   ├── getUser.ts
-│           │   ├── password.ts
-│           │   ├── sajuCalc.ts                     # 사주 원국 계산 엔진
-│           │   └── supabase/                       # client·server
-│           ├── middleware.ts                       # 인증 미들웨어
-│           ├── store/                              # Zustand 스토어
-│           │   ├── chat.store.ts
-│           │   ├── modal.store.ts
-│           │   ├── sidebar.store.ts
-│           │   └── user.store.ts
-│           └── utils/
-│               └── provider.tsx                   # TanStack Query Provider
-│
-└── packages/
-    ├── ui/                         # 공용 UI 컴포넌트 라이브러리
-    │   ├── .storybook/             # Storybook 설정
-    │   └── src/
-    │       └── components/         # Button·Input·Label·Menu·Modal·Select·Skeleton·Spinner·StarBurstButton
-    ├── eslint-config/              # 공용 ESLint 설정
-    └── typescript-config/          # 공용 TypeScript 설정
-```
-
----
-
 ## 아키텍처 특징
 
 - **SSR + 쿠키 기반 사이드바 상태**: 서버에서 쿠키를 읽어 초기 렌더링 시 layout shift 없이 사이드바 상태 복원
@@ -195,6 +90,7 @@ saju-talk/
 | AI 만세력 서비스   | Gemini 프롬프트 작성, 응답 파싱, Supabase 월별 캐시 로직                    |
 | UI 컴포넌트        | 사주팔자 테이블, 오행/십신 분포, 대운·세운·월운 테이블, 십신·용어 설명 모달 |
 | 스타일             | SCSS Module 기반 다크/라이트 테마 대응                                      |
+| 개인정보처리방침   |
 
 ---
 
@@ -253,6 +149,113 @@ pnpm build
 | Root Directory   | `.` (루트)                               |
 | Build Command    | `pnpm --filter @repo/ui build-storybook` |
 | Output Directory | `packages/ui/storybook-static`           |
+
+---
+
+## 프로젝트 구조
+
+```
+saju-talk/
+├── apps/
+│   └── web/                        # Next.js 메인 앱
+│       ├── public/                 # 정적 파일
+│       └── src/
+│           ├── app/                # App Router
+│           │   ├── (saju)/         # 메인 서비스 레이아웃 그룹
+│           │   │   ├── layout.tsx
+│           │   │   ├── page.tsx                    # 홈 (새 채팅)
+│           │   │   ├── not-found.tsx
+│           │   │   ├── chat/[id]/page.tsx           # 대화 상세
+│           │   │   ├── chat/search/page.tsx         # 상담 검색
+│           │   │   ├── today/[date]/page.tsx        # 오늘의 운세
+│           │   │   ├── gunghap/page.tsx             # 커플 궁합
+│           │   │   ├── saju/page.tsx                # 만세력
+│           │   │   ├── user/edit/page.tsx           # 회원 정보 수정
+│           │   │   ├── _actions/                   # Server Actions
+│           │   │   │   ├── conversation.ts
+│           │   │   │   └── user.ts
+│           │   │   ├── _components/                # 기능별 컴포넌트
+│           │   │   │   ├── birth/                  # 사주 정보 입력 폼·모달
+│           │   │   │   ├── detail/                 # 채팅 상세 (메시지·입력창)
+│           │   │   │   ├── gunghap/                # 궁합 대시보드·폼·카드
+│           │   │   │   ├── layout/                 # 채팅 헤더·레이아웃
+│           │   │   │   ├── manseryeok/             # 만세력 테이블·차트·모달
+│           │   │   │   ├── saju/                   # 사주 원국·추천 질문
+│           │   │   │   ├── search/                 # 채팅 검색
+│           │   │   │   ├── sidebar/                # 사이드바·채팅 목록
+│           │   │   │   ├── today/                  # 운세 대시보드·공유 카드
+│           │   │   │   └── user/                   # 회원 정보 수정 폼
+│           │   │   ├── _constants/                 # 기능별 상수
+│           │   │   │   ├── gunghap.ts
+│           │   │   │   ├── manseryeok.ts
+│           │   │   │   └── saju.ts
+│           │   │   ├── _hooks/
+│           │   │   │   └── useSearchHistory.ts
+│           │   │   └── _lib/                       # 기능별 유틸·서비스
+│           │   │       ├── manseryeok.ts
+│           │   │       ├── saju.ts
+│           │   │       └── services/message.ts
+│           │   ├── api/                            # Route Handlers
+│           │   │   ├── chat/route.ts               # AI 스트리밍 채팅
+│           │   │   ├── fortune/today/route.ts      # 오늘의 운세 생성
+│           │   │   ├── gunghap/route.ts            # 궁합 분석 생성
+│           │   │   ├── manseryeok/route.ts         # 만세력 생성
+│           │   │   └── user/route.ts               # 회원 정보
+│           │   ├── auth/callback/route.ts          # Supabase OAuth 콜백
+│           │   ├── landing/                        # 랜딩 페이지
+│           │   │   └── _components/LandingLayout.tsx
+│           │   ├── login/                          # 로그인·회원가입·비밀번호
+│           │   │   ├── _components/               # LoginForm·SignupForm·ForgotPasswordForm·ResetPasswordForm
+│           │   │   ├── page.tsx
+│           │   │   └── reset-password/page.tsx
+│           │   ├── privacy-policy/                        # 개인정보처리방침
+│           │   │   └── page.tsx
+│           │   ├── types/                          # 도메인 타입 정의
+│           │   │   ├── api.ts
+│           │   │   ├── conversation.ts
+│           │   │   ├── fortune.ts
+│           │   │   ├── gunghap.ts
+│           │   │   ├── manseryeok.ts
+│           │   │   ├── message.ts
+│           │   │   └── user.ts
+│           │   ├── globals.css
+│           │   ├── layout.tsx                      # 루트 레이아웃
+│           │   └── not-found.tsx
+│           ├── components/                         # 전역 공유 컴포넌트
+│           │   ├── common/                         # Logo·NotFound·StarCanvas
+│           │   ├── providers/ToastClient.tsx
+│           │   ├── ui/                             # ConfirmModal·PasswordStrengthIndicator
+│           │   └── ThemeToggle.tsx
+│           ├── constants/                          # 전역 상수
+│           │   ├── fortune.ts
+│           │   ├── pagination.ts
+│           │   └── saju.ts
+│           ├── hooks/
+│           │   └── useDropdown.ts
+│           ├── lib/                                # 전역 유틸리티
+│           │   ├── ai.ts                           # Gemini 클라이언트
+│           │   ├── fortune.ts
+│           │   ├── getUser.ts
+│           │   ├── password.ts
+│           │   ├── sajuCalc.ts                     # 사주 원국 계산 엔진
+│           │   └── supabase/                       # client·server
+│           ├── middleware.ts                       # 인증 미들웨어
+│           ├── store/                              # Zustand 스토어
+│           │   ├── chat.store.ts
+│           │   ├── modal.store.ts
+│           │   ├── sidebar.store.ts
+│           │   └── user.store.ts
+│           └── utils/
+│               └── provider.tsx                   # TanStack Query Provider
+│
+└── packages/
+    ├── ui/                         # 공용 UI 컴포넌트 라이브러리
+    │   ├── .storybook/             # Storybook 설정
+    │   └── src/
+    │       └── components/         # Button·Input·Label·Menu·Modal·Select·Skeleton·Spinner·StarBurstButton
+    ├── eslint-config/              # 공용 ESLint 설정
+    └── typescript-config/          # 공용 TypeScript 설정
+```
 
 ---
 

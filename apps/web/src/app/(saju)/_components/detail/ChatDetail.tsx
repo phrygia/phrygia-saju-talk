@@ -39,6 +39,7 @@ import { Button } from "@repo/ui/components/button";
 import styles from "./ChatDetail.module.scss";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
+
 interface ChatDetailProps {
   initialMessages: Messages[];
   initialProfile: BirthInfo | null;

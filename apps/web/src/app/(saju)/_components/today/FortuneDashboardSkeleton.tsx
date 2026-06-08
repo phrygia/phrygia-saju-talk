@@ -6,6 +6,7 @@ import { Skeleton } from "@repo/ui/components/skeleton";
 import { Spinner } from "@repo/ui/components/spinner";
 import { cn } from "@repo/ui/lib/utils";
 import styles from "./FortuneDashboardContent.module.scss";
+dayjs.locale("ko");
 
 export default function FortuneDashboardSkeleton({ date }: { date?: string }) {
   return (

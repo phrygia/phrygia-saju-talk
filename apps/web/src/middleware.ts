@@ -35,19 +35,23 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const isAuthPage = request.nextUrl.pathname.startsWith("/login");
+  const isPrivacyPage = request.nextUrl.pathname.startsWith("/privacy-policy");
+  const isLandingPage = request.nextUrl.pathname.startsWith("/landing");
 
-  if (!user && !isAuthPage) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
+  if (!isPrivacyPage && !isLandingPage) {
+    if (!user && !isAuthPage) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
 
-    return NextResponse.redirect(url);
-  }
+      return NextResponse.redirect(url);
+    }
 
-  if (user && isAuthPage) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/";
+    if (user && isAuthPage) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/";
 
-    return NextResponse.redirect(url);
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;
