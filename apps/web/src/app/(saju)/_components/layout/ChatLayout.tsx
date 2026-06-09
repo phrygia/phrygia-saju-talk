@@ -43,7 +43,7 @@ export default function ChatLayout({
 
   return (
     <>
-      <div className="fixed left-0 h-[45px] top-0 w-full flex items-center justify-center bg-red-700 z-100 text-[11px] leading-4 font-semibold text-white">
+      <div className="fixed left-0 h-[45px] top-0 w-full flex items-center justify-center bg-red-700 z-100 text-xs leading-4 font-semibold text-white">
         현재 결제 수단에 문제가 있어 AI 상담에 문제가 발생했습니다. <br />
         최대한 빨리 복구하도록 노력하겠습니다. (26/6/9)
       </div>
