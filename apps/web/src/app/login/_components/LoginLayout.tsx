@@ -23,6 +23,10 @@ export default function LoginLayout({
 
   return (
     <main className={styles.wrapper}>
+      <div className="fixed left-0 bottom-0 w-full p-1.5 bg-red-700 z-100 text-[11px] text-center leading-4 font-semibold">
+        현재 결제 수단에 문제가 있어 AI 상담에 문제가 발생했습니다. <br />
+        최대한 빨리 복구하도록 노력하겠습니다. (26/6/9)
+      </div>
       <nav className="fixed top-4 right-4 z-30">
         <ThemeToggle />
       </nav>

@@ -206,6 +206,17 @@ export default function ChatSidebarContent({
                 }}
               >
                 채팅 기록 삭제
+              </Menu.DropdownItem>{" "}
+              <Menu.Separator />
+              <Menu.DropdownItem
+                danger
+                left="📋"
+                onClick={() => {
+                  router.push("/privacy-policy");
+                  setOpen(false);
+                }}
+              >
+                개인정보처리방침
               </Menu.DropdownItem>
               <Menu.DropdownItem
                 danger

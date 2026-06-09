@@ -123,6 +123,27 @@ export async function POST(req: Request) {
     );
   }
 
+  if (!birthInfo || typeof birthInfo !== "object") {
+    return Response.json(
+      {
+        success: false,
+        message: "Birth information is required for saju consultation.",
+      },
+      { status: 400 },
+    );
+  }
+
+  const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+  if (!apiKey) {
+    return Response.json(
+      {
+        success: false,
+        message: "Server configuration error. Please try again later.",
+      },
+      { status: 500 },
+    );
+  }
+
   const coreMessages = messages as CoreMessage[];
   const latestUserText = getLatestUserText(coreMessages);
   const adaptiveMaxTokens = getAdaptiveMaxTokens(latestUserText);
@@ -130,7 +151,7 @@ export async function POST(req: Request) {
   try {
     const result = await streamText({
       model: createGoogleAi("gemini-2.5-flash"),
-      system: buildPrompt(birthInfo!),
+      system: buildPrompt(birthInfo as BirthInfo),
       messages: coreMessages.slice(-6),
       maxTokens: adaptiveMaxTokens,
       temperature: 0.5,
@@ -143,12 +164,20 @@ export async function POST(req: Request) {
       },
     });
 
-    return result.toDataStreamResponse();
+    return result.toDataStreamResponse({
+      getErrorMessage: (error) => {
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        return errorMessage || "상담 처리 중 오류가 발생했습니다.";
+      },
+    });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
     return Response.json(
       {
         success: false,
-        message: error instanceof Error ? error.message : undefined,
+        message: errorMessage || "상담 처리 중 오류가 발생했습니다.",
       },
       { status: 500 },
     );
