@@ -88,6 +88,10 @@ export default function ChatDetail({
           }
         : undefined,
     },
+    onError: (error: Error) => {
+      toast.error(error.message || "상담 중 오류가 발생했습니다.");
+      setLoading(false);
+    },
     onFinish: async (message: any) => {
       if (conversationId) {
         const result = await saveChatMessage(

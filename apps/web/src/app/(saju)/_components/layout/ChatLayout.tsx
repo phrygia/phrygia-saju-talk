@@ -42,19 +42,25 @@ export default function ChatLayout({
   }, [router, queryClient]);
 
   return (
-    <div className="flex h-screen text-foreground">
-      <Suspense
-        fallback={
-          <aside className="hidden w-65 shrink-0 border-r border-r-sidebar-border bg-tertiary md:flex" />
-        }
-      >
-        <ChatSidebar />
-      </Suspense>
-      <div className="flex flex-1 flex-col min-w-0">
-        <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
-          {children}
-        </main>
+    <>
+      <div className="fixed left-0 h-[45px] top-0 w-full flex items-center justify-center bg-red-700 z-100 text-[11px] leading-4 font-semibold text-white">
+        현재 결제 수단에 문제가 있어 AI 상담에 문제가 발생했습니다. <br />
+        최대한 빨리 복구하도록 노력하겠습니다. (26/6/9)
       </div>
-    </div>
+      <div className="flex h-[calc(100vh-45px)] text-foreground mt-[45px]">
+        <Suspense
+          fallback={
+            <aside className="hidden w-65 shrink-0 border-r border-r-sidebar-border bg-tertiary md:flex" />
+          }
+        >
+          <ChatSidebar />
+        </Suspense>
+        <div className="flex flex-1 flex-col min-w-0">
+          <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
+            {children}
+          </main>
+        </div>
+      </div>
+    </>
   );
 }
