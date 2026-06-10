@@ -1,6 +1,7 @@
 .root {
   padding: 0 24px 20px;
   backdrop-filter: blur(12px);
+  background-color: var(--background);
 
   @media (max-width: 767px) {
     position: fixed;

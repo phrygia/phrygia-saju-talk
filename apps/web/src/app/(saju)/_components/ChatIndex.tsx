@@ -84,10 +84,10 @@ export default function ChatIndex({
           <SimpleBirthInfo initialBirthInfo={birthInfo} changeable />
         )}
       </ChatHeader>
-      <div className="grid grid-rows-[1fr_auto] flex-1 min-h-0 pb-20 md:pb-0">
-        <div className="min-h-0 overflow-y-auto relative">
+      <div className="flex flex-col flex-1 pb-20 md:pb-0">
+        <div className="flex-1 relative">
           <div className="px-5 py-8 mx-auto max-w-full sm:max-w-xl">
-            <div className="text-center space-y-3 fade-in">
+            <div className="text-center space-y-3">
               <div className="w-[88px] h-[88px] mx-auto flex items-center justify-center rounded-3xl bg-[linear-gradient(135deg,#6366f1_0%,#a78bfa_60%,#f0c060_100%)] border border-[rgba(124,92,252,0.25)] shadow-[0_0_20px_rgba(124,92,252,0.2)] text-[40px] animate-[orbFloat_4s_ease-in-out_infinite]">
                 🔮
               </div>
@@ -139,7 +139,7 @@ export default function ChatIndex({
             />
           </div>
         </div>
-        <div>
+        <div className="sticky bottom-0 z-20">
           <ChatInput
             value={input}
             onSubmit={handleConversationCreated}

@@ -68,7 +68,6 @@ export default function ChatDetail({
   const [showScrollButton, setShowScrollButton] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const didInitialScrollRef = useRef<boolean>(false);
   const didAutoReload = useRef<boolean>(false);
@@ -178,17 +177,15 @@ export default function ChatDetail({
   }, [olderMessages, messages]);
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
     const handleScroll = () => {
       const distanceFromBottom =
-        container.scrollHeight - container.scrollTop - container.clientHeight;
+        document.documentElement.scrollHeight -
+        window.scrollY -
+        window.innerHeight;
       setShowScrollButton(distanceFromBottom > 2000);
     };
-    container.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => container.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToBottom = () => {
@@ -217,30 +214,29 @@ export default function ChatDetail({
   }, [allMessages.length]);
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
     const tryLoadOlder = () => {
       if (!hasNextPage || isFetchingNextPage) return;
-      if (container.scrollTop > 80) return;
+      if (window.scrollY > 80) return;
 
-      const prevHeight = container.scrollHeight;
+      const prevHeight = document.documentElement.scrollHeight;
       fetchNextPage().then(() => {
         requestAnimationFrame(() => {
-          container.scrollTop += container.scrollHeight - prevHeight;
+          window.scrollTo({
+            top: window.scrollY + (document.documentElement.scrollHeight - prevHeight),
+          });
         });
       });
     };
-    container.addEventListener("scroll", tryLoadOlder, { passive: true });
+    window.addEventListener("scroll", tryLoadOlder, { passive: true });
 
     const onWheel = (e: WheelEvent) => {
       if (e.deltaY < 0) tryLoadOlder();
     };
-    container.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: true });
 
     return () => {
-      container.removeEventListener("scroll", tryLoadOlder);
-      container.removeEventListener("wheel", onWheel);
+      window.removeEventListener("scroll", tryLoadOlder);
+      window.removeEventListener("wheel", onWheel);
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
@@ -301,11 +297,8 @@ export default function ChatDetail({
         )}
       </ChatHeader>
 
-      <div className="grid grid-rows-[1fr_auto] flex-1 min-h-0 pb-5 md:pb-0">
-        <div
-          ref={scrollContainerRef}
-          className="min-h-0 overflow-y-auto relative"
-        >
+      <div className="flex flex-col flex-1 pb-20 md:pb-0">
+        <div className="flex-1 relative">
           {showScrollButton && (
             <button
               onClick={scrollToBottom}
@@ -414,7 +407,7 @@ export default function ChatDetail({
           )}
         </div>
 
-        <div>
+        <div className="sticky bottom-0 z-20">
           <ChatInput
             value={input}
             formRef={formRef}

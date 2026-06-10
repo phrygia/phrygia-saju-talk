@@ -198,7 +198,6 @@ export default function ChatSidebarContent({
               </Menu.DropdownItem>
               <Menu.Separator />
               <Menu.DropdownItem
-                danger
                 left="🗑"
                 onClick={() => {
                   setModalOpen(true);
@@ -209,7 +208,6 @@ export default function ChatSidebarContent({
               </Menu.DropdownItem>{" "}
               <Menu.Separator />
               <Menu.DropdownItem
-                danger
                 left="📋"
                 onClick={() => {
                   router.push("/privacy-policy");

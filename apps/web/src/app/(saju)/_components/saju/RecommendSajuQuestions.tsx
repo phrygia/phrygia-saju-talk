@@ -14,11 +14,11 @@ export default function RecommendSajuQuestions({
 }) {
   return (
     <div>
-      <div className="mt-8 text-xs text-foreground-sub fade-in">
+      <div className="mt-8 text-xs text-foreground-sub">
         <span className="text-gold text-[10px] mr-2">✦</span>
         추천 상담 주제
       </div>
-      <div className={cn("grid grid-cols-2 gap-3 fade-in", className)}>
+      <div className={cn("grid grid-cols-2 gap-3", className)}>
         {questions.map((q) => (
           <button
             key={q.id}

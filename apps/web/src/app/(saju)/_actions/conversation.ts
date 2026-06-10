@@ -25,7 +25,7 @@ export async function createConversation(
     .from(conversationTableName)
     .insert({
       user_id: user!.id,
-      title: firstMessage.slice(0, 20),
+      title: firstMessage.slice(0, 45),
       profile: initialBirthInfo,
     })
     .select()

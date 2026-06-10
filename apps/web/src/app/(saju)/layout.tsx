@@ -20,10 +20,10 @@ async function AuthenticatedLayout({
 
 function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen text-foreground">
+    <div className="flex min-h-screen text-foreground">
       <aside className="hidden w-65 shrink-0 border-r border-r-sidebar-border bg-tertiary md:flex" />
       <div className="flex flex-1 flex-col min-w-0">
-        <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
+        <main className="flex flex-col flex-1">
           {children}
         </main>
       </div>

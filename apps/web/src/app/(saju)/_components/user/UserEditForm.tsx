@@ -118,7 +118,7 @@ export default function UserEditForm() {
   return (
     <>
       <ChatHeader title="회원 정보" />
-      <div className="overflow-y-auto">
+      <div>
         <div className="max-w-[480px] w-full mx-auto px-4 py-8">
           <div>
             <p className="text-violet text-[11px]">Account · 계정 설정</p>

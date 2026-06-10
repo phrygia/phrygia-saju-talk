@@ -35,7 +35,7 @@ const ChatListItem = memo(function ChatListItem({
       href={`/chat/${id}`}
       prefetch={false}
       className={cn(
-        "h-[32px] flex gap-2 items-center px-2.5 py-2 text-xs rounded-[10px] text-foreground-sub transition-all mb-1 whitespace-nowrap overflow-hidden text-ellipsis hover:bg-[rgba(124,92,252,0.08)] hover:text-violet",
+        "h-[32px] flex gap-2 items-center px-2.5 py-2 text-xs rounded-[10px] text-foreground-sub transition-all mb-1 hover:bg-[rgba(124,92,252,0.08)] hover:text-violet",
         isActive &&
           "bg-[rgba(124,92,252,0.12)] text-foreground border border-[rgba(124,92,252,0.15)]",
       )}
@@ -46,7 +46,9 @@ const ChatListItem = memo(function ChatListItem({
           isActive && "bg-violet",
         )}
       />
-      {(title ?? "").slice(0, 28)}...
+      <p className="whitespace-nowrap overflow-hidden text-ellipsis">
+        {(title ?? "").slice(0, 45)}...
+      </p>
     </Link>
   );
 });

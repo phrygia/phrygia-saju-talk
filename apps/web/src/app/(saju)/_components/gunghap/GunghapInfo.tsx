@@ -103,7 +103,7 @@ export default function GunghapInfo() {
     <>
       <ChatHeader title="궁합 분석" />
 
-      <div className="overflow-y-auto">
+      <div>
         {step === "input" && (
           <div className="p-[28px] px-5 pb-10 md:px-[32px]">
             <div className="mb-[28px]">

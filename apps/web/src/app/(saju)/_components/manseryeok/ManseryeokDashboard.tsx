@@ -25,7 +25,7 @@ export default function ManseryeokDashboard() {
     return (
       <>
         <ChatHeader title="만세력" />
-        <div className="overflow-y-auto mx">
+        <div>
           <div className="py-10 md:py-20 px-5 max-w-[500px] mx-auto">
             <BirthInfoForm />
           </div>
@@ -41,7 +41,7 @@ export default function ManseryeokDashboard() {
   return (
     <>
       <ChatHeader title="만세력" hideWonGukButton />
-      <div className="flex-1 overflow-y-auto">
+      <div>
         <ErrorBoundary
           FallbackComponent={ErrorFallback}
           resetKeys={[

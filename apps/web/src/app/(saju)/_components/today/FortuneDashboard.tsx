@@ -27,7 +27,7 @@ export default function FortuneDashboard({
     return (
       <>
         <ChatHeader />
-        <div className="overflow-y-auto">
+        <div>
           <div className="py-10 md:py-20 px-5 max-w-[480px] mx-auto">
             <BirthInfoForm hideDeleteButton />
           </div>

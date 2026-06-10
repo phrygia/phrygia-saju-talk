@@ -11,8 +11,8 @@ export default function ChatDetailSkeleton() {
           <Skeleton className="w-[70px] h-[30px] rounded-sm" />
         </div>
       </header>
-      <div className="grid grid-rows-[1fr_auto] flex-1 min-h-0">
-        <div className="min-h-0 overflow-y-auto relative">
+      <div className="flex flex-col flex-1">
+        <div className="flex-1 relative">
           <div className="mx-auto max-w-2xl space-y-4 px-4 py-6 pb-20">
             <div className="flex justify-end">
               <Skeleton className="h-[42px] w-[144px] rounded-[18px_18px_4px_18px]" />
@@ -28,7 +28,7 @@ export default function ChatDetailSkeleton() {
             </div>
           </div>
         </div>
-        <div className="px-5 md:px-6 pt-3 pb-5">
+        <div className="sticky bottom-0 z-20 px-5 md:px-6 pt-3 pb-5 bg-background">
           <div className="mx-auto max-w-2xl">
             <Skeleton className="h-[50px] rounded-2xl" />
             <p className="mt-2 text-center text-[10px] text-foreground-sub">
