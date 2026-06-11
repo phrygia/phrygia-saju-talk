@@ -60,6 +60,12 @@ export default function LoginPage({
       router.replace("/");
 
       reset();
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "로그인 중 오류가 발생했습니다.",
+      );
     } finally {
       setLoading(false);
     }
