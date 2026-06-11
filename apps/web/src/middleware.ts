@@ -37,8 +37,11 @@ export async function middleware(request: NextRequest) {
   const isAuthPage = request.nextUrl.pathname.startsWith("/login");
   const isPrivacyPage = request.nextUrl.pathname.startsWith("/privacy-policy");
   const isLandingPage = request.nextUrl.pathname.startsWith("/landing");
+  const isPublicFile =
+    request.nextUrl.pathname === "/app-ads.txt" ||
+    request.nextUrl.pathname === "/ads.txt";
 
-  if (!isPrivacyPage && !isLandingPage) {
+  if (!isPrivacyPage && !isLandingPage && !isPublicFile) {
     if (!user && !isAuthPage) {
       const url = request.nextUrl.clone();
       url.pathname = "/login";

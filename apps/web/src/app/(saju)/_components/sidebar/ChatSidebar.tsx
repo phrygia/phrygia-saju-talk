@@ -7,7 +7,7 @@ import { useSidebarToggleStore } from "@/src/store/sidebar.store";
 import ChatSidebarContent from "./ChatSidebarContent";
 
 const sidebarClass =
-  "dark:bg-[linear-gradient(180deg,#0a0928_0%,#070620_100%)] text-foreground bg-gradient-to-br from-[#ede8ff] to-[#e4dcff] border-r border-r-border";
+  "bg-[linear-gradient(to_bottom_right,#ede8ff,#e4dcff)] dark:bg-[linear-gradient(180deg,#0a0928_0%,#070620_100%)] text-foreground border-r border-r-border";
 
 function ChatSidebar() {
   const pathname = usePathname();
