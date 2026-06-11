@@ -36,7 +36,7 @@ export default function ChatHeader({
         !hideBorder && "border-b border-b-border",
       )}
     >
-      <div className="w-full flex items-center justify-between gap-1">
+      <div className="w-full grid grid-cols-[1fr_auto_1fr] items-center gap-1">
         <div>
           {title && (
             <h2 className="font-medium text-sm">
@@ -45,10 +45,10 @@ export default function ChatHeader({
             </h2>
           )}
         </div>
-        <div className="absolute left-1/2 top-1/2 -translate-1/2 text-foreground-sub opacity-80 -ml-5 text-xs">
+        <div className="text-foreground-sub opacity-80 text-xs text-center">
           {children && children}
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center justify-end">
           <button
             type="button"
             className="ml-1.5 w-[36px] h-[36px] rounded-[6px] border border-[rgba(124,92,252,0.2)] bg-[rgba(124,92,252,0.1)] text-violet text-[18px] flex md:hidden items-center justify-center cursor-pointer transition-all duration-200 shrink-0 hover:bg-[rgba(124,92,252,0.2)] dark:bg-[rgba(124,92,252,0.1)] dark:border-[rgba(124,92,252,0.2)] light:bg-[rgba(100,65,160,0.08)] light:border-[rgba(100,65,160,0.18)]"
