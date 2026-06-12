@@ -20,6 +20,7 @@ import { useBirthInfoModalStore } from "@/src/store/modal.store";
 import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import ChatDeleteModal from "@/src/app/(saju)/_components/chat/ChatDeleteModal";
 import UserDeleteModal from "@/src/app/(saju)/_components/user/UserDeleteModal";
+import { useIsWebView } from "@/src/hooks/useIsWebView";
 import styles from "./SettingList.module.scss";
 
 function Divide() {
@@ -31,6 +32,7 @@ function Divide() {
 export default function SettingList() {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
+  const isWebView = useIsWebView();
 
   const { birthInfo } = useUserStore();
   const { openBirthInfoModal } = useBirthInfoModalStore();
@@ -55,18 +57,22 @@ export default function SettingList() {
       <ChatHeader title="설정" />
       <div className={styles.container}>
         <div className={styles.card}>
-          <button
-            type="button"
-            className={styles.list}
-            onClick={() => router.push("/app/notification-settings")}
-          >
-            <div className={styles.icon}>
-              <Bell strokeWidth={1.8} size={20} />
-            </div>
-            알림 설정
-            <ChevronRight strokeWidth={1.5} className={styles.arrow} />
-          </button>
-          <Divide />
+          {isWebView && (
+            <>
+              <button
+                type="button"
+                className={styles.list}
+                onClick={() => router.push("/app/notification-settings")}
+              >
+                <div className={styles.icon}>
+                  <Bell strokeWidth={1.8} size={20} />
+                </div>
+                알림 설정
+                <ChevronRight strokeWidth={1.5} className={styles.arrow} />
+              </button>
+              <Divide />
+            </>
+          )}
           <Link href="/privacy-policy" className={styles.list}>
             <div className={styles.icon}>
               <ScrollText strokeWidth={1.7} size={20} />

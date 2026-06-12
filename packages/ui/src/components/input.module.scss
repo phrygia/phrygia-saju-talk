@@ -43,6 +43,10 @@
     color: var(--foreground-muted);
   }
 
+  &:read-only {
+    color: var(--foreground-sub);
+  }
+
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px #100d38 inset;
     -webkit-text-fill-color: var(--foreground);
