@@ -43,7 +43,7 @@ function ChatSidebar() {
         <aside
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            "relative flex h-full w-[90%] max-w-[90vw] flex-col transition-transform duration-300 overflow-hidden",
+            "relative flex h-full w-[85%] max-w-[90vw] flex-col transition-transform duration-300 overflow-hidden",
             isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full",
             sidebarClass,
           )}

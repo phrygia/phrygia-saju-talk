@@ -79,7 +79,7 @@ export default function ChatIndex({
 
   return (
     <>
-      <ChatHeader hideBorder>
+      <ChatHeader hideBorder hideBackButton>
         {birthInfo && (
           <SimpleBirthInfo initialBirthInfo={birthInfo} changeable />
         )}

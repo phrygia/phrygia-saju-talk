@@ -4,14 +4,13 @@ import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
+import UserDeleteModal from "@/src/app/(saju)/_components/user/UserDeleteModal";
 import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
 import { useUserStore } from "@/src/store/user.store";
-import { changeUserPassword, deleteUser } from "@/src/app/(saju)/_actions/user";
-import ConfirmModal from "@/src/components/ui/ConfirmModal";
+import { changeUserPassword } from "@/src/app/(saju)/_actions/user";
 import { checkPasswordStrength } from "@/src/lib/password";
 import PasswordStrengthIndicator from "@/src/components/ui/PasswordStrengthIndicator";
 
@@ -33,10 +32,7 @@ const editSchema = z
 type EditFormValues = z.infer<typeof editSchema>;
 
 export default function UserEditForm() {
-  const router = useRouter();
   const user = useUserStore((s) => s.user);
-
-  const [loading, setLoading] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [strength, setStrength] = useState<number>(0);
 
@@ -86,21 +82,6 @@ export default function UserEditForm() {
     } else {
       toast.success("비밀번호가 성공적으로 변경되었습니다.");
       reset();
-    }
-  };
-
-  const handleDeleteAccount = async () => {
-    setLoading(true);
-    try {
-      const result = await deleteUser();
-      if (!result.success) {
-        toast.error(result.message || "계정 삭제에 실패했습니다.");
-      } else {
-        toast.success("계정이 성공적으로 삭제되었습니다.");
-        router.replace("/login");
-      }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -200,7 +181,7 @@ export default function UserEditForm() {
               type="submit"
               fullWidth
               className="mt-6 h-11! font-semibold"
-              disabled={loading || isSubmitting}
+              disabled={isSubmitting}
             >
               {isSubmitting ? "수정 중..." : "수정하기"}
             </Button>
@@ -220,26 +201,14 @@ export default function UserEditForm() {
               variant="danger"
               className="h-8! !w-18"
               onClick={() => setModalOpen(true)}
-              disabled={loading || isSubmitting}
+              disabled={isSubmitting}
             >
               {isSubmitting ? "탈퇴 중..." : "탈퇴하기"}
             </Button>
           </div>
         </div>
       </div>
-      <ConfirmModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleDeleteAccount}
-        disabled={loading || isSubmitting}
-        icon="🗑"
-        title="회원 탈퇴"
-        subtitle={
-          <>
-            정말로 계정을 삭제하시겠습니까? <br />이 작업은 되돌릴 수 없습니다.
-          </>
-        }
-      />
+      <UserDeleteModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }

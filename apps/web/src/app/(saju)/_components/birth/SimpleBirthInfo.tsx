@@ -28,8 +28,10 @@ export default function SimpleBirthInfo({
         ` ${BirthCalendarLabels[initialBirthInfo.calendarType]}`}
       {initialBirthInfo?.birthTime &&
         ` ${getBirthTimeLabel(initialBirthInfo.birthTime)}`}
-      {initialBirthInfo?.gender &&
-        ` ${BirthGenderLabels[initialBirthInfo.gender]}`}
+      <span className="ml-1 hidden md:inline">
+        {initialBirthInfo?.gender &&
+          ` ${BirthGenderLabels[initialBirthInfo.gender]}`}
+      </span>
       {changeable && (
         <button
           type="button"

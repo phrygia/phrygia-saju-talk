@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Menu } from "lucide-react";
+import { Menu, ChevronLeft } from "lucide-react";
 import ThemeToggle from "@/src/components/ThemeToggle";
 import { useSidebarToggleStore } from "@/src/store/sidebar.store";
 import { cn } from "@repo/ui/lib/utils";
@@ -15,6 +15,7 @@ interface ChatHeaderProps {
   hideWonGukButton?: boolean;
   hideNewConversationButton?: boolean;
   hideBorder?: boolean;
+  hideBackButton?: boolean;
   rightButton?: React.ReactNode | null;
 }
 
@@ -25,6 +26,7 @@ export default function ChatHeader({
   hideNewConversationButton = false,
   hideBorder = false,
   rightButton = null,
+  hideBackButton = false,
 }: ChatHeaderProps) {
   const router = useRouter();
   const { openMobileSidebar } = useSidebarToggleStore();
@@ -37,7 +39,16 @@ export default function ChatHeader({
       )}
     >
       <div className="w-full grid grid-cols-[1fr_auto_1fr] items-center gap-1">
-        <div>
+        <div className="flex items-center">
+          {!hideBackButton && (
+            <button
+              type="button"
+              className="mr-2 -ml-2"
+              onClick={() => router.back()}
+            >
+              <ChevronLeft strokeWidth={1.5} />
+            </button>
+          )}
           {title && (
             <h2 className="font-medium text-sm">
               <span className="relative mr-2 inline-block h-[6px] w-[6px] rounded-full bg-gold shadow-[0_0_8px_var(--gold)] animate-blink -top-0.5" />
