@@ -20,7 +20,7 @@ import { deleteProfile, updataProfile } from "@/src/app/(saju)/_actions/user";
 import { useUserStore } from "@/src/store/user.store";
 import { useBirthInfoModalStore } from "@/src/store/modal.store";
 import { Input } from "@repo/ui/components/input";
-import styles from "./BirthInfoForm.module.scss";
+import styles from "./BirthInfoForm.module.css";
 
 const errorClass =
   "mt-[4px] text-[11px] leading-[16px] text-[#f87171] font-medium";

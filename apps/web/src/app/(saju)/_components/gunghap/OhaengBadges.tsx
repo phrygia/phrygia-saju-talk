@@ -1,5 +1,5 @@
 import { OHAENG } from "@/src/constants/saju";
-import styles from "./GunghapDashboard.module.scss";
+import styles from "./GunghapDashboard.module.css";
 
 const ohaengColorMap = Object.values(OHAENG).reduce(
   (acc, cur) => {

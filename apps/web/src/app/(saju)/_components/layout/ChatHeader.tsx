@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Menu, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import ThemeToggle from "@/src/components/ThemeToggle";
 import { useSidebarToggleStore } from "@/src/store/sidebar.store";
 import { cn } from "@repo/ui/lib/utils";
@@ -34,7 +34,7 @@ export default function ChatHeader({
   return (
     <header
       className={cn(
-        "min-h-[52px] h-[52px] sticky top-0 z-10 flex items-center px-5 md:px-6 duration-200 bg-[rgba(248,246,255,0.9)] dark:bg-[rgba(6,6,24,0.7)] backdrop-blur-md",
+        "min-h-[52px] h-[52px] sticky top-0 z-10 flex items-center px-4 md:px-6 duration-200 bg-[rgba(248,246,255,0.9)] dark:bg-[rgba(6,6,24,0.7)] backdrop-blur-md",
         !hideBorder && "border-b border-b-border",
       )}
     >
@@ -60,15 +60,6 @@ export default function ChatHeader({
           {children && children}
         </div>
         <div className="flex items-center justify-end">
-          <button
-            type="button"
-            className="ml-1.5 w-[36px] h-[36px] rounded-[6px] border border-[rgba(124,92,252,0.2)] bg-[rgba(124,92,252,0.1)] text-violet text-[18px] flex md:hidden items-center justify-center cursor-pointer transition-all duration-200 shrink-0 hover:bg-[rgba(124,92,252,0.2)] dark:bg-[rgba(124,92,252,0.1)] dark:border-[rgba(124,92,252,0.2)] light:bg-[rgba(100,65,160,0.08)] light:border-[rgba(100,65,160,0.18)]"
-            onClick={openMobileSidebar}
-            title="사이드바 열기"
-            aria-label="사이드바 열기"
-          >
-            <Menu strokeWidth={1.8} size={20} />
-          </button>
           <div className="ml-1.5">
             <ThemeToggle />
           </div>

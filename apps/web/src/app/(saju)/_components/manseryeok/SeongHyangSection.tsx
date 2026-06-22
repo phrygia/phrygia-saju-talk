@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { SeongHyangData } from "@/src/app/types/manseryeok";
-import styles from "./SeongHyangSection.module.scss";
+import styles from "./SeongHyangSection.module.css";
 
 interface Props {
   data: SeongHyangData;

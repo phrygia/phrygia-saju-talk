@@ -17,7 +17,7 @@ import { useBirthInfoModalStore } from "@/src/store/modal.store";
 import { useUserStore } from "@/src/store/user.store";
 import type { BirthInfo } from "@/src/app/types/fortune";
 import { BirthTimeLabels } from "@/src/app/types/fortune";
-import styles from "./ChatSidebarContent.module.scss";
+import styles from "./ChatSidebarContent.module.css";
 
 function ConversationListFallback() {
   return Array.from({ length: 5 }).map((_, index) => (

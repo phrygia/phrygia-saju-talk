@@ -8,7 +8,8 @@ import { createConversation } from "@/src/app/(saju)/_actions/conversation";
 import { useBirthInfoModalStore } from "@/src/store/modal.store";
 import { BirthInfo } from "@/src/app/types/fortune";
 import { saveChatMessage } from "@/src/app/(saju)/_lib/services/message";
-import styles from "./ChatInput.module.scss";
+import { cn } from "@repo/ui/lib/utils";
+import styles from "./ChatInput.module.css";
 
 interface ChatInputProps {
   value: string;
@@ -18,6 +19,7 @@ interface ChatInputProps {
   disabled?: boolean;
   formRef?: React.Ref<HTMLFormElement>;
   initialBirthInfo?: BirthInfo | null;
+  hideBottom?: boolean;
 }
 
 export default function ChatInput({
@@ -28,6 +30,7 @@ export default function ChatInput({
   disabled = false,
   formRef,
   initialBirthInfo = null,
+  hideBottom = false,
 }: ChatInputProps) {
   const user = useUserStore((s) => s.user);
   const { openBirthInfoModal } = useBirthInfoModalStore();
@@ -91,7 +94,7 @@ export default function ChatInput({
   };
 
   return (
-    <div className={styles.root}>
+    <div className={cn(styles.root, hideBottom && styles.bottom)}>
       <form ref={formRef} onSubmit={handleSubmit} className="max-w-2xl mx-auto">
         <div className={styles.inputWrapper}>
           <textarea

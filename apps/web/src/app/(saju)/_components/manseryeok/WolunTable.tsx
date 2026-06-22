@@ -2,7 +2,7 @@
 
 import type { Wolun } from "@/src/app/types/manseryeok";
 import { OHAENG_COLOR } from "@/src/app/(saju)/_constants/manseryeok";
-import styles from "./WolunTable.module.scss";
+import styles from "./WolunTable.module.css";
 
 interface Props {
   wolun: Wolun;

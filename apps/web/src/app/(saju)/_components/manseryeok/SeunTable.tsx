@@ -2,7 +2,7 @@
 
 import type { SeunYear } from "@/src/app/types/manseryeok";
 import { OHAENG_COLOR } from "@/src/app/(saju)/_constants/manseryeok";
-import styles from "./SeunTable.module.scss";
+import styles from "./SeunTable.module.css";
 
 interface Props {
   seun: SeunYear[];

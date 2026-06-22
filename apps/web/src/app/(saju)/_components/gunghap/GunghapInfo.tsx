@@ -10,7 +10,7 @@ import { type BirthInfo } from "@/src/app/types/fortune";
 import GunghapDashboard from "@/src/app/(saju)/_components/gunghap/GunghapDashboard";
 import PersonInfoForm from "@/src/app/(saju)/_components/gunghap/PersonInfoForm";
 import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
-import styles from "./GunghapInfo.module.scss";
+import styles from "./GunghapInfo.module.css";
 
 function GunghapLoading() {
   return (

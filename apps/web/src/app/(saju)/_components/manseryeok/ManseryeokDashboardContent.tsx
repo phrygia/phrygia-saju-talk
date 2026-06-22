@@ -12,7 +12,7 @@ import SeongHyangSection from "@/src/app/(saju)/_components/manseryeok/SeongHyan
 import DaeunTable from "@/src/app/(saju)/_components/manseryeok/DaeunTable";
 import SeunTable from "@/src/app/(saju)/_components/manseryeok/SeunTable";
 import WolunTable from "@/src/app/(saju)/_components/manseryeok/WolunTable";
-import styles from "./ManseryeokDashboardContent.module.scss";
+import styles from "./ManseryeokDashboardContent.module.css";
 
 interface Props {
   birthInfo: BirthInfo;

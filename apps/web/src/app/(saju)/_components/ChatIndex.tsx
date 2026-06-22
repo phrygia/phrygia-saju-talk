@@ -84,7 +84,7 @@ export default function ChatIndex({
           <SimpleBirthInfo initialBirthInfo={birthInfo} changeable />
         )}
       </ChatHeader>
-      <div className="flex flex-col flex-1 pb-20 md:pb-0">
+      <div className="flex flex-col flex-1 pb-30 md:pb-0">
         <div className="flex-1 relative">
           <div className="px-5 py-8 mx-auto max-w-full sm:max-w-xl">
             <div className="text-center space-y-3">

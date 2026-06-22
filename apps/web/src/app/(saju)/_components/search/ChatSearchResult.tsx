@@ -13,7 +13,7 @@ import { MessageCursor } from "@/src/app/(saju)/_lib/services/message";
 import { messagesTableName, type Messages } from "@/src/app/types/message";
 import { DEFAULT_PAGE_SIZE } from "@/src/constants/pagination";
 import { cn } from "@repo/ui/lib/utils";
-import styles from "./ChatSearchResult.module.scss";
+import styles from "./ChatSearchResult.module.css";
 import dayjs from "dayjs";
 
 type SearchSortOrder = "latest" | "oldest";

@@ -21,7 +21,7 @@ import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import ChatDeleteModal from "@/src/app/(saju)/_components/chat/ChatDeleteModal";
 import UserDeleteModal from "@/src/app/(saju)/_components/user/UserDeleteModal";
 import { useIsWebView } from "@/src/hooks/useIsWebView";
-import styles from "./SettingList.module.scss";
+import styles from "./SettingList.module.css";
 
 function Divide() {
   return (
@@ -143,6 +143,8 @@ export default function SettingList() {
             <ChevronRight strokeWidth={1.5} className={styles.arrow} />
           </button>
         </div>
+
+        {isWebView && <p className={styles.version}>앱 버전 1.0</p>}
       </div>
       <ChatDeleteModal open={modalOpen} onClose={() => setModalOpen(false)} />
       <UserDeleteModal

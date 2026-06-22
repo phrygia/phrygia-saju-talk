@@ -1,7 +1,8 @@
 .radio {
   display: none;
+}
 
-  &:checked + .radioLabel {
+.radio:checked + .radioLabel {
     background: linear-gradient(
       135deg,
       rgba(99, 102, 241, 0.15),
@@ -12,7 +13,6 @@
     font-weight: 600;
     box-shadow: 0 0 12px rgba(124, 92, 252, 0.15);
   }
-}
 
 .radioLabel {
   padding: 11px 10px;
@@ -27,30 +27,28 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
+}
 
-  &:hover {
+.radioLabel:hover {
     background: rgba(124, 92, 252, 0.12);
     border-color: rgba(124, 92, 252, 0.3);
   }
-}
 
-:global(html.light) {
-  & .radioLabel {
+:global(html.light) .radioLabel {
     background: rgba(100, 65, 160, 0.05);
     border-color: rgba(100, 65, 160, 0.15);
+  }
 
-    &:hover {
+:is(:global(html.light) .radioLabel):hover {
       background: rgba(100, 65, 160, 0.1);
     }
 
-    &.selected {
-      background: linear-gradient(
-        135deg,
-        rgba(99, 102, 241, 0.15),
-        rgba(100, 65, 160, 0.12)
-      );
-      border-color: rgba(100, 65, 160, 0.4);
-      color: var(--violet);
-    }
+:global(html.light) .radioLabel.selected {
+    background: linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.15),
+      rgba(100, 65, 160, 0.12)
+    );
+    border-color: rgba(100, 65, 160, 0.4);
+    color: var(--violet);
   }
-}

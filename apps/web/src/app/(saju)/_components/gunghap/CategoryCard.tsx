@@ -5,7 +5,7 @@ import {
   GunghapCategoryEmojis,
 } from "@/src/app/types/gunghap";
 import { type GunghapCategory } from "@/src/app/(saju)/_constants/gunghap";
-import styles from "./GunghapDashboard.module.scss";
+import styles from "./GunghapDashboard.module.css";
 
 interface CategoryCardProps {
   category: GunghapCategory;

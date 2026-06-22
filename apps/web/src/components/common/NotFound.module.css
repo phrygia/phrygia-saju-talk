@@ -63,16 +63,17 @@
   gap: 10px;
   margin-bottom: 36px;
   justify-content: center;
+}
 
-  &:hover .nf-card {
+.cards:hover .nf-card {
     transform: translateY(0) !important;
   }
 
-  &:hover .nf-card:nth-child(2) {
+.cards:hover .nf-card:nth-child(2) {
     transform: translateY(-10px) !important;
   }
 
-  & .card {
+.cards .card {
     width: 44px;
     height: 62px;
     border-radius: 8px;
@@ -86,8 +87,9 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s;
+  }
 
-    &::before {
+:is(.cards .card)::before {
       content: "";
       position: absolute;
       inset: 0;
@@ -96,22 +98,20 @@
       transition: opacity 0.3s;
     }
 
-    &:nth-child(2) {
+:is(.cards .card):nth-child(2) {
       transform: translateY(-6px);
       border-color: rgba(124, 92, 252, 0.35);
       background: rgba(124, 92, 252, 0.12);
       color: var(--violet);
     }
 
-    &:nth-child(2)::before {
+:is(.cards .card):nth-child(2)::before {
       opacity: 1;
     }
 
-    &:nth-child(3) {
+:is(.cards .card):nth-child(3) {
       transform: translateY(-2px);
     }
-  }
-}
 
 .title {
   font-size: 18px;
@@ -128,27 +128,25 @@
   line-height: 1.8;
   max-width: 340px;
   margin-bottom: 32px;
+}
 
-  & em {
+.subTitle em {
     font-style: normal;
     color: var(--violet);
     opacity: 0.9;
   }
-}
 
-:global(html.light) {
-  .number {
+:global(html.light) .number {
     background: linear-gradient(135deg, #4338ca 0%, #7c5cfc 50%, #a78bfa 100%);
     -webkit-background-clip: text;
     background-clip: text;
     filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.2));
   }
 
-  .orb1 {
+:global(html.light) .orb1 {
     background: radial-gradient(
       circle,
       rgba(99, 102, 241, 0.08) 0%,
       transparent 70%
     );
   }
-}

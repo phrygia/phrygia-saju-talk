@@ -36,7 +36,7 @@ import { type SajuQuestion } from "@/src/app/(saju)/_constants/saju";
 import { BirthInfo } from "@/src/app/types/fortune";
 import RecommendSajuQuestions from "@/src/app/(saju)/_components/saju/RecommendSajuQuestions";
 import { Button } from "@repo/ui/components/button";
-import styles from "./ChatDetail.module.scss";
+import styles from "./ChatDetail.module.css";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 
@@ -222,7 +222,9 @@ export default function ChatDetail({
       fetchNextPage().then(() => {
         requestAnimationFrame(() => {
           window.scrollTo({
-            top: window.scrollY + (document.documentElement.scrollHeight - prevHeight),
+            top:
+              window.scrollY +
+              (document.documentElement.scrollHeight - prevHeight),
           });
         });
       });
@@ -347,7 +349,7 @@ export default function ChatDetail({
                     {showDateLabel && (
                       <div className={styles.dateLabel}>
                         <div>
-                          {dayjs(msgDate).format("YYYY년 M월 D일 ddd요일")}
+                          {dayjs(msgDate).format("YYYY년 M월 D일 dddd")}
                         </div>
                       </div>
                     )}
@@ -409,6 +411,7 @@ export default function ChatDetail({
 
         <div className="sticky bottom-0 z-20">
           <ChatInput
+            hideBottom
             value={input}
             formRef={formRef}
             initialBirthInfo={initialProfile}

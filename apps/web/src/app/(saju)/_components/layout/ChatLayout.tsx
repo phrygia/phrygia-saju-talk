@@ -4,6 +4,7 @@ import React, { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/src/store/user.store";
+import TabBar from "@/src/components/layout/TabBar";
 import ChatSidebar from "@/src/app/(saju)/_components/sidebar/ChatSidebar";
 
 export default function ChatLayout({
@@ -53,6 +54,7 @@ export default function ChatLayout({
       <div className="flex flex-1 flex-col min-w-0">
         <main className="flex flex-col flex-1">
           {children}
+          <TabBar />
         </main>
       </div>
     </div>

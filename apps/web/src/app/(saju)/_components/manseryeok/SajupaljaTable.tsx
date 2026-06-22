@@ -10,7 +10,7 @@ import { CHEONGAN_OHAENG } from "@/src/app/(saju)/_constants/manseryeok";
 import { gongmangToHangul } from "@/src/app/(saju)/_lib/manseryeok";
 import SipshinTooltipModal from "@/src/app/(saju)/_components/manseryeok/SipshinTooltipModal";
 import TermTooltipModal from "@/src/app/(saju)/_components/manseryeok/TermTooltipModal";
-import styles from "./SajupaljaTable.module.scss";
+import styles from "./SajupaljaTable.module.css";
 
 interface Props {
   data: SajupaljaData;

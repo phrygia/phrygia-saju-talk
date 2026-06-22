@@ -3,11 +3,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
 }
+
+@media (max-width: 600px) {
+
+.wrap {
+    grid-template-columns: 1fr;
+}
+  }
 
 .section {
   background: var(--background-sub);
@@ -78,10 +81,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  & > *:last-child:nth-child(odd) {
+}
+
+.chipGrid > *:last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
-}
 
 .chip {
   border: 1px solid;

@@ -14,11 +14,14 @@
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-bottom: 16px;
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
 }
+
+@media (max-width: 600px) {
+
+.cardGrid {
+    grid-template-columns: 1fr;
+}
+  }
 
 .card {
   border-radius: 12px;
@@ -64,11 +67,11 @@
   color: var(--foreground);
   padding: 9px 0;
   border-bottom: 1px dashed var(--border);
+}
 
-  &:last-child {
+.traitItem:last-child {
     border-bottom: none;
   }
-}
 
 .dot {
   width: 8px;
@@ -96,11 +99,11 @@
   overflow: hidden;
   background: linear-gradient(135deg, #14103ae6, #0c0a28e6);
   transition: border-color 0.15s;
+}
 
-  &.open {
+.accordionItem.open {
     border-color: rgba(99, 102, 241, 0.3);
   }
-}
 
 .accordionHeader {
   width: 100%;
@@ -113,11 +116,11 @@
   cursor: pointer;
   text-align: left;
   transition: background 0.15s;
+}
 
-  &:hover {
+.accordionHeader:hover {
     background: var(--hover);
   }
-}
 
 .accordionTag {
   font-size: 11px;
@@ -152,9 +155,7 @@
   padding-top: 14px;
 }
 
-:global(html.light) {
-  .accordionItem {
+:global(html.light) .accordionItem {
     background: linear-gradient(135deg, #f5f0fff2, #e8e0fff2);
     border-color: #6441a024;
   }
-}
