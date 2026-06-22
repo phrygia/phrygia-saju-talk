@@ -132,9 +132,6 @@ importers:
       jsdom:
         specifier: ^29.0.2
         version: 29.0.2
-      sass:
-        specifier: ^1.98.0
-        version: 1.98.0
       typescript:
         specifier: 5.9.2
         version: 5.9.2

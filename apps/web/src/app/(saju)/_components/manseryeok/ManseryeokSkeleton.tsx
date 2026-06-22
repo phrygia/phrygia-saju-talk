@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./ManseryeokSkeleton.module.scss";
+import styles from "./ManseryeokSkeleton.module.css";
 
 function SkeletonBox({ h, w = "100%" }: { h: number; w?: string }) {
   return <div className={styles.skeletonBox} style={{ height: h, width: w }} />;

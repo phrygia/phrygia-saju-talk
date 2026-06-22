@@ -8,7 +8,7 @@ import {
   AVATAR,
   ROLE_LABEL,
 } from "@/src/app/(saju)/_constants/gunghap";
-import styles from "./GunghapDashboard.module.scss";
+import styles from "./GunghapDashboard.module.css";
 
 interface PersonCardProps {
   side: Side;

@@ -8,7 +8,8 @@ import { createConversation } from "@/src/app/(saju)/_actions/conversation";
 import { useBirthInfoModalStore } from "@/src/store/modal.store";
 import { BirthInfo } from "@/src/app/types/fortune";
 import { saveChatMessage } from "@/src/app/(saju)/_lib/services/message";
-import styles from "./ChatInput.module.scss";
+import { cn } from "@repo/ui/lib/utils";
+import styles from "./ChatInput.module.css";
 
 interface ChatInputProps {
   value: string;
@@ -18,6 +19,7 @@ interface ChatInputProps {
   disabled?: boolean;
   formRef?: React.Ref<HTMLFormElement>;
   initialBirthInfo?: BirthInfo | null;
+  hideBottom?: boolean;
 }
 
 export default function ChatInput({
@@ -28,6 +30,7 @@ export default function ChatInput({
   disabled = false,
   formRef,
   initialBirthInfo = null,
+  hideBottom = false,
 }: ChatInputProps) {
   const user = useUserStore((s) => s.user);
   const { openBirthInfoModal } = useBirthInfoModalStore();
@@ -56,7 +59,6 @@ export default function ChatInput({
       const result = await createConversation(value, initialBirthInfo);
 
       if (!result.success) {
-        setLoading(false);
         return toast.error(result.message || "대화 생성에 실패했습니다.");
       }
       convId = result.data!;
@@ -67,12 +69,11 @@ export default function ChatInput({
     const result = await saveChatMessage(convId, "user", value);
 
     if (!result.success) {
-      setLoading(false);
-
       return toast.error(result.message || "메시지 저장에 실패했습니다.");
     }
 
     if (onSubmit) await onSubmit(convId);
+    setLoading(false);
   };
 
   const handleInput = () => {
@@ -91,7 +92,7 @@ export default function ChatInput({
   };
 
   return (
-    <div className={styles.root}>
+    <div className={cn(styles.root, hideBottom && styles.bottom)}>
       <form ref={formRef} onSubmit={handleSubmit} className="max-w-2xl mx-auto">
         <div className={styles.inputWrapper}>
           <textarea
@@ -105,15 +106,13 @@ export default function ChatInput({
             placeholder="사주에 대해 궁금한 것을 물어보세요."
             className={styles.textarea}
           />
-          {value.trim().length > 0 && (
-            <button
-              type="submit"
-              disabled={disabled || loading}
-              className={styles.sendButton}
-            >
-              <MoveUp strokeWidth={2.2} size={16} />
-            </button>
-          )}
+          <button
+            type="submit"
+            disabled={disabled || loading || value.trim().length === 0}
+            className={styles.sendButton}
+          >
+            <MoveUp strokeWidth={2.2} size={16} />
+          </button>
         </div>
         <p className={styles.hint}>
           AI가 제공하는 운세는 재미로 참고해주세요. 중요한 결정은 신중하게!

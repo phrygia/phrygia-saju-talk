@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import StarCanvas from "@/src/components/common/StarCanvas";
 import Link from "next/link";
 import Logo from "@/src/components/common/Logo";
-import styles from "./LandingLayout.module.scss";
+import styles from "./LandingLayout.module.css";
 
 const SAJU_CHARS: ({ char: string; element: string; delay: number } | null)[] =
   [

@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import dayjs from "dayjs";
-import "dayjs/locale/ko";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
@@ -20,7 +19,8 @@ import { Modal } from "@repo/ui/components/modal";
 import { Button } from "@repo/ui/components/button";
 import { getLuckyColorValue } from "@/src/lib/fortune";
 import { StarBurstButton } from "@repo/ui/components/star-burst-button";
-import styles from "./FortuneDashboardContent.module.scss";
+import styles from "./FortuneDashboardContent.module.css";
+import "dayjs/locale/ko";
 
 export default function FortuneDashboardContent({
   birthInfo,
@@ -110,7 +110,7 @@ export default function FortuneDashboardContent({
   return (
     <>
       <ChatHeader title="오늘의 운세">
-        {dayjs(date).format("YYYY년 M월 D일 dddd")}
+        {dayjs(date).format("YY년 M월 D일 dddd")}
       </ChatHeader>
       {fortune && (
         <>

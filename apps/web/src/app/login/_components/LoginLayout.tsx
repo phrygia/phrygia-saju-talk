@@ -11,7 +11,8 @@ import SignupForm from "@/src/app/login/_components/SignupForm";
 import ForgotPasswordForm from "@/src/app/login/_components/ForgotPasswordForm";
 import { loginPageType } from "@/src/app/types/user";
 import StarCanvas from "@/src/components/common/StarCanvas";
-import styles from "./LoginLayout.module.scss";
+import styles from "./LoginLayout.module.css";
+import Link from "next/link";
 
 export default function LoginLayout({
   children,
@@ -153,8 +154,12 @@ export default function LoginLayout({
           )}
         </div>
       </div>
-      <footer className="mb-20 text-xs text-muted-foreground/50 text-center mt-5">
+
+      <footer className="mb-20 text-xs text-foreground-sub/70 text-center mt-4">
         © 2026 SAJU TALK. All rights reserved.
+        <Link href="/privacy-policy" className="ml-2 text-xs underline">
+          개인정보처리방침
+        </Link>
       </footer>
     </main>
   );

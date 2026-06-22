@@ -12,8 +12,9 @@
   position: relative;
   overflow: hidden;
   text-align: left;
+}
 
-  &:before {
+.button:before {
     content: "";
     position: absolute;
     inset: 0;
@@ -23,25 +24,22 @@
     border-radius: 14px;
   }
 
-  &:hover {
+.button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(100, 65, 160, 0.1);
     border-color: rgba(130, 90, 255, 0.3);
   }
-}
 
-:global(html.light) {
-  .button {
+:global(html.light) .button {
     background: linear-gradient(
       135deg,
       rgba(248, 245, 255, 0.97),
       rgba(238, 232, 255, 0.97)
     );
     border-color: rgba(100, 65, 200, 0.12);
+  }
 
-    &:hover {
+:is(:global(html.light) .button):hover {
       border-color: rgba(100, 65, 200, 0.25);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
-  }
-}

@@ -2,7 +2,7 @@
 
 import type { Daeun, DaeunPeriod } from "@/src/app/types/manseryeok";
 import { OHAENG_COLOR } from "@/src/app/(saju)/_constants/manseryeok";
-import styles from "./DaeunTable.module.scss";
+import styles from "./DaeunTable.module.css";
 
 interface Props {
   daeun: Daeun;

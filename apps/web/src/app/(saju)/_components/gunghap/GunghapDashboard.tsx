@@ -11,7 +11,7 @@ import { GUNGHAP_CATEGORIES } from "@/src/app/(saju)/_constants/gunghap";
 import ScoreRing from "@/src/app/(saju)/_components/gunghap/ScoreRing";
 import PersonCard from "@/src/app/(saju)/_components/gunghap/PersonCard";
 import CategoryCard from "@/src/app/(saju)/_components/gunghap/CategoryCard";
-import styles from "./GunghapDashboard.module.scss";
+import styles from "./GunghapDashboard.module.css";
 
 const today = dayjs().format("YYYY-MM-DD");
 

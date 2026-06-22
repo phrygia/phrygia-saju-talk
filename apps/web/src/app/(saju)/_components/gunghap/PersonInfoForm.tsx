@@ -7,7 +7,7 @@ import {
   ROLE_LABEL,
 } from "@/src/app/(saju)/_constants/gunghap";
 import { cn } from "@repo/ui/lib/utils";
-import styles from "./GunghapInfo.module.scss";
+import styles from "./GunghapInfo.module.css";
 
 export default function PersonInfoForm({
   side,

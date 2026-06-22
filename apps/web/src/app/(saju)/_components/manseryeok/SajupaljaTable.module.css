@@ -53,17 +53,15 @@
   background: var(--table-header-bg);
   border-bottom: 1px solid var(--table-border);
   border-right: 1px solid var(--table-border);
+}
 
-  &:last-child {
+.th:last-child {
     border-right: none;
   }
-}
 
-.tr {
-  &:not(:last-child) td {
+.tr:not(:last-child) td {
     border-bottom: 1px solid var(--table-border);
   }
-}
 
 .td {
   padding: 10px 8px;
@@ -71,11 +69,11 @@
   vertical-align: middle;
   border-right: 1px solid var(--table-border);
   font-size: 12px;
+}
 
-  &:last-child {
+.td:last-child {
     border-right: none;
   }
-}
 
 .ilganTd {
   background: rgba(124, 92, 252, 0.1);
@@ -127,12 +125,12 @@
   text-underline-offset: 3px;
   font-family: "Noto Sans KR", sans-serif;
   transition: color 0.15s;
+}
 
-  &:hover {
+.termBtn:hover {
     color: #818cf8;
     text-decoration-color: #818cf8;
   }
-}
 
 :global(.light) .termBtn:hover {
   color: #6366f1;
@@ -151,12 +149,12 @@
     background 0.15s,
     color 0.15s;
   font-family: "Noto Sans KR", sans-serif;
+}
 
-  &:hover {
+.sipshinBtn:hover {
     background: rgba(99, 102, 241, 0.12);
     color: #818cf8;
   }
-}
 
 :global(.light) .sipshinBtn:hover {
   color: #6366f1;
@@ -167,11 +165,11 @@
   background: rgba(99, 102, 241, 0.06);
   color: #6366f1;
   font-weight: 600;
+}
 
-  &:hover {
+.sipshinBtnIlgan:hover {
     background: rgba(99, 102, 241, 0.14);
   }
-}
 
 .jijangganCell {
   display: flex;

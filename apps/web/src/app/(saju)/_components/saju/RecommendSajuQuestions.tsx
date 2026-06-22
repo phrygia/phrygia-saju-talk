@@ -1,7 +1,7 @@
 import React from "react";
 import { SAJU_EMOJI, SajuQuestion } from "@/src/app/(saju)/_constants/saju";
 import { cn } from "@repo/ui/lib/utils";
-import styles from "./RecommendSajuQuestions.module.scss";
+import styles from "./RecommendSajuQuestions.module.css";
 
 export default function RecommendSajuQuestions({
   questions = [],

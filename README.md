@@ -35,7 +35,6 @@
 ![React](https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![SCSS](https://img.shields.io/badge/SCSS_Modules-CC6699?style=flat-square&logo=sass&logoColor=white)
 
 ### Backend & Database
 
@@ -89,7 +88,7 @@
 | 타입 설계          | `ManseryeokData`, `Daeun`, `SeunYear`, `Wolun` 등 전체 도메인 타입 정의     |
 | AI 만세력 서비스   | Gemini 프롬프트 작성, 응답 파싱, Supabase 월별 캐시 로직                    |
 | UI 컴포넌트        | 사주팔자 테이블, 오행/십신 분포, 대운·세운·월운 테이블, 십신·용어 설명 모달 |
-| 스타일             | SCSS Module 기반 다크/라이트 테마 대응                                      |
+| 스타일             | Module 기반 다크/라이트 테마 대응                                           |
 | 개인정보처리방침   |
 
 ---

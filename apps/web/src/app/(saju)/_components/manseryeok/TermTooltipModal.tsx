@@ -1,7 +1,7 @@
 "use client";
 
 import { TERM_GUIDE } from "@/src/app/(saju)/_constants/manseryeok";
-import styles from "./TermTooltipModal.module.scss";
+import styles from "./TermTooltipModal.module.css";
 
 interface Props {
   term: string;

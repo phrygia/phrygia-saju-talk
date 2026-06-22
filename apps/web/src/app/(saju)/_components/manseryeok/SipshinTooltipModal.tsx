@@ -4,7 +4,7 @@ import {
   SIPSHIN_DESC,
   POSITION_DESC,
 } from "@/src/app/(saju)/_constants/manseryeok";
-import styles from "./SipshinTooltipModal.module.scss";
+import styles from "./SipshinTooltipModal.module.css";
 
 interface Props {
   sipshin: string;

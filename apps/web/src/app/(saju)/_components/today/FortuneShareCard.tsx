@@ -14,7 +14,7 @@ import Logo from "@/src/components/common/Logo";
 import { getLuckyColorValue } from "@/src/lib/fortune";
 import { cn } from "@repo/ui/lib/utils";
 import { getBirthTimeLabel } from "@/src/lib/fortune";
-import styles from "./FortuneShareCard.module.scss";
+import styles from "./FortuneShareCard.module.css";
 
 const radius = 40;
 const circumference = 2 * Math.PI * radius;

@@ -5,69 +5,69 @@
   justify-content: center;
   gap: 14px;
   min-height: 60vh;
+}
 
-  & .loadingHeart {
+.loadingWrapper .loadingHeart {
     display: flex;
     gap: 14px;
     align-items: center;
     margin-bottom: 8px;
+  }
 
-    & span {
+:is(.loadingWrapper .loadingHeart) span {
       font-size: 28px;
       color: var(--rose);
       animation: lhFloat 1.6s ease-in-out infinite;
       filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.5));
+    }
 
-      &:first-child {
+:is(:is(.loadingWrapper .loadingHeart) span):first-child {
         animation-delay: 0s;
       }
 
-      &:nth-child(2) {
+:is(:is(.loadingWrapper .loadingHeart) span):nth-child(2) {
         font-size: 20px;
         color: var(--violet);
         animation-delay: 0.3s;
       }
 
-      &:last-child {
+:is(:is(.loadingWrapper .loadingHeart) span):last-child {
         animation-delay: 0.6s;
       }
-    }
-  }
 
-  & h2 {
+.loadingWrapper h2 {
     font-size: 16px;
     color: var(--foreground);
   }
 
-  & p {
+.loadingWrapper p {
     font-size: 12px;
     color: var(--foreground-muted);
   }
 
-  & .dots {
+.loadingWrapper .dots {
     display: flex;
     gap: 6px;
     margin-top: 4px;
+  }
 
-    & span {
+:is(.loadingWrapper .dots) span {
       width: 6px;
       height: 6px;
       border-radius: 50%;
       display: block;
       background: var(--rose);
       animation: ldot 1.4s ease-in-out infinite;
+    }
 
-      &:nth-child(2) {
+:is(:is(.loadingWrapper .dots) span):nth-child(2) {
         animation-delay: 0.2s;
         background: var(--violet);
       }
 
-      &:nth-child(3) {
+:is(:is(.loadingWrapper .dots) span):nth-child(3) {
         animation-delay: 0.4s;
       }
-    }
-  }
-}
 
 .box {
   background: linear-gradient(
@@ -84,8 +84,9 @@
   gap: 6px;
   position: relative;
   overflow: hidden;
+}
 
-  &::before {
+.box::before {
     content: "";
     position: absolute;
     width: 200px;
@@ -94,7 +95,7 @@
     pointer-events: none;
   }
 
-  &.me::before {
+.box.me::before {
     top: -80px;
     right: -80px;
     background: radial-gradient(
@@ -103,7 +104,8 @@
       transparent 70%
     );
   }
-  &.partner::before {
+
+.box.partner::before {
     top: -80px;
     left: -80px;
     background: radial-gradient(
@@ -113,15 +115,16 @@
     );
   }
 
-  & .tag {
+.box .tag {
     width: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
     gap: 12px;
     margin-bottom: 18px;
+  }
 
-    & .card {
+:is(.box .tag) .card {
       width: 44px;
       height: 44px;
       border-radius: 50%;
@@ -132,19 +135,17 @@
       flex-shrink: 0;
     }
 
-    & strong {
+:is(.box .tag) strong {
       font-size: 13px;
       font-weight: 600;
       color: var(--foreground);
     }
 
-    & p {
+:is(.box .tag) p {
       margin-top: 6px;
       font-size: 10.5px;
       color: var(--foreground-muted);
     }
-  }
-}
 
 .submitButton {
   display: flex;
@@ -162,21 +163,21 @@
   letter-spacing: 0.05em;
   box-shadow: 0 4px 24px rgba(236, 72, 153, 0.35);
   transition: all 0.2s;
+}
 
-  & span {
+.submitButton span {
     font-size: 16px;
     transition: transform 0.2s;
   }
 
-  &:hover {
+.submitButton:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(236, 72, 153, 0.5);
+  }
 
-    & span {
+.submitButton:hover span {
       transform: translateX(4px);
     }
-  }
-}
 
 .error {
   margin-top: 50px;
@@ -184,11 +185,11 @@
   color: #f87171;
   min-height: 18px;
   text-align: center;
+}
 
-  & + .submitButton {
+.error + .submitButton {
     margin-top: 10px;
   }
-}
 
 .vs {
   display: flex;
@@ -198,8 +199,9 @@
   padding: 0 20px;
   min-height: 200px;
   gap: 8px;
+}
 
-  & .line {
+.vs .line {
     flex: 1;
     width: 1px;
     min-height: 40px;
@@ -211,7 +213,7 @@
     );
   }
 
-  & .icon {
+.vs .icon {
     font-size: 20px;
     flex-shrink: 0;
     color: #f472b6;
@@ -219,12 +221,15 @@
     animation: heartbeat 2s ease-in-out infinite;
   }
 
-  @media (max-width: 767px) {
+@media (max-width: 767px) {
+
+.vs {
     flex-direction: row;
     min-height: unset;
     padding: 12px 0;
+}
 
-    & .line {
+    .vs .line {
       flex: 1;
       width: unset;
       height: 1px;
@@ -237,17 +242,14 @@
       min-height: unset;
     }
   }
-}
 
-:global(html.light) {
-  .box {
+:global(html.light) .box {
     background: linear-gradient(
       135deg,
       rgba(248, 245, 255, 0.97),
       rgba(238, 232, 255, 0.97)
     );
   }
-}
 
 @keyframes heartbeat {
   0%,

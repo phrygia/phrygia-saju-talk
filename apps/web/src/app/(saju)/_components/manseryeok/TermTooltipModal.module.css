@@ -4,7 +4,7 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
@@ -26,8 +26,8 @@
   border: 1px solid var(--border);
   border-radius: 16px;
   width: 100%;
-  max-width: 600px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.2s ease;
   overflow: hidden;
 }
@@ -37,11 +37,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 18px 20px 14px;
-  border-bottom: 1px solid var(--border);
 }
 
 .title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--foreground);
   font-family: "Noto Sans KR", sans-serif;
@@ -61,42 +60,51 @@
   justify-content: center;
   line-height: 1;
   transition: background 0.15s;
+}
 
-  &:hover {
+.closeBtn:hover {
     background: var(--hover);
     color: var(--foreground);
   }
+
+.body {
+  padding: 0 20px 20px;
 }
 
-.cardGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 16px 20px 20px;
+.subtitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 14px;
+  font-family: "Noto Sans KR", sans-serif;
+  line-height: 1.5;
+}
 
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 10px;
+  padding: 14px 16px;
 }
 
 .cardTitle {
+  display: block;
   font-size: 13px;
   font-weight: 700;
   color: var(--foreground);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-family: "Noto Sans KR", sans-serif;
 }
 
 .cardDesc {
   font-size: 13px;
   color: var(--foreground-sub);
-  line-height: 1.75;
+  line-height: 1.7;
   font-family: "Noto Sans KR", sans-serif;
 }

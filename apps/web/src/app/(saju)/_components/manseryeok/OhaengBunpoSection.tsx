@@ -9,7 +9,7 @@ import {
   SIPSHIN_ITEMS,
   SIPSHIN_COLORS,
 } from "@/src/app/(saju)/_constants/manseryeok";
-import styles from "./OhaengBunpoSection.module.scss";
+import styles from "./OhaengBunpoSection.module.css";
 
 interface Props {
   ohaeng: OhaengBunpo;

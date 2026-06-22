@@ -7,7 +7,7 @@ import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import ChatSearchResult from "@/src/app/(saju)/_components/search/ChatSearchResult";
 import { Skeleton } from "@repo/ui/components/skeleton";
 import ErrorFallback from "@/src/app/(saju)/_components/ErrorFallback";
-import styles from "./ChatSearch.module.scss";
+import styles from "./ChatSearch.module.css";
 
 function SearchResultsFallback() {
   return (

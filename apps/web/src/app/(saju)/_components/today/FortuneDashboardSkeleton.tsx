@@ -5,14 +5,14 @@ import ChatHeader from "@/src/app/(saju)/_components/layout/ChatHeader";
 import { Skeleton } from "@repo/ui/components/skeleton";
 import { Spinner } from "@repo/ui/components/spinner";
 import { cn } from "@repo/ui/lib/utils";
-import styles from "./FortuneDashboardContent.module.scss";
+import styles from "./FortuneDashboardContent.module.css";
 dayjs.locale("ko");
 
 export default function FortuneDashboardSkeleton({ date }: { date?: string }) {
   return (
     <>
       <ChatHeader title="오늘의 운세">
-        {date ? dayjs(date).format("YYYY년 M월 D일 dddd") : "운세 분석 중"}
+        {date ? dayjs(date).format("YY년 M월 D일 dddd") : "운세 분석 중"}
       </ChatHeader>
       <div className={styles.wrapper}>
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@repo/ui/components/button";
 import ThemeToggle from "@/src/components/ThemeToggle";
 import StarCanvas from "@/src/components/common/StarCanvas";
-import styles from "./NotFound.module.scss";
+import styles from "./NotFound.module.css";
 
 export default function NotFound() {
   const router = useRouter();

@@ -11,8 +11,8 @@
   margin-bottom: 2px;
   position: relative;
   overflow: hidden;
-
-  &:before {
+}
+.button:before {
     content: "";
     position: absolute;
     inset: 0;
@@ -21,27 +21,21 @@
     transition: opacity 0.18s;
     border-radius: 11px;
   }
-
-  &:hover,
-  &.active {
+.button:hover,.button.active {
     color: var(--color-violet);
-
-    &:before {
+  }
+:is(.button:hover,.button.active):before {
       opacity: 1;
     }
-  }
-
-  &.active {
+.button.active {
     font-weight: 500;
     border: 1px solid rgba(124, 92, 252, 0.22);
     background: rgba(124, 92, 252, 0.08);
   }
-
-  & span {
+.button span {
     display: inline-block;
     margin-top: 5px;
     width: 18px;
     height: 18px;
     font-size: 14px;
   }
-}

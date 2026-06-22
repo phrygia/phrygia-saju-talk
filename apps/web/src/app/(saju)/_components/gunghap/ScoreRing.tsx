@@ -1,4 +1,4 @@
-import styles from "./GunghapDashboard.module.scss";
+import styles from "./GunghapDashboard.module.css";
 
 const RING_RADIUS = 54;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
