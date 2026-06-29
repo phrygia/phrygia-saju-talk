@@ -59,7 +59,6 @@ export default function ChatInput({
       const result = await createConversation(value, initialBirthInfo);
 
       if (!result.success) {
-        setLoading(false);
         return toast.error(result.message || "대화 생성에 실패했습니다.");
       }
       convId = result.data!;
@@ -70,12 +69,11 @@ export default function ChatInput({
     const result = await saveChatMessage(convId, "user", value);
 
     if (!result.success) {
-      setLoading(false);
-
       return toast.error(result.message || "메시지 저장에 실패했습니다.");
     }
 
     if (onSubmit) await onSubmit(convId);
+    setLoading(false);
   };
 
   const handleInput = () => {
@@ -108,15 +106,13 @@ export default function ChatInput({
             placeholder="사주에 대해 궁금한 것을 물어보세요."
             className={styles.textarea}
           />
-          {value.trim().length > 0 && (
-            <button
-              type="submit"
-              disabled={disabled || loading}
-              className={styles.sendButton}
-            >
-              <MoveUp strokeWidth={2.2} size={16} />
-            </button>
-          )}
+          <button
+            type="submit"
+            disabled={disabled || loading || value.trim().length === 0}
+            className={styles.sendButton}
+          >
+            <MoveUp strokeWidth={2.2} size={16} />
+          </button>
         </div>
         <p className={styles.hint}>
           AI가 제공하는 운세는 재미로 참고해주세요. 중요한 결정은 신중하게!

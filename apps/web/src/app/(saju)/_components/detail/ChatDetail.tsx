@@ -38,6 +38,7 @@ import RecommendSajuQuestions from "@/src/app/(saju)/_components/saju/RecommendS
 import { Button } from "@repo/ui/components/button";
 import styles from "./ChatDetail.module.css";
 import "dayjs/locale/ko";
+import { load } from "next/dist/compiled/@edge-runtime/primitives/load";
 dayjs.locale("ko");
 
 interface ChatDetailProps {

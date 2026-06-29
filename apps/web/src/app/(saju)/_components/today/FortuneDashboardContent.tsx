@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import dayjs from "dayjs";
-import "dayjs/locale/ko";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
@@ -21,6 +20,7 @@ import { Button } from "@repo/ui/components/button";
 import { getLuckyColorValue } from "@/src/lib/fortune";
 import { StarBurstButton } from "@repo/ui/components/star-burst-button";
 import styles from "./FortuneDashboardContent.module.css";
+import "dayjs/locale/ko";
 
 export default function FortuneDashboardContent({
   birthInfo,
